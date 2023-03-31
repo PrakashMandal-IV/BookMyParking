@@ -16,12 +16,23 @@ const Home = () => {
         </div>
       </div>
       <div className="flex flex-col gap-10">
-           <p className="text-center font-normal   text-3xl">Get your Parking in 3 easy steps</p>
-           <div className="flex gap-20 mx-auto">
-                <div className="w-80 bg-gray-400 h-48 rounded-md"></div>
-                <div className="w-80 bg-gray-400 h-48 rounded-md"></div>
-                <div className="w-80 bg-gray-400 h-48 rounded-md"></div>
-           </div>
+        <p className="text-center font-normal   text-3xl">Get your Parking in 3 easy steps</p>
+        <div className="flex gap-20 mx-auto">
+          <div className="w-96 bg-gray-400 h-48 rounded-md"></div>
+          <div className="w-96 bg-gray-400 h-48 rounded-md"></div>
+          <div className="w-96 bg-gray-400 h-48 rounded-md"></div>
+        </div>
+      </div>
+      <div className="flex flex-col mt-32 gap-10">
+        <div className="">
+          <p className="text-center font-normal   text-xl">Type of Parking</p>
+          <p className="text-center font-normal   text-3xl">Our Parking Services</p>
+        </div>
+        <div className="flex gap-20 mx-auto">
+          <div className="w-96 bg-gray-400 h-48 rounded-md"></div>
+          <div className="w-96 bg-gray-400 h-48 rounded-md"></div>
+          <div className="w-96 bg-gray-400 h-48 rounded-md"></div>
+        </div>
       </div>
     </div>
   )
