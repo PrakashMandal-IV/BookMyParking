@@ -75,7 +75,7 @@ const Organization = () => {
             </div>
         </div>
         {isOpen && (
-            <AddOrganizationModal  Close={()=>setisOpen(!isOpen)}/>
+            <AddOrganizationModal Close={() => setisOpen(!isOpen)} />
         )}
 
 
@@ -86,51 +86,60 @@ export default Organization
 
 
 const AddOrganizationModal = (props) => {
-  
-    const [Scale,SetScale] = useState('scale-0')
-    useEffect(()=>{
-            SetScale('scale-100')
-    },[])
-    const OnClose=()=>{
+
+    const [Scale, SetScale] = useState('scale-0')
+    useEffect(() => {
+        SetScale('scale-100')
+    }, [])
+    const OnClose = () => {
         SetScale('scale-0')
         setTimeout(() => {
             props.Close()
         }, 150);
     }
+  const SubmitClick=()=>{
+    
+
+  }
+    const OnFormSubmit=(e)=>{
+        
+        e.preventDefault()
+    }
+    
     return (<>
         <div className="fixed z-10 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen px-4 pt-6 pb-20 text-center sm:block sm:p-0">
-                <div className="fixed inset-0 transition-opacity">
+                <div className="fixed inset-0 transition-opacity" onClick={OnClose}>
                     <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
                 </div>
                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
                 &#8203;
-                <div className={"inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full  "+Scale}>
+                <form onSubmit={OnFormSubmit} className={"inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full  " + Scale}>
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div className="sm:flex sm:items-start">
-                            <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                                <svg className="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                            </div>
-                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                <h3 className="text-lg leading-6 font-medium text-gray-900">Modal Title</h3>
-                                <div className="mt-2">
-                                    <p className="text-sm leading-5 text-gray-500">
-                                        Modal description goes here.
-                                    </p>
-                                </div>
-                            </div>
+                        <p className="text-center text-2xl mb-4">Add Organization</p>
+                        <div id="NewOrgForm" name="NewOrgForm"  className="flex flex-col gap-2">
+                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Name" required />
+                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Address Line 1" required />
+                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Address Line 1" required />
+                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="City" required />
+                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="State" required />
+                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Postal Code" required />
+                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Owner's Email" required />
                         </div>
                     </div>
-                    <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                            <button onClick={OnClose} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
+                    <div className="bg-gray-50 px-4 py-3 sm:px-6 flex">
+                        <div className="flex w-full rounded-md shadow-sm sm:w-auto">
+                            <button onClick={OnClose} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-gray-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
                                 Close
                             </button>
-                        </span>
+                        </div>
+                        <div className="ml-auto flex w-full rounded-md shadow-sm  sm:w-auto">
+                            <button type="submit" className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
+                                Add
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </>)
@@ -139,12 +148,12 @@ const AddOrganizationModal = (props) => {
 
 
 const PopupModal = (props) => {
-  
-    const [Scale,SetScale] = useState('scale-0')
-    useEffect(()=>{
-            SetScale('scale-100')
-    },[])
-    const OnClose=()=>{
+
+    const [Scale, SetScale] = useState('scale-0')
+    useEffect(() => {
+        SetScale('scale-100')
+    }, [])
+    const OnClose = () => {
         SetScale('scale-0')
         setTimeout(() => {
             props.Close()
@@ -153,12 +162,12 @@ const PopupModal = (props) => {
     return (<>
         <div className="fixed z-10 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen px-4 pt-6 pb-20 text-center sm:block sm:p-0">
-                <div className="fixed inset-0 transition-opacity">
+                <div className="fixed inset-0 transition-opacity" onClick={OnClose}>
                     <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
                 </div>
                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
                 &#8203;
-                <div className={"inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full  "+Scale}>
+                <div className={"inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full  " + Scale}>
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div className="sm:flex sm:items-start">
                             <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
