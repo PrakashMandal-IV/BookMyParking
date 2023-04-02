@@ -100,7 +100,7 @@ export default Home
 const ContactUs = () => {
   const Contact = (e) => {
     e.preventDefault()
-    debugger
+    
   }
   return (
     <div className="mx-28" >

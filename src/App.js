@@ -10,21 +10,21 @@ import AdminDashboardLayout from './Pages/AdminDashboard/DashboardLayout';
 
 function App() {
   const nav = useNavigate()
-  const [UserData,SetUserData] = useState(null)
+  const [UserData, SetUserData] = useState(null)
 
 
-  function OnLogin(UserData){
+  function OnLogin(UserData) {
     SetUserData(UserData)
-     nav('/home')
+    nav('/home')
   }
   return (
     <Routes>
-      <Route path='/' element={<Login OnLogin={(data)=>OnLogin(data)}/>}/>
-      <Route path='/' element={<Nav UserData={UserData}/>}>
+      <Route path='/' element={<Login OnLogin={(data) => OnLogin(data)} />} />
+      <Route path='/' element={<Nav UserData={UserData} />}>
         <Route path='home' element={<Home />} />
-        <Route path='/admin' element={<AdminDashboardLayout />}>
-           
-        </Route>
+        {UserData?.IsAdmin && (<Route path='/admin' element={<AdminDashboardLayout />}>
+
+        </Route>)}
       </Route>
     </Routes>
   );
