@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom"
 
 
 
-const Nav = () => {
+const Nav = (props) => {
 
 
     return (<div className="flex flex-col min-h-screen " id="top">
@@ -11,7 +11,10 @@ const Nav = () => {
             <div className="my-auto">
                 <p className="text-3xl font-medium  ">Park<span className="text-blue-600">Mate</span></p>
             </div>
-            <div className="ml-auto my-auto flex gap-2">
+            <div className="my-auto ml-auto mr-20">
+                {(props.UserData?.IsAdmin || props.UserData?.IsAgent) && (<p className="text-lg font-medium cursor-pointer">Dashboard</p>)}
+            </div>
+            <div className=" my-auto flex gap-2">
                 <div className="w-10 h-10 rounded-full overflow-hidden">
                     <img src="https://i.pinimg.com/564x/d9/7b/bb/d97bbb08017ac2309307f0822e63d082.jpg" alt="" />
                 </div>
@@ -26,7 +29,7 @@ const Nav = () => {
             </div>
         </div>
         <div className="w-full mb-20">
-        <Outlet />
+            <Outlet />
         </div>
 
     </div>

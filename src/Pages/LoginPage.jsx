@@ -11,13 +11,14 @@ const Login=(props)=>{
     
 const OnLogin=(e)=>{
     e.preventDefault()
+    SetIsLoading(true)
     SetError('')
     var det = {
         "link": "User/Login?Email="+e.target[0].value+"&Password="+e.target[1].value
     }
     NoAuthPost(det, (res, rej) => {
         if(res.data.length!==0){
-              
+               props.OnLogin(res.data[0])
         }else{
             SetError('User Not Found !!')
         }
