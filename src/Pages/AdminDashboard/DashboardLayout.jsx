@@ -7,10 +7,10 @@ const AdminDashboardLayout = () => {
         <div className="w-full h-full flex">
             <div className="w-60  bg-gray-200">
                 <div className="flex flex-col mt-5">
-                    <div className="text-xl pl-10 font-medium hover:bg-gray-300 py-4" onClick={()=> nav('overview')}>
+                    <div className="text-lg pl-10 font-medium hover:bg-gray-300 py-4" onClick={()=> nav('overview')}>
                         Overview
                     </div>
-                    <div className="text-xl pl-10  font-medium hover:bg-gray-300 py-4">
+                    <div className="text-lg pl-10  font-medium hover:bg-gray-300 py-4">
                         Organization
                     </div>
                 </div>
