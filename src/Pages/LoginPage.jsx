@@ -3,8 +3,6 @@ import { NoAuthPost } from "../components/Api";
 import { useEffect, useState } from "react";
 
 const Login = (props) => {
-
-    const nav = useNavigate()
     const [Error, SetError] = useState('')
     const [Loading, SetIsLoading] = useState(false)
     useEffect(() => {
