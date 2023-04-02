@@ -53,7 +53,7 @@ const Login = (props) => {
                         <input type="password" name="LoginPassword" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Password" required />
                     </div>
                     <div className="flex flex-col w-full gap-4 pb-5">
-                        <button type="submit" className="border py-4 mx-10 rounded hover:bg-gray-100 transition-all">
+                        <button type="submit" className="w-4/5 mx-auto Inline-flex justify-center rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
                             Login
                         </button>
                         <p className="text-center text-red-500">{Error}</p>
