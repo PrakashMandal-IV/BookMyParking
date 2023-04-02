@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import AdminDashboardLayout from './Pages/AdminDashboard/DashboardLayout';
 import OverView from './Pages/AdminDashboard/Overview';
 import { NoAuthPost } from './components/Api';
+import Organization from './Pages/AdminDashboard/Organization';
 
 function App() {
   const nav = useNavigate()
@@ -47,6 +48,7 @@ function App() {
         <Route path='home' element={<Home />} />
         {UserData?.IsAdmin && (<Route path='/admin' element={<AdminDashboardLayout />}>
           <Route path='overview' element={<OverView />} />
+          <Route path='organization' element={<Organization />} />
         </Route>)}
       </Route>
     </Routes>
