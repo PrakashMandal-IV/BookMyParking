@@ -47,7 +47,7 @@ function App() {
       <Route path='/' element={<Nav UserData={UserData} />}>
         <Route path='home' element={<Home />} />
         {UserData?.IsAdmin && (<Route path='/admin' element={<AdminDashboardLayout />}>
-          <Route path='overview' element={<OverView />} />
+          <Route path='' element={<OverView />} />
           <Route path='organization' element={<Organization />} />
         </Route>)}
       </Route>
