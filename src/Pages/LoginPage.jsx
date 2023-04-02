@@ -48,7 +48,6 @@ const OnLogin=(e)=>{
                                 <p className="text-center">Create a free account <span className="text-blue-400 hover:text-blue-500 transition-all cursor-pointer">Register</span></p>
                             </div>
                             </div>
-                            
                       </form>
                  </div>
              

@@ -4,15 +4,25 @@ import { Outlet, useNavigate } from "react-router-dom"
 
 
 const Nav = (props) => {
+ const nav = useNavigate()
 
 
+
+function NavigationClick(type){
+
+     if(type='dashboard'){
+        if(props.UserData?.IsAdmin){
+            nav('/admin')
+        }
+     } 
+}
     return (<div className="flex flex-col min-h-screen " id="top">
         <div className="w-full h-14 flex bg-gray-200 px-10">
             <div className="my-auto">
                 <p className="text-3xl font-medium  ">Park<span className="text-blue-600">Mate</span></p>
             </div>
             <div className="my-auto ml-auto mr-20">
-                {(props.UserData?.IsAdmin || props.UserData?.IsAgent) && (<p className="text-lg font-medium cursor-pointer">Dashboard</p>)}
+                {(props.UserData?.IsAdmin || props.UserData?.IsAgent) && (<p className="text-lg font-medium cursor-pointer" onClick={()=>NavigationClick('dashboard')}>Dashboard</p>)}
             </div>
             <div className=" my-auto flex gap-2">
                 <div className="w-10 h-10 rounded-full overflow-hidden">

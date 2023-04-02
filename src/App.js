@@ -6,6 +6,7 @@ import Nav from './components/Navbar';
 import Home from './Pages/Home';
 import Login from './Pages/LoginPage';
 import { useState } from 'react';
+import AdminDashboardLayout from './Pages/AdminDashboard/DashboardLayout';
 
 function App() {
   const nav = useNavigate()
@@ -21,7 +22,9 @@ function App() {
       <Route path='/' element={<Login OnLogin={(data)=>OnLogin(data)}/>}/>
       <Route path='/' element={<Nav UserData={UserData}/>}>
         <Route path='home' element={<Home />} />
-        <Route path='homeee' element={<Home />} />
+        <Route path='/admin' element={<AdminDashboardLayout />}>
+           
+        </Route>
       </Route>
     </Routes>
   );
