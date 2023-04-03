@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { Post } from "../../components/Api";
+import { Get, Post } from "../../components/Api";
 import Spinner from "../../components/Spinner";
 
 const Organization = () => {
     const [CurrentDate, SetCurrentDate] = useState('')
     const [isOpen, setisOpen] = useState(false)
+    const [OrgList,SetOrgList] = useState([])
+    const [FilteredOrgList,SetFilteredOrgList] =useState([])
     useEffect(() => {
         const currentDate = new Date();
         SetCurrentDate(formatDate(currentDate))
+        GetOrganizationList()
     }, [])
 
 
@@ -18,10 +21,25 @@ const Organization = () => {
         const year = date.getFullYear();
         return `${day} ${month}, ${year}`;
     }
-
+   function GetOrganizationList(){
+    
+    var det = {
+        "link": "Admin/orglistforadmin"
+    }
+    Get(det, (res, rej) => {
+        
+        SetOrgList(res.data)
+        SetFilteredOrgList(res.data)
+    }, (err) => {
+        
+    });
+   }
 
     function SearchFunc(e) {
         e.preventDefault()
+        debugger
+         let s = e.target[0].value.toLowerCase()
+        SetFilteredOrgList(OrgList.filter(i=>i.OrganizationName.toLowerCase().startsWith(e.target[0].value.toLowerCase())))
     }
 
     const SuccessAdd = () => {
@@ -67,16 +85,31 @@ const Organization = () => {
             </div>
             <div className="mt-10  px-32">
                 <table className="w-full">
-                    <thead className="flex py-2 bg-gray-200">
-                        <th className="flex-grow text-center">S.No</th>
-                        <th className="flex-grow text-center">Name</th>
-                        <th className="flex-grow text-center">Parking Slots</th>
-                        <th className="flex-grow text-center">Active Slots</th>
-                        <th className="flex-grow text-center">Total Revenue</th>
-                        <th className="flex-grow text-center">Location</th>
-                        <th className="flex-grow text-center">Status</th>
-                        <th className="flex-grow text-center">Remove</th>
-                    </thead>
+                    <tr className="flex py-2 bg-gray-200">
+                        <th className="w-[10%] text-center">S.No</th>
+                        <th className="w-[20%] text-center">Name</th>
+                        <th className="w-[10%] text-center">Parking Slots</th>
+                        <th className="w-[10%] text-center">Active Slots</th>
+                        <th className="w-[10%] text-center">Total Revenue</th>
+                        <th className="w-[20%] text-center">Location</th>
+                        <th className="w-[10%] text-center">Status</th>
+                        <th className="w-[10%] text-center">Remove</th>
+                    </tr>
+                    <tbody className="w-full">
+                       {FilteredOrgList.map((item,idx)=>{
+                          
+                        return ( <tr key={idx} className={"flex py-2  "+(idx % 2 !== 0?"bg-gray-100":"")}>
+                        <td className="w-[10%] text-center">{idx+1}</td>
+                        <td className="w-[20%] text-center">{item.OrganizationName}</td>
+                        <td className="w-[10%] text-center">{item.ParkingSlots}</td>
+                        <td className="w-[10%] text-center">{item.ActiveParkingSlots}</td>
+                        <td className="w-[10%] text-center">0</td>
+                        <td className="w-[20%] text-center">{item.State+","+item.City}</td>
+                        <td className="w-[10%] text-center">{item.IsActive?"Active":"InActive"}</td>
+                        <td className="w-[10%] text-center">X</td>
+                    </tr>)
+                       })}
+                    </tbody>
                 </table>
             </div>
         </div>
