@@ -27,7 +27,7 @@ const Organization = () => {
         "link": "Admin/orglistforadmin"
     }
     Get(det, (res, rej) => {
-        
+        document.getElementById('SearchInput').value=''
         SetOrgList(res.data)
         SetFilteredOrgList(res.data)
     }, (err) => {
@@ -37,13 +37,14 @@ const Organization = () => {
 
     function SearchFunc(e) {
         e.preventDefault()
-        debugger
+    
          let s = e.target[0].value.toLowerCase()
         SetFilteredOrgList(OrgList.filter(i=>i.OrganizationName.toLowerCase().startsWith(e.target[0].value.toLowerCase())))
     }
 
     const SuccessAdd = () => {
         setisOpen(false)
+        GetOrganizationList()
     }
     return (<>
         <svg className='hidden'>
@@ -66,7 +67,7 @@ const Organization = () => {
                 <div className="flex ">
                     <form onSubmit={SearchFunc}>
                         <div className="flex border px-2  rounded-md">
-                            <input type="text" name="Org_Search" className="  py-2 outline-none" placeholder="Search.." />
+                            <input type="text" name="Org_Search" id="SearchInput" className="  py-2 outline-none" placeholder="Search.." />
                             <span className="my-auto" id="basic-addon1">
                                 <svg width='16' height='16'>
                                     <use xlinkHref='#svg_search'></use>
