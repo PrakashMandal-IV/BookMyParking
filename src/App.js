@@ -31,6 +31,7 @@ function App() {
       if (res.data.length !== 0) {
         localStorage.setItem('email', email)
         localStorage.setItem('pass', pass)
+        sessionStorage.setItem('token', res.data[0].Token)
         SetUserData(res.data[0])
        
       }

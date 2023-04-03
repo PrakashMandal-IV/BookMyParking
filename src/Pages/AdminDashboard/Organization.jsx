@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Post } from "../../components/Api";
 
 const Organization = () => {
     const [CurrentDate, SetCurrentDate] = useState('')
@@ -20,6 +21,10 @@ const Organization = () => {
 
     function SearchFunc(e) {
         e.preventDefault()
+    }
+
+    const SuccessAdd=()=>{
+        setisOpen(false)
     }
     return (<>
         <svg className='hidden'>
@@ -62,20 +67,20 @@ const Organization = () => {
             <div className="mt-10  px-32">
                 <table className="w-full">
                     <thead className="flex py-2 bg-gray-200">
-                        <td className="flex-grow text-center">S.No</td>
-                        <td className="flex-grow text-center">Name</td>
-                        <td className="flex-grow text-center">Parking Slots</td>
-                        <td className="flex-grow text-center">Active Slots</td>
-                        <td className="flex-grow text-center">Total Revenue</td>
-                        <td className="flex-grow text-center">Location</td>
-                        <td className="flex-grow text-center">Status</td>
-                        <td className="flex-grow text-center">Remove</td>
+                        <th className="flex-grow text-center">S.No</th>
+                        <th className="flex-grow text-center">Name</th>
+                        <th className="flex-grow text-center">Parking Slots</th>
+                        <th className="flex-grow text-center">Active Slots</th>
+                        <th className="flex-grow text-center">Total Revenue</th>
+                        <th className="flex-grow text-center">Location</th>
+                        <th className="flex-grow text-center">Status</th>
+                        <th className="flex-grow text-center">Remove</th>
                     </thead>
                 </table>
             </div>
         </div>
         {isOpen && (
-            <AddOrganizationModal Close={() => setisOpen(!isOpen)} />
+            <AddOrganizationModal Close={() => setisOpen(!isOpen)} Success={SuccessAdd} />
         )}
 
 
@@ -88,6 +93,7 @@ export default Organization
 const AddOrganizationModal = (props) => {
 
     const [Scale, SetScale] = useState('scale-0')
+    const [Error,SetError] = useState('')
     useEffect(() => {
         SetScale('scale-100')
     }, [])
@@ -97,14 +103,40 @@ const AddOrganizationModal = (props) => {
             props.Close()
         }, 150);
     }
-  const SubmitClick=()=>{
-    
-
-  }
+  
     const OnFormSubmit=(e)=>{
         
         e.preventDefault()
+        SetError('')
+        var data = {
+            "name": e.target[0].value,
+            "addressLine1":e.target[1].value,
+            "adddressLine2": e.target[2].value,
+            "city": e.target[3].value,
+            "state": e.target[4].value,
+            "postalCode": e.target[5].value,
+            "ownerEmail": e.target[6].value
+          }
+          AddOrg(data)
     }
+
+  const AddOrg=(data)=>{
+
+    var det = {
+        "link": "Admin/addorganization",
+        "data": JSON.stringify(data)
+    }
+    Post(det, (res, rej) => {
+      if(res.data="Success"){
+          props.Success()
+      }else {
+        SetError(res.data)
+      }
+
+    }, (err) => {
+        SetError('Something went wrong , Please try again')
+    });
+  }
     
     return (<>
         <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -116,17 +148,18 @@ const AddOrganizationModal = (props) => {
                 &#8203;
                 <form onSubmit={OnFormSubmit} className={"inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full  " + Scale}>
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <p className="text-center text-2xl mb-4">Add Organization</p>
+                        <p className="text-center  text-2xl mb-4">Add Organization</p>
                         <div id="NewOrgForm" name="NewOrgForm"  className="flex flex-col gap-2">
-                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Name" required />
-                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Address Line 1" required />
-                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Address Line 1" required />
-                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="City" required />
-                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="State" required />
-                            <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Postal Code" required />
+                            <input type="text" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Name" required />
+                            <input type="text" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Address Line 1" required />
+                            <input type="text" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Address Line 1" required />
+                            <input type="text" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="City" required />
+                            <input type="text" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="State" required />
+                            <input type="text" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Postal Code" required />
                             <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Owner's Email" required />
                         </div>
                     </div>
+                   
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 flex">
                         <div className="flex w-full rounded-md shadow-sm sm:w-auto">
                             <button onClick={OnClose} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-gray-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
@@ -134,6 +167,7 @@ const AddOrganizationModal = (props) => {
                             </button>
                         </div>
                         <div className="ml-auto flex w-full rounded-md shadow-sm  sm:w-auto">
+                           <p className="text-center my-auto pr-5 text-red-500 text-sm">{Error}</p>
                             <button type="submit" className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
                                 Add
                             </button>

@@ -31,6 +31,7 @@ const Login = (props) => {
             if (res.data.length !== 0) {
                 localStorage.setItem('email', email)
                 localStorage.setItem('pass', pass)
+                sessionStorage.setItem('token', res.data[0].Token)
                 props.OnLogin(res.data[0])
             } else {
                 SetError('User Not Found !!')
