@@ -59,7 +59,7 @@ export async function Get(config, callback, errorcallback) {
     method: 'GET',
     url: Api + config.link,
     headers: {
-      'Authorization': "bearer " + sessionStorage.getItem('Token'),
+      'Authorization': "bearer " + sessionStorage.getItem('token'),
       'Content-Type': 'application/json; charset=UTF-8'
     }
   };
@@ -81,12 +81,11 @@ export async function Get(config, callback, errorcallback) {
 }
 
 export async function Post(config, callback, errorcallback) {
-
   const options = {
     method: 'POST',
     url: Api + config.link,
     headers: {
-      'Authorization': "bearer " + sessionStorage.getItem('Token'),
+      'Authorization': "bearer " + sessionStorage.getItem('token'),
       'Content-Type': 'application/json; charset=UTF-8'
     },
     data: config.data
