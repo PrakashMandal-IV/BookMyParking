@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Get, Post } from "../../components/Api";
-import Spinner from "../../components/Spinner";
 
 const Organization = () => {
     const [CurrentDate, SetCurrentDate] = useState('')
@@ -201,7 +200,7 @@ const AddOrganizationModal = (props) => {
 
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 flex">
                         <div className="flex w-full rounded-md shadow-sm sm:w-auto">
-                            <button onClick={OnClose} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-gray-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
+                            <button onClick={OnClose} type="button" className=" inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-gray-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
                                 Close
                             </button>
                         </div>
@@ -211,10 +210,9 @@ const AddOrganizationModal = (props) => {
                             <p className="text-center my-auto pr-5 text-red-500 text-sm">{Error}</p>
                            
                             <button type="submit" disabled={Loading} className="inline-flex justify-center  rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6  text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
-                            {Loading?<div className="">
-                                <Spinner size="20px" color="gray"/>
+                            {Loading? <div className="animate-spin rounded-full border-b-2 border-white">
+                                 <div className="w-5 h-5"></div>
                             </div>:'Add'}
-                               
                             </button>
                         </div>
                     </div>
