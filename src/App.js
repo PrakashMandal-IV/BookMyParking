@@ -14,6 +14,7 @@ import AgentDashboardLayout from './Pages/AgentDashboard/DashboardLayout';
 import AgentOverView from './Pages/AgentDashboard/Overview';
 import ManageParking from './Pages/AgentDashboard/ManageParking';
 import Finance from './Pages/AgentDashboard/Finance';
+import RegisterUser from './Pages/RegisterUser';
 
 function App() {
   const nav = useNavigate()
@@ -53,6 +54,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Login OnLogin={(data) => OnLogin(data)} />} />
+      <Route path='/register' element={<RegisterUser OnLogin={(data) => OnLogin(data)} />} />
       <Route path='/' element={<Nav UserData={UserData}  Logout={Logout}/>}>
         <Route path='home' element={<Home />} />
         {UserData?.IsAdmin && (<Route path='/admin' element={<AdminDashboardLayout />}>
