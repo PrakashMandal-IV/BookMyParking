@@ -13,6 +13,7 @@ import Organization from './Pages/AdminDashboard/Organization';
 import AgentDashboardLayout from './Pages/AgentDashboard/DashboardLayout';
 import AgentOverView from './Pages/AgentDashboard/Overview';
 import ManageParking from './Pages/AgentDashboard/ManageParking';
+import Finance from './Pages/AgentDashboard/Finance';
 
 function App() {
   const nav = useNavigate()
@@ -61,6 +62,7 @@ function App() {
         {UserData?.IsAgent && (<Route path='/agent' element={<AgentDashboardLayout />}>
           <Route path='' element={<AgentOverView />} />
           <Route path='manageparking' element={<ManageParking />} />
+          <Route path='finance' element={<Finance />} />
         </Route>)}
       </Route>
     </Routes>

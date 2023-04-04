@@ -14,6 +14,9 @@ const AgentDashboardLayout = () => {
                     <div className="text-lg pl-10  font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={()=> nav('manageparking')}>
                         Manage Parking
                     </div>
+                    <div className="text-lg pl-10  font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={()=> nav('finance')}>
+                        Finance
+                    </div>
                 </div>
             </div>
             <div className="flex-grow">

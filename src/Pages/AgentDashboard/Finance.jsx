@@ -13,18 +13,17 @@ const floor_map = {
     9: 'NT',
     10: 'TT'
 }
-const ManageParking = () => {
+const Finance = () => {
     const [CurrentDate, SetCurrentDate] = useState('')
     const [isLotOpen, setisLotOpen] = useState(false)
-    const [isSLotOpen, setisSLotOpen] = useState(false)
-    const [PLotList, SetPLotList] = useState([])
-    const [VTypeList, SetVTypeList] = useState([])
+    const [PricingList, SetPricingList] = useState([])
+
     const [SlotList, SetSlotList] = useState([])
     const [FilteredOrgList, SetFilteredOrgList] = useState([])
     useEffect(() => {
         const currentDate = new Date();
         SetCurrentDate(formatDate(currentDate))
-        GetParkingLotList()
+        GetPricingList()
     }, [])
 
 
@@ -35,17 +34,14 @@ const ManageParking = () => {
         const year = date.getFullYear();
         return `${day} ${month}, ${year}`;
     }
-    function GetParkingLotList() {
+    function GetPricingList() {
 
         var det = {
-            "link": "Agent/getparkingmanagementData"
+            "link": "Agent/parkingpricing"
         }
         Get(det, (res, rej) => {
+            SetPricingList(res.data)
 
-            SetPLotList(JSON.parse(res.data[0].PLots))
-           
-            SetVTypeList(JSON.parse(res.data[0].Vtypes))
-            SetSlotList(JSON.parse(res.data[0].SlotList))
         }, (err) => {
 
         });
@@ -54,12 +50,12 @@ const ManageParking = () => {
         e.preventDefault()
 
         let s = e.target[0].value.toLowerCase()
-        SetFilteredOrgList(PLotList.filter(i => i.OrganizationName.toLowerCase().startsWith(e.target[0].value.toLowerCase())))
+        SetFilteredOrgList(PricingList.filter(i => i.OrganizationName.toLowerCase().startsWith(e.target[0].value.toLowerCase())))
     }
 
     const SuccessAdd = () => {
         setisLotOpen(false)
-        GetParkingLotList()
+        GetPricingList()
     }
     return (<>
         <svg className='hidden'>
@@ -75,7 +71,7 @@ const ManageParking = () => {
         </svg>
         <div className="pl-10 pr-20 pt-5 ">
             <div className="flex h-10">
-                <div className="text-xl">Manage Parking</div>
+                <div className="text-xl">Finance</div>
                 <div className="ml-auto text-lg font-medium">{CurrentDate}</div>
             </div>
             <div className=" px-32 mt-10">
@@ -90,7 +86,7 @@ const ManageParking = () => {
                             </span>
                         </div>
                     </form> */}
-                    <div className="ml-auto flex gap-2">
+                    {/* <div className="ml-auto flex gap-2">
                         <div className="bg-gray-200  h-10 rounded-md flex gap-2 px-2 hover:bg-gray-300 transition-all cursor-pointer" onClick={() => setisLotOpen(!isLotOpen)}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="m-auto w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -103,59 +99,77 @@ const ManageParking = () => {
                             </svg>
                             <p className="my-auto">Add Parking SLot</p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
-            <div className="mt-10  px-32">
-                <table className="w-full">
-                    <tr className="flex py-2 bg-gray-200">
-                        <th className="w-2/12 text-center">S.No</th>
-                        <th className="w-2/12 text-center">Floor</th>
-                        <th className="w-2/12 text-center">Parking Lot</th>
-                        <th className="w-2/12 text-center">Parking Slot</th>
-                        <th className="w-2/12 text-center">Vehical Type</th>
-                        <th className="w-2/12 text-center">Status</th>
-                        <th className="w-2/12 text-center">Disable</th>
-                        <th className="w-2/12 text-center">Remove</th>
-                    </tr>
-                    <tbody className="w-full">
-                        {SlotList.map((item, idx) => {
+            <div className="flex gap-20 ">
+                <div className=" w-1/2  px-32">
+                    <div className="flex">
+                        <p className="mb-2 text-lg font-medium">Parking Price </p>
+                        <div className="ml-auto flex gap-2 hover:bg-slate-200 transition-all my-2 px-2 rounded-md cursor-pointer" onClick={() => setisLotOpen(!isLotOpen)}>
+                            <p className="">Edit</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>
 
-                            return (<tr key={idx} className={"flex py-2  " + (idx % 2 !== 0 ? "bg-gray-100" : "")}>
-                                <td className="w-2/12 text-center">{idx + 1}</td>
-                                <td className="w-2/12 text-center">{floor_map[item.FloorNumber]}</td>
-                                <td className="w-2/12 text-center">{item.ParkingLotName}</td>
-                                <td className="w-2/12 text-center">{item.ParkingSlotName}</td>
-                                <td className="w-2/12 text-center">{item.VehicalType}</td>
-                                <td className="w-2/12 text-center">{item.Status ? "Active" : "InActive"}</td>
-                              
-                                <td className="w-2/12 text-center"></td>
-                                <td className="w-2/12 text-center">X</td>
-                            </tr>)
-                        })}
-                    </tbody>
-                </table>
+                        </div>
+                    </div>
+                    <table className="w-full">
+                        <tr className="flex py-2 bg-gray-200">
+                            <th className="w-1/2 text-center">Vehical Type</th>
+                            <th className="w-1/2 text-center">Price per hour</th>
+                        </tr>
+                        <tbody className="w-full">
+                            {PricingList.map((item, idx) => {
+
+                                return (<tr key={idx} className={"flex py-2  " + (idx % 2 !== 0 ? "bg-gray-100" : "")}>
+                                    <td className="w-1/2 text-center">{item.VehicalType}</td>
+                                    <td className="w-1/2 text-center">{item.Price}</td>
+                                </tr>)
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+                <div className=" w-1/2  px-32">
+                    <p className="mb-2 text-lg font-medium">Total Revenue </p>
+                    <table className="w-full">
+                        <tr className="flex py-2 bg-gray-200">
+                            <th className="w-1/2 text-center">Vehical Type</th>
+                            <th className="w-1/2 text-center">Revenue</th>
+                        </tr>
+                        <tbody className="w-full">
+                            {PricingList.map((item, idx) => {
+
+                                return (<tr key={idx} className={"flex py-2  " + (idx % 2 !== 0 ? "bg-gray-100" : "")}>
+                                    <td className="w-2/12 text-center">{idx + 1}</td>
+                                    <td className="w-2/12 text-center">{floor_map[item.FloorNumber]}</td>
+
+                                </tr>)
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         {isLotOpen && (
-            <AddParkinglot Close={() => setisLotOpen(!isLotOpen)} Success={SuccessAdd} />
+            <EditPricing Close={() => setisLotOpen(!isLotOpen)} Success={SuccessAdd} Data={PricingList} />
         )}
-        {isSLotOpen && (
-            <AddParkingSlot Close={() => setisSLotOpen(!isSLotOpen)} Success={SuccessAdd} PLotList={PLotList} VType={VTypeList} />
-        )}
+
     </>)
 }
-export default ManageParking
+export default Finance
 
 
-const AddParkinglot = (props) => {
+const EditPricing = (props) => {
 
     const [Scale, SetScale] = useState('scale-0')
     const [Error, SetError] = useState('')
     const [Success, SetSuccess] = useState(false)
     const [Loading, SetLoading] = useState(false)
+    const [Pricing,SetPricing] = useState([])
     useEffect(() => {
         SetScale('scale-100')
+        SetPricing([...props.Data])
     }, [])
     const OnClose = () => {
         SetScale('scale-0')
@@ -164,32 +178,36 @@ const AddParkinglot = (props) => {
         }, 150);
     }
 
-    const OnFormSubmit = (e) => {
-
-        e.preventDefault()
-        SetSuccess(false)
-        SetError('')
+    const AddParkinglot = () => {
         SetLoading(true)
-        var data = {
-            "floor": e.target[0].value,
-            "name": e.target[1].value.toUpperCase(),
-        }
-        AddParkinglot(data)
-    }
-
-    const AddParkinglot = (data) => {
-
+        var data = []
+        Pricing.forEach(element => {
+              var temp =  {
+                "vehicleTypeID": element.VehicalTypeID,
+                "price": element.Price
+              }
+              data.push(temp)
+        });
         var det = {
-            "link": "Agent/AddParkinglot",
+            "link": "Agent/setPricing",
             "data": JSON.stringify(data)
         }
         Post(det, (res, rej) => {
-            SetSuccess(true)
+            props.Success()
             SetLoading(false)
         }, (err) => {
             SetError('Something went wrong , Please try again')
             SetLoading(false)
         });
+    }
+    const SetPrice=(value,ID)=>{
+       
+        let Index = Pricing.map(i=>i.VehicalTypeID).indexOf(ID)
+        if(Index!==-1){
+            let data = Pricing
+            data[Index].Price = parseFloat(value)
+            SetPricing([...data])
+        }
     }
 
     return (<>
@@ -200,15 +218,16 @@ const AddParkinglot = (props) => {
                 </div>
                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
                 &#8203;
-                <form onSubmit={OnFormSubmit} className={"inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full  " + Scale}>
+                <div className={"inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full  " + Scale}>
                     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <p className="text-center  text-2xl mb-4">Add Parking Lot</p>
-                        <div id="NewOrgForm" name="NewOrgForm" className="flex flex-col gap-2">
-                            <label htmlFor="Floor" className="font-medium">Floor</label>
-                            <input type="number" name="Floor" min={0} className="border px-2 py-3 outline-none rounded-md" placeholder="GF=0,FF=1..." required />
-                            <label htmlFor="LotName" className="font-medium">Parking Lot Name</label>
-                            <input type="text" name="LotName" min={0} className="border px-2 py-3 outline-none rounded-md" placeholder="Parking Lot Name" required />
+                        <p className="text-center  text-2xl mb-4">Pricing</p>
+                        {Pricing.map((item,idx)=>(
+                            <div className="flex" key={idx}>
+                            <label htmlFor="Floor" className="font-medium my-auto w-1/2">{item.VehicalType}</label>
+                            
+                            <input  name="Floor" type="number"  value={item.Price} onChange={(e)=>SetPrice(e.target.value,item.VehicalTypeID)} className="border px-2 py-3 outline-none rounded-md" placeholder="GF=0,FF=1..." /> 
                         </div>
+                        ))}
                     </div>
 
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 flex">
@@ -224,14 +243,14 @@ const AddParkinglot = (props) => {
                             {Success && (
                                 <p className="text-center my-auto pr-5 text-green-500 text-sm">Success !!</p>
                             )}
-                            <button type="submit" disabled={Loading} className="inline-flex justify-center  rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6  text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
+                            <button onClick={AddParkinglot} disabled={Loading} className="inline-flex justify-center  rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6  text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150ms sm:text-sm sm:leading-5">
                                 {Loading ? <div className="animate-spin rounded-full border-b-2 border-white">
                                     <div className="w-5 h-5"></div>
                                 </div> : 'Add'}
                             </button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </>)
@@ -241,7 +260,7 @@ const AddParkingSlot = (props) => {
 
     const [Scale, SetScale] = useState('scale-0')
     const [Error, SetError] = useState('')
-  
+
     const [Loading, SetLoading] = useState(false)
     useEffect(() => {
         SetScale('scale-100')
@@ -252,18 +271,18 @@ const AddParkingSlot = (props) => {
             props.Close()
         }, 150);
     }
- 
+
     const OnFormSubmit = (e) => {
 
         e.preventDefault()
-       
+
         SetError('')
         SetLoading(true)
-        debugger
+
         var data = {
             "pLotID": e.target[0].value,
             "slotCount": parseInt(e.target[1].value),
-            "vehicalTypeID":e.target[2].value
+            "vehicalTypeID": e.target[2].value
         }
         AddParkinglot(data)
     }
@@ -275,7 +294,7 @@ const AddParkingSlot = (props) => {
             "data": JSON.stringify(data)
         }
         Post(det, (res, rej) => {
-           
+
             SetLoading(false)
             props.Success()
         }, (err) => {
