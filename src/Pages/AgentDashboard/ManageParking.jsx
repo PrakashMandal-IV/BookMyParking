@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
 import { Get, Post } from "../../components/Api";
-
+const floor_map = {
+    0: 'GF',
+    1: 'FF',
+    2: 'SF',
+    3: 'TF',
+    4: 'FO',
+    5: 'FV',
+    6: 'SX',
+    7: 'SV',
+    8: 'ET',
+    9: 'NT',
+    10: 'TT'
+}
 const ManageParking = () => {
     const [CurrentDate, SetCurrentDate] = useState('')
     const [isLotOpen, setisLotOpen] = useState(false)
     const [isSLotOpen, setisSLotOpen] = useState(false)
     const [PLotList, SetPLotList] = useState([])
     const [VTypeList, SetVTypeList] = useState([])
+    const [SlotList, SetSlotList] = useState([])
     const [FilteredOrgList, SetFilteredOrgList] = useState([])
     useEffect(() => {
         const currentDate = new Date();
@@ -32,6 +45,7 @@ const ManageParking = () => {
             SetPLotList(JSON.parse(res.data[0].PLots))
            
             SetVTypeList(JSON.parse(res.data[0].Vtypes))
+            SetSlotList(JSON.parse(res.data[0].SlotList))
         }, (err) => {
 
         });
@@ -99,22 +113,23 @@ const ManageParking = () => {
                         <th className="w-2/12 text-center">Floor</th>
                         <th className="w-2/12 text-center">Parking Lot</th>
                         <th className="w-2/12 text-center">Parking Slot</th>
+                        <th className="w-2/12 text-center">Vehical Type</th>
                         <th className="w-2/12 text-center">Status</th>
-                        <th className="w-2/12 text-center">Total Uses</th>
                         <th className="w-2/12 text-center">Disable</th>
                         <th className="w-2/12 text-center">Remove</th>
                     </tr>
                     <tbody className="w-full">
-                        {FilteredOrgList.map((item, idx) => {
+                        {SlotList.map((item, idx) => {
 
                             return (<tr key={idx} className={"flex py-2  " + (idx % 2 !== 0 ? "bg-gray-100" : "")}>
                                 <td className="w-2/12 text-center">{idx + 1}</td>
-                                <td className="w-2/12 text-center">{item.OrganizationName}</td>
-                                <td className="w-2/12 text-center">{item.ParkingSlots}</td>
-                                <td className="w-2/12 text-center">{item.ActiveParkingSlots}</td>
-                                <td className="w-2/12 text-center">0</td>
-                                <td className="w-2/12 text-center">{item.State + "," + item.City}</td>
-                                <td className="w-2/12 text-center">{item.IsActive ? "Active" : "InActive"}</td>
+                                <td className="w-2/12 text-center">{floor_map[item.FloorNumber]}</td>
+                                <td className="w-2/12 text-center">{item.ParkingLotName}</td>
+                                <td className="w-2/12 text-center">{item.ParkingSlotName}</td>
+                                <td className="w-2/12 text-center">{item.VehicalType}</td>
+                                <td className="w-2/12 text-center">{item.Status ? "Active" : "InActive"}</td>
+                              
+                                <td className="w-2/12 text-center"></td>
                                 <td className="w-2/12 text-center">X</td>
                             </tr>)
                         })}
@@ -237,19 +252,7 @@ const AddParkingSlot = (props) => {
             props.Close()
         }, 150);
     }
-    const floor_map = {
-        0: 'GF',
-        1: 'FF',
-        2: 'SF',
-        3: 'TF',
-        4: 'FO',
-        5: 'FV',
-        6: 'SX',
-        7: 'SV',
-        8: 'ET',
-        9: 'NT',
-        10: 'TT'
-    }
+ 
     const OnFormSubmit = (e) => {
 
         e.preventDefault()
