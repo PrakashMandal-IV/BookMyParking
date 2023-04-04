@@ -30,9 +30,7 @@ const RegisterUser = (props) => {
                 SetError('Email already in use !!')
                 SetIsLoading(false)
             }
-
         }, (err) => {
-            //error
             SetError("Network Error! Please try again")
             SetIsLoading(false)
         });
