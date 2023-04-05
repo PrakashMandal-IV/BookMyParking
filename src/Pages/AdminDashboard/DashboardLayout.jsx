@@ -6,7 +6,7 @@ const AdminDashboardLayout = () => {
 
     return (<>
         <div className="w-full h-full flex">
-            <div className="w-60  bg-gray-200">
+            <div className="w-64   bg-gray-200">
                 <div className="flex flex-col mt-5">
                     <div className="text-lg pl-10 font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={()=> nav('/admin')}>
                         Overview
@@ -22,5 +22,4 @@ const AdminDashboardLayout = () => {
         </div>
     </>)
 }
-
 export default AdminDashboardLayout
