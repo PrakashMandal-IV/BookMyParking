@@ -23,3 +23,4 @@ const AdminDashboardLayout = () => {
     </>)
 }
 export default AdminDashboardLayout
+///imagine art of a car in a parking with a girl in it smiling , hyper realistic , desktop wallpaper size , a phone in her hand , long hair , beautifull , main focus on car and parking area   --ar 16:9  --v 5

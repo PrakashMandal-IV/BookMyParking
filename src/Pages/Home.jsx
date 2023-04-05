@@ -1,11 +1,15 @@
+import { useNavigate } from "react-router-dom"
+
 const Home = () => {
 
+  const nav = useNavigate()
 
   return (
-    <div className="w-full flex flex-col gap-5">
+    <div className="max-h-[calc(100vh-3.5rem)] overflow-y-scroll">
+    <div className="w-full flex flex-col gap-5 ">
       <div className="bg-gray-300 flex   h-[75vh]">
         <div className="mx-auto mt-auto mb-32">
-          <button className="py-4  rounded text-white hover:bg-gray-500 transition-all px-10 bg-gray-600 flex gap-4 hover:gap-8">
+          <button className="py-4  rounded text-white hover:bg-gray-500 transition-all px-10 bg-gray-600 flex gap-4 hover:gap-8" onClick={()=>nav('/bookmyparking')}>
             <p className="">Get a Parking </p>
             <div className="ml-auto">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -90,6 +94,7 @@ const Home = () => {
           <div className="w-1/3 bg-gray-300"></div>
         </div>
       </div>
+    </div>
     </div>
   )
 }
