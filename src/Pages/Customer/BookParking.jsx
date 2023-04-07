@@ -1,9 +1,22 @@
+import { useState } from "react";
+import { Get } from "../../components/Api";
+
 const BookParking = () => {
+   const [SearchedOrgLists,SetSearchedOrgLists]= useState([])
 
 
-
-    const SearchParkings = () => {
-
+    const SearchParkings = (e) => {
+        e.preventDefault()
+        debugger
+        var det = {
+            "link": "Customer/searchorg?SearchText="+e.target[0].value
+        }
+        Get(det, (res, rej) => {
+            debugger
+            SetSearchedOrgLists(res.data)
+        }, (err) => {
+            
+        });
     }
     return (<>
         <svg className='hidden'>
@@ -27,7 +40,7 @@ const BookParking = () => {
                             </span>
                         </div>
                     </form>
-                    <p className="text-center  text-sm ">Start by Selected where you want to go..</p>
+                    <p className="text-center mt-1 text-sm ">Start by Selected where you want to go..</p>
                 </div>
             </div>
         </div>
