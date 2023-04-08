@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+
+.scrollbar-thin::-webkit-scrollbar {
+  width : 5px;
+  height: 5px;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scrollbar-thin::-moz-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scrollbar-thin::-ms-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* thumb */
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #ddd;
+}
+
+.scrollbar-thin::-moz-scrollbar-thumb {
+  background: #ddd;
+}
+
+.scrollbar-thin::-ms-scrollbar-thumb {
+  background: #ddd;
+}
