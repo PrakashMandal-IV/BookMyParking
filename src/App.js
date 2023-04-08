@@ -27,6 +27,8 @@ function App() {
     let pass = localStorage.getItem('pass')
     if ((Email && pass)) {
       AutoLogin (Email, pass)
+    }else{
+      nav('/login')
     }
   }, [])
   const AutoLogin = (email, pass) => {
@@ -47,17 +49,19 @@ function App() {
   }
   function OnLogin(UserData) {
     SetUserData(UserData)
-    nav('/bookmyparking/home')
+    nav('/home')
   }
   function Logout(){
+    SetUserData(null)
     localStorage.clear()
-    nav('/')
+    nav('/login')
   }
   return (
     <Routes>
-      <Route exact path='/' element={<Login OnLogin={(data) => OnLogin(data)} />} />
-      <Route exact path='/register' element={<RegisterUser OnLogin={(data) => OnLogin(data)} />} />
-      <Route exact path='/bookmyparking' element={<Nav UserData={UserData}  Logout={Logout}/>}>
+     
+      <Route exact path='/' element={<Nav UserData={UserData}  Logout={Logout}/>}>
+      <Route exact path='login' element={<Login OnLogin={(data) => OnLogin(data)} />} />
+      <Route exact path='register' element={<RegisterUser OnLogin={(data) => OnLogin(data)} />} />
         <Route exact path='home' element={<Home />} />
         <Route exact path='bookmyparking' element={<BookParking />} />
         

@@ -1,23 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import { NoAuthPost } from "../components/Api";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 const Login = (props) => {
     const [Error, SetError] = useState('')
     const [Loading, SetIsLoading] = useState(false)
     const nav = useNavigate()
     
-    useEffect(() => {
-        SetError('')
-        SetIsLoading(true)
-        let Email = localStorage.getItem('email')
-        let pass = localStorage.getItem('pass')
-        if ((Email && pass)) {
-            OnLogin(Email, pass)
-        }else{
-            SetIsLoading(false)
-        }
-        
-    }, [])
+    
     const OnLoginClick = (e) => {
         e.preventDefault()
         OnLogin(e.target[0].value, e.target[1].value)
@@ -49,7 +38,7 @@ const Login = (props) => {
         });
     }
     return (<>
-        <div className="w-full flex h-full justify-center align-middle">
+        <div className="w-full flex justify-center align-middle">
 
             <div className="md:w-1/5 rounded border mt-36 p-5">
                 <form onSubmit={OnLoginClick} className="flex flex-col gap-12 ">
