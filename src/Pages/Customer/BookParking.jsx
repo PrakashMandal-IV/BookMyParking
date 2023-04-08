@@ -2,20 +2,20 @@ import { useState } from "react";
 import { Get } from "../../components/Api";
 
 const BookParking = () => {
-   const [SearchedOrgLists,SetSearchedOrgLists]= useState([])
+    const [SearchedOrgLists, SetSearchedOrgLists] = useState([])
 
 
     const SearchParkings = (e) => {
         e.preventDefault()
         debugger
         var det = {
-            "link": "Customer/searchorg?SearchText="+e.target[0].value
+            "link": "Customer/searchorg?SearchText=" + e.target[0].value
         }
         Get(det, (res, rej) => {
             debugger
             SetSearchedOrgLists(res.data)
         }, (err) => {
-            
+
         });
     }
     return (<>
@@ -26,7 +26,7 @@ const BookParking = () => {
                 </symbol>
             </defs>
         </svg>
-        <div className="max-h-[calc(100vh-3.5rem)] overflow-y-auto">
+        <div className="max-h-[calc(100vh-3.5rem)] overflow-hidden flex flex-col  ">
             <p className="text-2xl font-semibold text-center my-10">Book You Parking !!</p>
             <div className="flex w-full ">
                 <div className="mx-auto">
@@ -43,9 +43,30 @@ const BookParking = () => {
                     <p className="text-center mt-1 text-sm ">Start by Selected where you want to go..</p>
                 </div>
             </div>
+            <div className="flex flex-col w-full mt-10">
+                <div className="w-3/5 mx-auto">
+                     
+                    <div className="flex h-[40rem] flex-col gap-5 pr-2 overflow-y-auto scrollbar-thin" >
+                        <OrgListCard />
+                        <OrgListCard />
+                        <OrgListCard />
+                    </div>
+                </div>
+            </div>
         </div>
     </>)
 }
 
 
 export default BookParking
+
+
+const OrgListCard = () => {
+    return (<>
+        <div className="flex border p-2 rounded-md">
+            <div className="max-w-[40%]  bg-gray-200  rounded-md overflow-hidden">
+                <img src="https://i.pinimg.com/564x/8d/35/b2/8d35b2cf43859bfec6d5ade4d466c9ad.jpg" className=" object-cover pointer-events-none max-h-52" alt="" />
+            </div>
+        </div>
+    </>)
+}

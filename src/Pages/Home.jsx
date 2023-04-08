@@ -5,7 +5,7 @@ const Home = () => {
   const nav = useNavigate()
 
   return (
-    <div className="max-h-[calc(100vh-3.5rem)] overflow-y-scroll">
+    <div className="max-h-[calc(100vh-3.5rem)] overflow-y-scroll scrollbar-thin">
     <div className="w-full flex flex-col gap-5 ">
       <div className="bg-gray-300 flex   h-[75vh]">
         <div className="mx-auto mt-auto mb-32">
