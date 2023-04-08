@@ -32,7 +32,7 @@ const AgentDashboardLayout = () => {
                             <p className="text-center text-sm">{OrgData?.FullName}</p>
                         </div>
                     </div>
-                    <div className="text-lg pl-10 font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('/bookmyparking/agent')}>
+                    <div className="text-lg pl-10 font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('')}>
                         Overview
                     </div>
                     <div className="text-lg pl-10  font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('manageparking')}>
@@ -47,6 +47,7 @@ const AgentDashboardLayout = () => {
                 <Outlet />
             </div>
         </div>
+        
     </>)
 }
 
