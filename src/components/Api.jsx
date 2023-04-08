@@ -106,6 +106,7 @@ export async function Post(config, callback, errorcallback) {
 
 
 export const FileUpload = async (config, callback, errorcallback) => {
+  
   const formData = new FormData();
   formData.append('file', config.file)
   const response = await fetch(Api + config.link,

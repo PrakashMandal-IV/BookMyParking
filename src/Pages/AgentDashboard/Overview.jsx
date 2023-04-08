@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { FileUpload, Get, Post } from "../../components/Api";
+import { Api, FileUpload, Get, Post } from "../../components/Api";
 
 const AgentOverView = () => {
     const [CurrentDate, SetCurrentDate] = useState('')
     const [OrgData, SetOrgData] = useState()
     const [OrgEditableData, SetOrgEditableData] = useState(null)
     const [OrgEditModal, SetOrgEditModal] = useState(false)
-    const [OrgImage, SetOrgImage] = useState('https://i.pinimg.com/564x/8d/35/b2/8d35b2cf43859bfec6d5ade4d466c9ad.jpg')
-    const [AddedImage,SetAddedImage] = useState(null)
+    const [OrgImage, SetOrgImage] = useState('')
+    const [AddedImage, SetAddedImage] = useState(null)
     const [ImageChange, SetImageChange] = useState(false)
     useEffect(() => {
         const currentDate = new Date();
@@ -30,6 +30,7 @@ const AgentOverView = () => {
         Get(det, (res, rej) => {
             SetOrgData(res.data.Table[0])
             SetOrgEditableData(res.data.Table[0])
+            SetOrgImage(Api+"orgthumb?OrgID="+res.data.Table[0].OrganizationID+"&FileName="+res.data.Table[0].Thumbnail)
         }, (err) => {
 
         });
@@ -44,32 +45,34 @@ const AgentOverView = () => {
         reader.onload = () => {
             SetImageChange(true)
             SetOrgImage(reader.result);
-            
+
         };
 
         if (file) {
             SetAddedImage(file)
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file); 
         }
     };
-    const OnImageChangeCancle=()=>{
-        SetOrgImage('https://i.pinimg.com/564x/8d/35/b2/8d35b2cf43859bfec6d5ade4d466c9ad.jpg');
+    const OnImageChangeCancle = () => {
+        SetOrgImage(Api+"orgthumb?OrgID="+OrgData.OrganizationID+"&FileName="+OrgData.Thumbnail)
         SetImageChange(false)
     }
-    const OnImageSave=async()=>{
-    
-        var det = {
-            "link": "Agent/OverViewData",
-            "file":AddedImage
+    const OnImageSave = async () => {
+      
+        if (OrgData&&AddedImage) {
+            var det = {
+                "link": "uploadorgthumb?TypeID=" + OrgData.OrganizationID,
+                "file": AddedImage
+            }
+            FileUpload(det, (res, rej) => {
+                SetImageChange(false)
+                GetOrgData()
+            }, (err) => {
+
+            });
+
         }
-        FileUpload(det, (res, rej) => {
-            SetImageChange(false)
-            GetOrgData()
-        }, (err) => {
 
-        });
-
-        
     }
     return (<>
         <div className="pl-10 pr-20 pt-5 ">
@@ -78,7 +81,7 @@ const AgentOverView = () => {
                 <div className="ml-auto text-lg font-medium">{CurrentDate}</div>
             </div>
             <div className="flex px-20 w-full mt-10">
-                <div className="bg-gray-200  rounded-md overflow-hidden">
+                <div className="max-w-[40%]  bg-gray-200  rounded-md overflow-hidden">
                     <img src={OrgImage} className=" object-cover pointer-events-none max-h-96" alt="" />
                 </div>
                 <div className="flex flex-col py-2 px-10 flex-grow">
@@ -98,7 +101,7 @@ const AgentOverView = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex h-3/6 gap-20 mt-auto">
+                    <div className="flex h-3/6 gap-10 mt-auto">
                         <div className="flex-grow bg-gray-200  rounded-md flex flex-col p-4 ">
                             <p className="text-lg  ">Total Slots</p>
                             <p className="mt-auto ml-auto text-4xl">1</p>
@@ -115,7 +118,7 @@ const AgentOverView = () => {
                 </div>
             </div>
             <div className="flex py-2  flex-grow px-20">
-                {!ImageChange&& (<> <label
+                {!ImageChange && (<> <label
                     htmlFor="imageInput"
                     className="bg-gray-200 = px-4 py-2 rounded cursor-pointer hover:bg-gray-400 transition duration-200"
                 >
@@ -128,12 +131,12 @@ const AgentOverView = () => {
                         accept="image/*"
                         onChange={handleImageChange}
                     /></>)}
-                     {ImageChange&& (<> 
-                      <div className="flex gap-5">
+                {ImageChange && (<>
+                    <div className="flex gap-5">
                         <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-400 transition duration-200" onClick={OnImageChangeCancle}>Cancle</button>
-                        <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-400 transition duration-200">Save</button>
-                      </div>
-                     </>)}
+                        <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-400 transition duration-200" onClick={()=>OnImageSave()}>Save</button>
+                    </div>
+                </>)}
             </div>
             {OrgEditModal && (
                 <EditOrg Close={() => SetOrgEditModal(!OrgEditModal)} Data={OrgEditableData} />
