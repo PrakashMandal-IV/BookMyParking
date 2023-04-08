@@ -63,9 +63,23 @@ export default BookParking
 
 const OrgListCard = () => {
     return (<>
-        <div className="flex border p-2 rounded-md">
+        <div className="flex border hover:border-gray-400 p-2 rounded-md transition-all">
             <div className="max-w-[40%]  bg-gray-200  rounded-md overflow-hidden">
                 <img src="https://i.pinimg.com/564x/8d/35/b2/8d35b2cf43859bfec6d5ade4d466c9ad.jpg" className=" object-cover pointer-events-none max-h-52" alt="" />
+            </div>
+            <div className="flex-grow flex flex-col px-4 py-1 ">
+                  <div className="">
+                             <p className="text-2xl font-medium  ">City Center</p>
+                             <p className="text-sm">Raipur, Chhatisgarh</p>
+                             <p className="text-sm">road 34, phase 2 , Pandri</p>
+                  </div>
+                  <div className="mt-auto flex">
+                    <div className="ml-auto">
+                        <button className="px-6 py-2 bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
+                            Book
+                        </button>
+                    </div>
+                  </div>
             </div>
         </div>
     </>)
