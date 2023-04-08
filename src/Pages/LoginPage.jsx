@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { NoAuthPost } from "../components/Api";
-import {useState } from "react";
+import {useEffect, useState } from "react";
 const Login = (props) => {
     const [Error, SetError] = useState('')
     const [Loading, SetIsLoading] = useState(false)
@@ -11,7 +11,14 @@ const Login = (props) => {
         e.preventDefault()
         OnLogin(e.target[0].value, e.target[1].value)
     }
-
+    useEffect(() => {
+  
+        let Email = localStorage.getItem('email')
+        let pass = localStorage.getItem('pass')
+        if ((Email && pass)) {
+            OnLogin(Email, pass)
+        }
+      }, [])
 
     const OnLogin = (email, pass) => {
 

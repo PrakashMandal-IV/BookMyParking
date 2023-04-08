@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Get } from "../../components/Api";
+import { Api, Get } from "../../components/Api";
 
 const BookParking = () => {
     const [SearchedOrgLists, SetSearchedOrgLists] = useState([])
@@ -7,12 +7,11 @@ const BookParking = () => {
 
     const SearchParkings = (e) => {
         e.preventDefault()
-        debugger
         var det = {
             "link": "Customer/searchorg?SearchText=" + e.target[0].value
         }
         Get(det, (res, rej) => {
-            debugger
+
             SetSearchedOrgLists(res.data)
         }, (err) => {
 
@@ -27,12 +26,12 @@ const BookParking = () => {
             </defs>
         </svg>
         <div className="max-h-[calc(100vh-3.5rem)] overflow-hidden flex flex-col  ">
-            <p className="text-2xl font-semibold text-center my-10">Book You Parking !!</p>
-            <div className="flex w-full ">
+            <p className="text-2xl font-semibold text-center mt-5">Book You Parking !!</p>
+            <div className="flex w-full mt-5">
                 <div className="mx-auto">
                     <form onSubmit={SearchParkings}>
                         <div className="flex  px-2  rounded-md border" >
-                            <input type="text" name="Org_Search" id="SearchParkings" className="w-96  py-2 outline-none" placeholder="Where you want to park ?" />
+                            <input type="text"  id="SearchParkings" className="w-96  py-2 outline-none" placeholder="Where you want to park ?" />
                             <span className="my-auto ml-auto" id="basic-addon1">
                                 <svg width='16' height='16'>
                                     <use xlinkHref='#svg_search'></use>
@@ -43,13 +42,15 @@ const BookParking = () => {
                     <p className="text-center mt-1 text-sm ">Start by Selected where you want to go..</p>
                 </div>
             </div>
-            <div className="flex flex-col w-full mt-10">
-                <div className="w-3/5 mx-auto">
-                     
-                    <div className="flex h-[40rem] flex-col gap-5 pr-2 overflow-y-auto scrollbar-thin" >
-                        <OrgListCard />
-                        <OrgListCard />
-                        <OrgListCard />
+            <div className="flex-grow flex flex-col w-full mt-10">
+                <div className="w-full px-2 md:w-4/5 lg:w-3/5 mx-auto">
+
+                    <div className="flex h-[100vh] flex-col gap-5 pr-2 overflow-y-auto scrollbar-thin scroll-smooth  " >
+                        {SearchedOrgLists.map((item, idx) => (
+                            <OrgListCard item={item} key={idx}/>
+                        ))}
+
+
                     </div>
                 </div>
             </div>
@@ -61,25 +62,39 @@ const BookParking = () => {
 export default BookParking
 
 
-const OrgListCard = () => {
+const OrgListCard = (props) => {
+    debugger
     return (<>
-        <div className="flex border hover:border-gray-400 p-2 rounded-md transition-all">
-            <div className="max-w-[40%]  bg-gray-200  rounded-md overflow-hidden">
-                <img src="https://i.pinimg.com/564x/8d/35/b2/8d35b2cf43859bfec6d5ade4d466c9ad.jpg" className=" object-cover pointer-events-none max-h-52" alt="" />
+        <div className="flex gap-2 border hover:border-gray-400 p-2 rounded-md transition-all bg-gray-50">
+            <div className="max-w-[35%] sm:max-w-[40%]  overflow-hidden flex">
+                <img src={Api+"orgthumb?OrgID="+props.item.OrganizationID+"&FileName="+props.item.Thumbnail} className="rounded-md my-auto sm:max-h-52 object-cover pointer-events-none" alt="" />
             </div>
-            <div className="flex-grow flex flex-col px-4 py-1 ">
-                  <div className="">
-                             <p className="text-2xl font-medium  ">City Center</p>
-                             <p className="text-sm">Raipur, Chhatisgarh</p>
-                             <p className="text-sm">road 34, phase 2 , Pandri</p>
-                  </div>
-                  <div className="mt-auto flex">
-                    <div className="ml-auto">
-                        <button className="px-6 py-2 bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
+            <div className="flex-grow flex flex-col  sm:px-4 py-1 ">
+                <div className="flex">
+                    <div className="">
+                        <p className=" sm:text-2xl font-medium  ">{props.item.OrganizationName}</p>
+                        <p className=" text-[.6rem] sm:text-sm">{props.item.City}, {props.item.State}</p>
+                        <p className=" text-[.6rem] sm:text-sm">{props.item.Address1}</p>
+                    </div>
+
+                </div>
+                <div className="mt-auto ml-auto">
+                    <p className="text-[.6rem] sm:text-sm">Available Parking : <span className="text-green-500">10</span></p>
+                </div>
+                <div className="flex gap-1">
+                    <div className=" sm:flex flex-col flex-grow mt-auto">
+                        <p className="text-[.6rem] md:text-sm font-medium">Opens At:<span className="font-normal ">8:00 am</span> </p>
+                        <p className="text-[.6rem] md:text-sm font-medium">Close At:<span className="font-normal">11:00 pm</span> </p>
+                    </div>
+                    <div className="flex-grow flex ml-auto">
+
+                        <button className="ml-auto px-6 py-2 text-xs md:text-lg bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
                             Book
                         </button>
                     </div>
-                  </div>
+
+                </div>
+
             </div>
         </div>
     </>)
