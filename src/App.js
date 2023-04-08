@@ -5,7 +5,7 @@ import Nav from './components/Navbar';
 
 import Home from './Pages/Home';
 import Login from './Pages/LoginPage';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AdminDashboardLayout from './Pages/AdminDashboard/DashboardLayout';
 import OverView from './Pages/AdminDashboard/Overview';
 import { NoAuthPost } from './components/Api';
@@ -20,8 +20,9 @@ import BookParking from './Pages/Customer/BookParking';
 function App() {
   const nav = useNavigate()
   const [UserData, SetUserData] = useState(null)
+  
   useEffect(() => {
-   
+  
     let Email = localStorage.getItem('email')
     let pass = localStorage.getItem('pass')
     if ((Email && pass)) {
@@ -46,7 +47,7 @@ function App() {
   }
   function OnLogin(UserData) {
     SetUserData(UserData)
-    nav('/home')
+    nav('/bookmyparking/home')
   }
   function Logout(){
     localStorage.clear()
@@ -54,17 +55,17 @@ function App() {
   }
   return (
     <Routes>
-      <Route path='/' element={<Login OnLogin={(data) => OnLogin(data)} />} />
-      <Route path='/register' element={<RegisterUser OnLogin={(data) => OnLogin(data)} />} />
-      <Route path='/' element={<Nav UserData={UserData}  Logout={Logout}/>}>
-        <Route path='home' element={<Home />} />
-        <Route path='bookmyparking' element={<BookParking />} />
+      <Route exact path='/' element={<Login OnLogin={(data) => OnLogin(data)} />} />
+      <Route exact path='/register' element={<RegisterUser OnLogin={(data) => OnLogin(data)} />} />
+      <Route exact path='/bookmyparking' element={<Nav UserData={UserData}  Logout={Logout}/>}>
+        <Route exact path='home' element={<Home />} />
+        <Route exact path='bookmyparking' element={<BookParking />} />
         
-        {UserData?.IsAdmin && (<Route path='/admin' element={<AdminDashboardLayout />}>
+        {UserData?.IsAdmin && (<Route path='admin' element={<AdminDashboardLayout />}>
           <Route path='' element={<OverView />} />
           <Route path='organization' element={<Organization />} />
         </Route>)}
-        {UserData?.IsAgent && (<Route path='/agent' element={<AgentDashboardLayout />}>
+        {UserData?.IsAgent && (<Route path='agent' element={<AgentDashboardLayout />}>
           <Route path='' element={<AgentOverView />} />
           <Route path='manageparking' element={<ManageParking />} />
           <Route path='finance' element={<Finance />} />

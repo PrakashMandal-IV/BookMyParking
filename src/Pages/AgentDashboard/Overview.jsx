@@ -24,6 +24,11 @@ const AgentOverView = () => {
                 <div className="text-xl">Overview</div>
                 <div className="ml-auto text-lg font-medium">{CurrentDate}</div>
             </div>
+            <div className="flex px-32">
+                <div className="bg-gray-200 w-96 h-80 rounded-md">
+
+                </div>
+            </div>
             <div className="flex  justify-between px-32 mt-20">
                 <div className=" bg-gray-200 w-80 h-48 rounded-md flex flex-col p-4 ">
                     <p className="text-lg  ">Total Slots</p>

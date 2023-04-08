@@ -12,12 +12,12 @@ const Nav = (props) => {
 
         if (type === 'dashboard') {
             if (props.UserData?.IsAdmin) {
-                nav('/admin')
+                nav('admin')
             }else  if (props.UserData?.IsAgent) {
-                nav('/agent')
+                nav('agent')
             }
         } else if (type === 'home') {
-            nav('/home')
+            nav('home')
         }
     }
     const Logout=()=>{
