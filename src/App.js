@@ -58,7 +58,6 @@ function App() {
   }
   return (
     <Routes>
-     
       <Route exact path='/' element={<Nav UserData={UserData}  Logout={Logout}/>}>
       <Route exact path='login' element={<Login OnLogin={(data) => OnLogin(data)} />} />
       <Route exact path='register' element={<RegisterUser OnLogin={(data) => OnLogin(data)} />} />
