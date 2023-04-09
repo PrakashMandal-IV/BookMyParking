@@ -154,36 +154,49 @@ const ParkingDetailsOnOrg = () => {
 
 
     return (<>
-        <div className="mt-2 p-2 flex">
+        <div className="mt-2 p-2 flex flex-col sm:flex-row">
 
-            <div className="w-2/3 flex gap-5">
-                <div className="w-1/2 flex flex-col gap-5">
-                    <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none" placeholder="Where you want to park ?" onChange={e => SetSelectedTime(parseInt(e.target.value))}>
-                        {TimeOptions.map((item, idx) =>
-                            <option value={item.value} key={idx}>{item.time}</option>
-                        )}
-                    </select>
+            <div className="sm:w-2/3 flex flex-col gap-5 ">
+                <div className="w-full flex gap-5">
+                    <div className="w-1/2 flex flex-col gap-5">
+                        <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none" placeholder="Where you want to park ?" onChange={e => SetSelectedTime(parseInt(e.target.value))}>
+                            {TimeOptions.map((item, idx) =>
+                                <option value={item.value} key={idx}>{item.time}</option>
+                            )}
+                        </select>
 
+
+
+
+
+                    </div>
+                    <div className="w-1/2 flex  flex-col gap-5">
+                        <div className="flex justify-between h-full">
+                            <label className="flex items-center space-x-3">
+                                <input
+                                    type="checkbox" checked={!IsNewVhicle}
+                                    onChange={(e) => ToggleVehicleSelection(e, 'EV')}
+                                    className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                />
+                                <span className="text-gray-700 text-xs sm:text-sm">Existing Vehicle</span>
+                            </label>
+                            <label className="flex items-center space-x-3">
+                                <input
+                                    type="checkbox"
+                                    checked={IsNewVhicle}
+                                    onChange={(e) => ToggleVehicleSelection(e, 'NV')}
+                                    className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                />
+                                <span className="text-gray-700 text-xs sm:text-sm">New Vehicle</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div className="w-1/2 flex  flex-col gap-5">
-                    <div className="flex justify-between h-full">
-                        <label className="flex items-center space-x-3">
-                            <input
-                                type="checkbox" checked={!IsNewVhicle}
-                                onChange={(e) => ToggleVehicleSelection(e, 'EV')}
-                                className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
-                            />
-                            <span className="text-gray-700 ">Existing Vehicle</span>
-                        </label>
-                        <label className="flex items-center space-x-3">
-                            <input
-                                type="checkbox"
-                                checked={IsNewVhicle}
-                                onChange={(e) => ToggleVehicleSelection(e, 'NV')}
-                                className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
-                            />
-                            <span className="text-gray-700">New Vehicle</span>
-                        </label>
+                <div className="w-full flex gap-5">
+                    <div className="w-1/2 flex flex-col gap-5">
+                        <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none" placeholder="Vehicle Selector" >
+
+                        </select>
                     </div>
                 </div>
             </div>
