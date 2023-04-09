@@ -67,13 +67,29 @@ export default BookParking
 
 const OrgListCard = (props) => {
     const [isOpen, setIsOpen] = useState(!false); // State to track whether the collapsible div is open or not
+
+    const [InTime, SetInTime] = useState('')
+    const [OutTime, SetOutTime] = useState('')
     useEffect(() => {
-        //setIsOpen(false)
+        SetTime(props.item.InTime, 'in')
+        SetTime(props.item.OutTime, 'out')
     }, [props])
     const toggleCollapse = () => {
         setIsOpen(!isOpen); // Function to toggle the collapsible div
     };
 
+    function SetTime(hours, type) {
+
+        var meridiem = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours === 0 ? 12 : hours;
+        var timeString = hours + ':00 ' + meridiem;
+        if (type === "in") {
+            SetInTime(timeString)
+        } else {
+            SetOutTime(timeString)
+        }
+    }
     return (
         <>
             <div className="flex gap-2 border hover:border-gray-400 p-2 rounded-md transition-all bg-gray-50 cursor-pointer" onClick={toggleCollapse}>
@@ -90,8 +106,15 @@ const OrgListCard = (props) => {
                     </div>
                     <div className="flex gap-1 mt-auto">
                         <div className="sm:flex flex-col flex-grow mt-auto">
-                            <p className="text-[.6rem] md:text-sm font-medium">Opens At:<span className="font-normal ">8:00 am</span> </p>
-                            <p className="text-[.6rem] md:text-sm font-medium">Close At:<span className="font-normal">11:00 pm</span> </p>
+                            <div className="flex">
+                                <p className="w-20 text-[.6rem] md:text-sm font-medium">Opens At:</p>
+                                <p className="w-1/2 text-[.6rem]  md:text-sm font-normal ">{InTime} </p>
+                            </div>
+                            <div className="flex">
+                                <p className="w-20 text-[.6rem] md:text-sm font-medium">Close At:</p>
+                                <p className="w-1/2 text-[.6rem]  md:text-sm font-normal ">{OutTime} </p>
+                            </div>
+                           
                         </div>
                         <div className="flex-grow flex ml-auto">
                             <p className="text-[.6rem] sm:text-sm ml-auto mt-auto">Available Parking : <span className="text-green-500">10</span></p>
@@ -107,7 +130,7 @@ const OrgListCard = (props) => {
                 className={`overflow-hidden transition-max-h duration-300 ease-in-out mt-4 bg-gray-100 rounded-md ${isOpen ? 'max-h-40' : 'max-h-0 '
                     }`}
             >
-                <ParkingDetailsOnOrg />
+                <ParkingDetailsOnOrg item={props.item}/>
             </div>
             {/* Collapsible Div Toggle Button */}
         </>
@@ -116,7 +139,7 @@ const OrgListCard = (props) => {
 
 
 
-const ParkingDetailsOnOrg = () => {
+const ParkingDetailsOnOrg = (props) => {
     const [TimeOptions, SetTimeOptions] = useState([])
     const [SelectedTime, SetSelectedTime] = useState()
     const [IsNewVhicle, SetIsNewVehicle] = useState(false)
@@ -126,7 +149,7 @@ const ParkingDetailsOnOrg = () => {
         let currentTime = new Date();
         let currentHour = currentTime.getHours();
         let currentMinute = currentTime.getMinutes();
-        let endTime = 22; // 10 PM in 24-hour format
+        let endTime = props.item.OutTime-1; // 10 PM in 24-hour format
 
         // If current time is 12 PM, start from 1 PM
         if (currentHour === 12 && currentMinute >= 0) {
