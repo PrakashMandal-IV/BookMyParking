@@ -78,7 +78,7 @@ export default BookParking
 
 
 const OrgListCard = (props) => {
-    const [isOpen, setIsOpen] = useState(!false); // State to track whether the collapsible div is open or not
+    const [isOpen, setIsOpen] = useState(false); // State to track whether the collapsible div is open or not
 
     const [InTime, SetInTime] = useState('')
     const [OutTime, SetOutTime] = useState('')
@@ -156,7 +156,6 @@ const ParkingDetailsOnOrg = (props) => {
     const [SelectedTime, SetSelectedTime] = useState()
     const [IsNewVhicle, SetIsNewVehicle] = useState(false)
     const [PricingList, SetPricingList] = useState([])
-    const [VehicalTypeList,SetVehicalTypeList] = useState([])
     const [VtypeID, SetVTypeID] = useState('')
    
     const [SelectedCarNumber,SetSelectedCarNumber] = useState('')

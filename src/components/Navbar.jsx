@@ -26,7 +26,7 @@ const Nav = (props) => {
     return (<div className="flex flex-col min-h-screen " id="top">
         <div className="w-full h-14 flex bg-gray-200 px-10">
             <div className="my-auto cursor-pointer" onClick={() => NavigationClick('home')}>
-                <p className="text-3xl font-medium  ">Park<span className="text-blue-600">Mate</span></p>
+                <p className="text-3xl font-medium  ">Book<span className="text-red-600">My</span>Parking</p>
             </div>
             <div className="my-auto ml-auto mr-10">
                 {(props.UserData?.IsAdmin || props.UserData?.IsAgent) && (<p className="text-lg font-medium cursor-pointer" onClick={() => NavigationClick('dashboard')}>Dashboard</p>)}
