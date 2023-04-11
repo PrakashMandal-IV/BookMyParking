@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Api, Get } from "../../components/Api";
+import useRazorpay from "react-razorpay";
 
 const BookParking = () => {
     const [SearchedOrgLists, SetSearchedOrgLists] = useState([])
@@ -168,6 +169,7 @@ const ParkingDetailsOnOrg = (props) => {
     const [SelectedCarNumber, SetSelectedCarNumber] = useState('')
     const [SelectedCarName, SetSelectedCarName] = useState('')
     const [SaveVhicle, SetSaveVhicle] = useState(true)
+    const Razorpay = useRazorpay();
     useEffect(() => {
         GetPricingDetails()
         
@@ -242,6 +244,18 @@ const ParkingDetailsOnOrg = (props) => {
             SetIsNewVehicle(!e.target.checked)
         }
     }
+
+    const MakePayment=()=>{
+        var det = {
+            "link": "Customer/getOrderID?Amount=" + PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price
+        }
+        Get(det, (res, rej) => {
+            
+            openRazorpayGateway(res.data.OrderID,res.data.RazorPayID)
+        }, (err) => {
+
+        });
+    }
     const VehcalSelectionHandeler = (id) => {
 
         var List = props.VList.filter(i => i.VehicalID === id)[0]
@@ -258,6 +272,36 @@ const ParkingDetailsOnOrg = (props) => {
         }
     }
 
+
+
+    const handlePaymentSuccess = (paymentResponse) => {
+        // Handle payment success callback here
+        debugger
+        console.log('Payment success:', paymentResponse);
+      };
+      const openRazorpayGateway = (orderId,Key) => {
+        debugger
+        const razorpayOptions = {
+          key: Key,
+          amount: 1000, // Replace with the amount you want to charge
+          order_id: orderId, // Use the received order ID from the state
+          name: 'BOOKMYPARKING',
+          description: 'Payment for purchase',
+          image: 'https://yourcompany.com/logo.png', // Replace with your company logo URL
+          handler: handlePaymentSuccess,
+          prefill: {
+            name: 'John Doe', // Replace with customer's name
+            email: 'john.doe@example.com', // Replace with customer's email
+            contact: '+91 9876543210', // Replace with customer's contact number
+          },
+          theme: {
+            color: '#F37254', // Replace with your desired color
+          },
+        };
+    
+        const razorpayInstance = new Razorpay(razorpayOptions);
+        razorpayInstance.open();
+      };
     return (<>
         <div className="mt-2 p-2 flex flex-col sm:flex-row">
 
@@ -371,7 +415,7 @@ const ParkingDetailsOnOrg = (props) => {
                 </div>
                 <div className="flex mt-2">
 
-                    <button className="ml-auto  px-6 py-2 text-xs md:text-[1rem] bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
+                    <button className="ml-auto  px-6 py-2 text-xs md:text-[1rem] bg-green-400 rounded-md text-white hover:bg-green-600  transition-all" onClick={()=>MakePayment()}>
                         Make Payment
                     </button>
                 </div>
