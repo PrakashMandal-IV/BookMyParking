@@ -54,18 +54,34 @@ const BookParking = () => {
                     <p className="text-center mt-1 text-sm ">Start by Selected where you want to go...</p>
                 </div>
             </div>
-            <div className="flex-grow flex flex-col w-full mt-10">
+            <div className="flex-grow flex flex-col w-full mt-10 overflow-y-auto scrollbar-thin scroll-smooth ">
                 <div className="w-full px-2 md:w-4/5 lg:w-3/5 mx-auto">
 
-                    <div className="flex h-[100vh] flex-col gap-5 pr-2 overflow-y-auto scrollbar-thin scroll-smooth  " >
+                    <div className="flex flex-col gap-5 pr-2  " >
                         {SearchedOrgLists.map((item, idx) => (
                             <div className="" key={idx}>
                                 <OrgListCard item={item} VList={UserVehicles} />
                             </div>
 
                         ))}
+                        {SearchedOrgLists.map((item, idx) => (
+                            <div className="" key={idx}>
+                                <OrgListCard item={item} VList={UserVehicles} />
+                            </div>
 
+                        ))}
+                        {SearchedOrgLists.map((item, idx) => (
+                            <div className="" key={idx}>
+                                <OrgListCard item={item} VList={UserVehicles} />
+                            </div>
 
+                        ))}
+                        {SearchedOrgLists.map((item, idx) => (
+                            <div className="" key={idx}>
+                                <OrgListCard item={item} VList={UserVehicles} />
+                            </div>
+
+                        ))}
                     </div>
                 </div>
             </div>
@@ -88,7 +104,15 @@ const OrgListCard = (props) => {
         // setIsOpen(false)
     }, [props])
     const toggleCollapse = () => {
-        setIsOpen(!isOpen); // Function to toggle the collapsible div
+        
+        var time = new Date()
+        if(props.item.OutTime<=time.getHours()||props.item.InTime>=time.getHours()){
+            setIsOpen(false);
+        }else{
+            setIsOpen(!isOpen); 
+        }
+         
+       
     };
 
     function SetTime(hours, type) {
@@ -139,7 +163,7 @@ const OrgListCard = (props) => {
             </div>
             {/* Collapsible Div */}
             <div
-                className={`overflow-hidden transition-max-h duration-300 ease-in-out mt-4 bg-gray-100 rounded-md ${isOpen ? 'max-h-80' : 'max-h-0 '
+                className={`overflow-hidden transition-max-h duration-300 ease-in-out mt-4 bg-gray-100 rounded-md ${isOpen ? 'max-h-[50rem]' : 'max-h-0 '
                     }`}
             >
                 {isOpen && (<ParkingDetailsOnOrg item={props.item} VList={props.VList} />)}
@@ -153,13 +177,14 @@ const OrgListCard = (props) => {
 
 const ParkingDetailsOnOrg = (props) => {
     const [TimeOptions, SetTimeOptions] = useState([])
-    const [SelectedTime, SetSelectedTime] = useState()
+    const [SelectedTime, SetSelectedTime] = useState('')
     const [IsNewVhicle, SetIsNewVehicle] = useState(false)
     const [PricingList, SetPricingList] = useState([])
     const [VtypeID, SetVTypeID] = useState('')
-   
-    const [SelectedCarNumber,SetSelectedCarNumber] = useState('')
-    const [SelectedCarName,SetSelectedCarName] = useState('')
+
+    const [SelectedCarNumber, SetSelectedCarNumber] = useState('')
+    const [SelectedCarName, SetSelectedCarName] = useState('')
+    const [SaveVhicle, SetSaveVhicle] = useState(true)
     useEffect(() => {
         GetPricingDetails()
         let timeArray = [];
@@ -186,16 +211,16 @@ const ParkingDetailsOnOrg = (props) => {
                 timeArray.push({ values: (hour === 0 ? 12 : hour) + (amPm === 'am' ? 0 : 12), time: `${hour === 0 ? 12 : hour} ${amPm}` });
             }
         }
-      
-        SetTimeOptions(timeArray)
         
+        SetTimeOptions(timeArray)
+        SetSelectedTime(timeArray[0]?.values)
     }, [])
     async function GetPricingDetails() {
         var det = {
             "link": "Customer/getparkingstatusoforg?OrgID=" + props.item.OrganizationID
         }
         Get(det, (res, rej) => {
-          
+            debugger
             SetPricingList(res.data.Table)
         }, (err) => {
 
@@ -205,21 +230,28 @@ const ParkingDetailsOnOrg = (props) => {
     const ToggleVehicleSelection = (e, item) => {
         if (item === 'NV') {
             SetIsNewVehicle(e.target.checked)
+            SetVTypeID('')
+            SetSelectedCarName('')
+            SetSelectedCarNumber('')
         } else {
             SetIsNewVehicle(!e.target.checked)
         }
     }
-   const VehcalSelectionHandeler=(id)=>{
-    
-      var List = props.VList.filter(i=>i.VehicalID===id)[0]
-      
-      if(List){
-          SetVTypeID(List.VehicalType)
-        
-          SetSelectedCarNumber(List.VehicalNumber)
-          SetSelectedCarName(List.VehicalName)
-      }
-   }
+    const VehcalSelectionHandeler = (id) => {
+
+        var List = props.VList.filter(i => i.VehicalID === id)[0]
+
+        if (List) {
+            SetVTypeID(List.VehicalType)
+
+            SetSelectedCarNumber(List.VehicalNumber)
+            SetSelectedCarName(List.VehicalName)
+        } else {
+            SetVTypeID('')
+            SetSelectedCarName('')
+            SetSelectedCarNumber('')
+        }
+    }
 
     return (<>
         <div className="mt-2 p-2 flex flex-col sm:flex-row">
@@ -227,9 +259,9 @@ const ParkingDetailsOnOrg = (props) => {
             <section className="sm:w-2/3 flex flex-col gap-5 p-2">
                 <div className="w-full flex gap-5">
                     <div className="w-1/2 flex flex-col gap-5">
-                        <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none" placeholder="Where you want to park ?" onChange={e => SetSelectedTime(parseInt(e.target.value))}>
+                        <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none text-xs sm:text-sm " placeholder="Where you want to park ?" onChange={e => SetSelectedTime(parseInt(e.target.value))}>
                             {TimeOptions.map((item, idx) =>
-                                <option value={item.value} key={idx}>{item.time}</option>
+                                <option value={item.values} key={idx}>{item.time}</option>
                             )}
                         </select>
 
@@ -239,7 +271,7 @@ const ParkingDetailsOnOrg = (props) => {
 
                     </div>
                     <div className="w-1/2 flex  flex-col gap-5">
-                        <div className="flex justify-between h-full">
+                        <div className="flex flex-col sm:flex-row justify-between h-full">
                             <label className="flex items-center space-x-3">
                                 <input
                                     type="checkbox" checked={!IsNewVhicle}
@@ -260,44 +292,87 @@ const ParkingDetailsOnOrg = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex gap-5">
+
+
+                {!IsNewVhicle && (<div className="w-full flex gap-5">
                     <div className="w-1/2 flex flex-col gap-5">
-                        <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none" placeholder="Vehicle Selector" onChange={(e) => VehcalSelectionHandeler(e.target.value)}>
-                        <option value="" >Select Your Vehicle</option>
+                        <select type="text" id="SearchParkings" className="rounded-md text-xs sm:text-sm p-2 outline-none" placeholder="Vehicle Selector" onChange={(e) => VehcalSelectionHandeler(e.target.value)}>
+                            <option value="" >Select Your Vehicle</option>
                             {props.VList.map((item, idx) => (
                                 <option value={item.VehicalID} key={idx}>{item.VehicalName}</option>
                             ))}
                         </select>
                     </div>
-                </div>
+                </div>)}
+                {IsNewVhicle && (
+                    <section className="flex flex-col gap-4">
+                        <div className="w-full flex  gap-5">
+                            <div className="w-1/2 flex flex-col gap-5">
+                                <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none text-xs sm:text-sm " placeholder="Vehicle Selector" onChange={(e) => SetVTypeID(e.target.value)}>
+                                    <option value="" >Select Your Vehicle Type</option>
+                                    {PricingList.map((item, idx) => (
+                                        <option value={item.VTypeID} key={idx}>{item.VName}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="w-1/2 flex flex-col gap-5">
+                                <input type="text" id="SearchParkings" className=" rounded w-full focus:bg-none p-2 outline-none text-xs sm:text-sm " onChange={(e) => SetSelectedCarNumber(e.target.value)} placeholder="Vehicle Number" />
+                            </div>
+                        </div>
+                        <div className="w-full flex gap-5">
+                            <div className="w-1/2 flex flex-col gap-2">
+                                <input type="text" id="SearchParkings" className=" rounded w-full focus:bg-none p-2 outline-none text-xs sm:text-sm " onChange={(e) => SetSelectedCarName(e.target.value)} placeholder="Vehicle Name" />
+                                <label className="flex items-center space-x-3">
+                                    <input
+                                        type="checkbox"
+                                        checked={SaveVhicle}
+                                        onChange={(e) => SetSaveVhicle(e.target.checked)}
+                                        className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                    />
+                                    <span className="text-gray-700 text-xs sm:text-sm">Save Vehicle</span>
+                                </label>
+                            </div>
+                            <div className="w-1/2 flex flex-col">
+                                <p className="text-xs text-red-500 ml-auto">Note : Your Vehical Number will be your Parking Pass</p>
+
+                            </div>
+                        </div>
+                    </section>
+                )}
             </section>
 
-            {VtypeID!==''&&(<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-gray-50 text-[.9rem]">
-                 <div className="flex">
-                      <p className="w-1/2">Type</p>
-                      <p className="w-1/2 text-right">{PricingList.filter(i=>i.VTypeID===VtypeID)[0]?.VName}</p>
-                 </div>
-                 <div className="flex">
-                      <p className="w-1/2">No.</p>
-                      <p className="w-1/2 text-right">{SelectedCarNumber}</p>
-                 </div>
-                 <div className="flex">
-                      <p className="w-1/2">Name</p>
-                      <p className="w-1/2 text-right">{SelectedCarName}</p>
-                 </div>
-                 <div className="flex mt-2">
-                      <p className="w-1/2 font-semibold ">Total</p>
-                      <p className="w-1/2 text-right font-semibold text-green-500">₹ {PricingList.filter(i=>i.VTypeID===VtypeID)[0]?.Price}</p>
-                 </div>
-                 <div className="flex mt-2">
-                      
-                       <button className="ml-auto  px-6 py-2 text-xs md:text-[1rem] bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
-                                Make Payment
-                            </button>
-                 </div>
+            {VtypeID !== '' && (<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-gray-50 text-[.9rem]">
+                <p className=" font-semibold text-center">Overview</p>
+                <div className="flex">
+                    <p className="w-1/2">Type</p>
+                    <p className="w-1/2 text-right">{PricingList.filter(i => i.VTypeID === VtypeID)[0]?.VName}</p>
+                </div>
+                <div className="flex">
+                    <p className="w-1/2">No.</p>
+                    <p className="w-1/2 text-right">{SelectedCarNumber.replaceAll(' ', '').toUpperCase()}</p>
+                </div>
+                <div className="flex">
+                    <p className="w-1/2">Name</p>
+                    <p className="w-1/2 text-right">{SelectedCarName}</p>
+                </div>
+                <div className="flex">
+                    <p className="w-1/2">Time</p>
+
+                    <p className="w-1/2 text-right">{TimeOptions.filter(i => i.values === SelectedTime)[0]?.time}</p>
+                </div>
+                <div className="flex mt-2">
+                    <p className="w-1/2 font-semibold ">Your Total :</p>
+                    <p className="w-1/2 text-right font-semibold text-green-500">₹ {PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price}</p>
+                </div>
+                <div className="flex mt-2">
+
+                    <button className="ml-auto  px-6 py-2 text-xs md:text-[1rem] bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
+                        Make Payment
+                    </button>
+                </div>
             </section>)}
-            {VtypeID===''&&(<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-gray-50 text-[.95rem]">
-                             <p className="text-center ">Select Vehicle Or Add New Vehicle !!</p>     
+            {VtypeID === '' && (<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-gray-50 text-[.95rem]">
+                <p className="text-center ">Select Vehicle Or Add New Vehicle !!</p>
             </section>)}
         </div>
     </>)
