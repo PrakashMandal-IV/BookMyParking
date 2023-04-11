@@ -3,8 +3,20 @@ import { Api, Get } from "../../components/Api";
 
 const BookParking = () => {
     const [SearchedOrgLists, SetSearchedOrgLists] = useState([])
+    const [UserVehicles, SetUserVehicles] = useState([])
+    useEffect(() => {
+        GetUserVhiclesList()
+    }, [])
+    const GetUserVhiclesList = () => {
+        var det = {
+            "link": "Customer/vehiclelist"
+        }
+        Get(det, (res, rej) => {
+            SetUserVehicles(res.data)
+        }, (err) => {
 
-
+        });
+    }
     const SearchParkings = (e) => {
         e.preventDefault()
         var det = {
@@ -30,8 +42,8 @@ const BookParking = () => {
             <div className="flex w-full  mt-5">
                 <div className="mx-auto sm:w-1/4">
                     <form onSubmit={SearchParkings}>
-                        <div className="flex  px-4  rounded-md border" >
-                            <input type="text" id="SearchParkings" className="  py-2 outline-none" placeholder="Where you want to park ?" />
+                        <div className="flex   rounded-md border" >
+                            <input type="text" id="SearchParkings" className=" w-full px-4 focus:bg-none py-2 outline-none" placeholder="Where you want to park ?" />
                             <span className="my-auto ml-auto" id="basic-addon1">
                                 <svg width='16' height='16'>
                                     <use xlinkHref='#svg_search'></use>
@@ -48,7 +60,7 @@ const BookParking = () => {
                     <div className="flex h-[100vh] flex-col gap-5 pr-2 overflow-y-auto scrollbar-thin scroll-smooth  " >
                         {SearchedOrgLists.map((item, idx) => (
                             <div className="" key={idx}>
-                                <OrgListCard item={item} />
+                                <OrgListCard item={item} VList={UserVehicles} />
                             </div>
 
                         ))}
@@ -73,13 +85,13 @@ const OrgListCard = (props) => {
     useEffect(() => {
         SetTime(props.item.InTime, 'in')
         SetTime(props.item.OutTime, 'out')
+        // setIsOpen(false)
     }, [props])
     const toggleCollapse = () => {
         setIsOpen(!isOpen); // Function to toggle the collapsible div
     };
 
     function SetTime(hours, type) {
-
         var meridiem = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12;
         hours = hours === 0 ? 12 : hours;
@@ -114,10 +126,10 @@ const OrgListCard = (props) => {
                                 <p className="w-20 text-[.6rem] md:text-sm font-medium">Close At:</p>
                                 <p className="w-1/2 text-[.6rem]  md:text-sm font-normal ">{OutTime} </p>
                             </div>
-                           
+
                         </div>
                         <div className="flex-grow flex ml-auto">
-                            <p className="text-[.6rem] sm:text-sm ml-auto mt-auto">Available Parking : <span className="text-green-500">10</span></p>
+                            <p className="text-[.6rem] sm:text-sm ml-auto mt-auto">Available Parking : <span className="text-green-500">{props.item.AvailableSlots}</span></p>
                             {/* <button className="ml-auto px-6 py-2 text-xs md:text-lg bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
                                 Book
                             </button> */}
@@ -127,10 +139,10 @@ const OrgListCard = (props) => {
             </div>
             {/* Collapsible Div */}
             <div
-                className={`overflow-hidden transition-max-h duration-300 ease-in-out mt-4 bg-gray-100 rounded-md ${isOpen ? 'max-h-40' : 'max-h-0 '
+                className={`overflow-hidden transition-max-h duration-300 ease-in-out mt-4 bg-gray-100 rounded-md ${isOpen ? 'max-h-80' : 'max-h-0 '
                     }`}
             >
-                <ParkingDetailsOnOrg item={props.item}/>
+                {isOpen && (<ParkingDetailsOnOrg item={props.item} VList={props.VList} />)}
             </div>
             {/* Collapsible Div Toggle Button */}
         </>
@@ -143,14 +155,26 @@ const ParkingDetailsOnOrg = (props) => {
     const [TimeOptions, SetTimeOptions] = useState([])
     const [SelectedTime, SetSelectedTime] = useState()
     const [IsNewVhicle, SetIsNewVehicle] = useState(false)
-
+    const [PricingList, SetPricingList] = useState([])
+    const [VehicalTypeList,SetVehicalTypeList] = useState([])
+    const [VtypeID, SetVTypeID] = useState('')
+   
+    const [SelectedCarNumber,SetSelectedCarNumber] = useState('')
+    const [SelectedCarName,SetSelectedCarName] = useState('')
     useEffect(() => {
+        GetPricingDetails()
         let timeArray = [];
         let currentTime = new Date();
         let currentHour = currentTime.getHours();
-        let currentMinute = currentTime.getMinutes();
-        let endTime = props.item.OutTime-1; // 10 PM in 24-hour format
 
+        let currentMinute = currentTime.getMinutes();
+        let endTime = currentHour + 2; // 10 PM in 24-hour format
+        if (currentHour < props.item.InTime) {
+            currentHour = props.item.InTime
+        }
+        if (endTime > props.item.OutTime) {
+            endTime = props.item.OutTime - 1
+        }
         // If current time is 12 PM, start from 1 PM
         if (currentHour === 12 && currentMinute >= 0) {
             currentHour = 13;
@@ -163,9 +187,21 @@ const ParkingDetailsOnOrg = (props) => {
                 timeArray.push({ values: (hour === 0 ? 12 : hour) + (amPm === 'am' ? 0 : 12), time: `${hour === 0 ? 12 : hour} ${amPm}` });
             }
         }
+      
         SetTimeOptions(timeArray)
+        
     }, [])
+    async function GetPricingDetails() {
+        var det = {
+            "link": "Customer/getparkingstatusoforg?OrgID=" + props.item.OrganizationID
+        }
+        Get(det, (res, rej) => {
+          
+            SetPricingList(res.data.Table)
+        }, (err) => {
 
+        });
+    }
 
     const ToggleVehicleSelection = (e, item) => {
         if (item === 'NV') {
@@ -174,12 +210,22 @@ const ParkingDetailsOnOrg = (props) => {
             SetIsNewVehicle(!e.target.checked)
         }
     }
-
+   const VehcalSelectionHandeler=(id)=>{
+    
+      var List = props.VList.filter(i=>i.VehicalID===id)[0]
+      
+      if(List){
+          SetVTypeID(List.VehicalType)
+        
+          SetSelectedCarNumber(List.VehicalNumber)
+          SetSelectedCarName(List.VehicalName)
+      }
+   }
 
     return (<>
         <div className="mt-2 p-2 flex flex-col sm:flex-row">
 
-            <div className="sm:w-2/3 flex flex-col gap-5 ">
+            <section className="sm:w-2/3 flex flex-col gap-5 p-2">
                 <div className="w-full flex gap-5">
                     <div className="w-1/2 flex flex-col gap-5">
                         <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none" placeholder="Where you want to park ?" onChange={e => SetSelectedTime(parseInt(e.target.value))}>
@@ -217,12 +263,43 @@ const ParkingDetailsOnOrg = (props) => {
                 </div>
                 <div className="w-full flex gap-5">
                     <div className="w-1/2 flex flex-col gap-5">
-                        <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none" placeholder="Vehicle Selector" >
-
+                        <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none" placeholder="Vehicle Selector" onChange={(e) => VehcalSelectionHandeler(e.target.value)}>
+                        <option value="" >Select Your Vehicle</option>
+                            {props.VList.map((item, idx) => (
+                                <option value={item.VehicalID} key={idx}>{item.VehicalName}</option>
+                            ))}
                         </select>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            {VtypeID!==''&&(<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-gray-50 text-[.9rem]">
+                 <div className="flex">
+                      <p className="w-1/2">Type</p>
+                      <p className="w-1/2 text-right">{PricingList.filter(i=>i.VTypeID===VtypeID)[0]?.VName}</p>
+                 </div>
+                 <div className="flex">
+                      <p className="w-1/2">No.</p>
+                      <p className="w-1/2 text-right">{SelectedCarNumber}</p>
+                 </div>
+                 <div className="flex">
+                      <p className="w-1/2">Name</p>
+                      <p className="w-1/2 text-right">{SelectedCarName}</p>
+                 </div>
+                 <div className="flex mt-2">
+                      <p className="w-1/2 font-semibold ">Total</p>
+                      <p className="w-1/2 text-right font-semibold text-green-500">₹ {PricingList.filter(i=>i.VTypeID===VtypeID)[0]?.Price}</p>
+                 </div>
+                 <div className="flex mt-2">
+                      
+                       <button className="ml-auto  px-6 py-2 text-xs md:text-[1rem] bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
+                                Make Payment
+                            </button>
+                 </div>
+            </section>)}
+            {VtypeID===''&&(<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-gray-50 text-[.95rem]">
+                             <p className="text-center ">Select Vehicle Or Add New Vehicle !!</p>     
+            </section>)}
         </div>
     </>)
 }
