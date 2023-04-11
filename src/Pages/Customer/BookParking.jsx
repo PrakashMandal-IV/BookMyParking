@@ -64,24 +64,7 @@ const BookParking = () => {
                             </div>
 
                         ))}
-                        {SearchedOrgLists.map((item, idx) => (
-                            <div className="" key={idx}>
-                                <OrgListCard item={item} VList={UserVehicles} />
-                            </div>
-
-                        ))}
-                        {SearchedOrgLists.map((item, idx) => (
-                            <div className="" key={idx}>
-                                <OrgListCard item={item} VList={UserVehicles} />
-                            </div>
-
-                        ))}
-                        {SearchedOrgLists.map((item, idx) => (
-                            <div className="" key={idx}>
-                                <OrgListCard item={item} VList={UserVehicles} />
-                            </div>
-
-                        ))}
+                      
                     </div>
                 </div>
             </div>
@@ -104,9 +87,9 @@ const OrgListCard = (props) => {
         // setIsOpen(false)
     }, [props])
     const toggleCollapse = () => {
-        
+       
         var time = new Date()
-        if(props.item.OutTime<=time.getHours()||props.item.InTime>=time.getHours()){
+        if(props.item.OutTime<=time.getHours()&&props.item.InTime>=time.getHours()){
             setIsOpen(false);
         }else{
             setIsOpen(!isOpen); 
@@ -187,40 +170,62 @@ const ParkingDetailsOnOrg = (props) => {
     const [SaveVhicle, SetSaveVhicle] = useState(true)
     useEffect(() => {
         GetPricingDetails()
+        
         let timeArray = [];
         let currentTime = new Date();
         let currentHour = currentTime.getHours();
-
         let currentMinute = currentTime.getMinutes();
-        let endTime = currentHour + 2; // 10 PM in 24-hour format
-        if (currentHour < props.item.InTime) {
-            currentHour = props.item.InTime
-        }
-        if (endTime > props.item.OutTime) {
-            endTime = props.item.OutTime - 1
-        }
+        let endTime = currentHour + 2; // 2 hours after current hour in 24-hour format
+        let inTime = props.item.InTime; // props.item.InTime represents the minimum allowed hour
+        let outTime = props.item.OutTime - 1; // props.item.OutTime - 1 represents the maximum allowed hour
+        
+        // Ensure currentHour is not less than props.item.InTime
+        currentHour = Math.max(currentHour, inTime);
+        
+        // Ensure endTime is not greater than props.item.OutTime - 1
+        endTime = Math.min(endTime, outTime);
+        
         // If current time is 12 PM, start from 1 PM
         if (currentHour === 12 && currentMinute >= 0) {
-            currentHour = 13;
-        }
-
-        for (let i = currentHour; i <= endTime; i++) {
-            if (i <= 23) {
-                let hour = i % 12;
-                let amPm = i < 12 ? 'am' : 'pm';
-                timeArray.push({ values: (hour === 0 ? 12 : hour) + (amPm === 'am' ? 0 : 12), time: `${hour === 0 ? 12 : hour} ${amPm}` });
-            }
+          currentHour = 13;
         }
         
-        SetTimeOptions(timeArray)
-        SetSelectedTime(timeArray[0]?.values)
+        // Calculate the difference between currentHour and endTime
+        let diff = calculateHourDifference(currentHour, endTime);
+        
+        // Loop to generate time options
+        for (let i = 0; i <= diff; i++) {
+          if (currentHour <= 23) {
+            let hour = currentHour % 12;
+            let amPm = currentHour < 12 ? 'am' : 'pm';
+            timeArray.push({ values: (hour === 0 ? 12 : hour) + (amPm === 'am' ? 0 : 12), time: `${hour === 0 ? 12 : hour} ${amPm}` });
+          }
+          currentHour++;
+        }
+        
+        SetTimeOptions(timeArray);
+        SetSelectedTime(timeArray[0]?.values);
+        
     }, [])
+    function calculateHourDifference(currentHour, endTime) {
+        if (currentHour === endTime) {
+          // If currentHour is the same as endTime, the difference is 0
+          return 0;
+        } else if (currentHour < endTime) {
+          // If currentHour is less than endTime, simply subtract the values
+          return endTime - currentHour;
+        } else {
+          // If currentHour is greater than endTime, we have crossed midnight
+          // Subtract currentHour from 24 and add endTime
+          return (24 - currentHour) + endTime;
+        }
+      }
     async function GetPricingDetails() {
         var det = {
             "link": "Customer/getparkingstatusoforg?OrgID=" + props.item.OrganizationID
         }
         Get(det, (res, rej) => {
-            debugger
+            
             SetPricingList(res.data.Table)
         }, (err) => {
 
