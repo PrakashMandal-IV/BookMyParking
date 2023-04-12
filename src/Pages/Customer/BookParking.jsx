@@ -171,6 +171,7 @@ const ParkingDetailsOnOrg = (props) => {
     const [SelectedCarNumber, SetSelectedCarNumber] = useState('')
     const [SelectedCarName, SetSelectedCarName] = useState('')
     const [SaveVhicle, SetSaveVhicle] = useState(true)
+    const [Loading,setLoading] = useState(false)
     const Razorpay = useRazorpay();
     useEffect(() => {
         GetPricingDetails()
@@ -248,16 +249,19 @@ const ParkingDetailsOnOrg = (props) => {
         }
     }
 
-    const MakePayment = () => {
+    const MakePayment =async() => {
+        setLoading(true)
         var det = {
             "link": "Customer/getOrderID?Amount=" + PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price
         }
         Get(det, (res, rej) => {
 
             openRazorpayGateway(res.data.OrderID, res.data.RazorPayID)
+            setLoading(false)
         }, (err) => {
 
         });
+        
     }
     const VehcalSelectionHandeler = (id) => {
 
@@ -317,6 +321,7 @@ const ParkingDetailsOnOrg = (props) => {
     };
 
     async function CreateBooking(data){
+        setLoading(true)
         var det = {
             "link": "Customer/BookParking",
             "data": JSON.stringify(data)
@@ -325,10 +330,13 @@ const ParkingDetailsOnOrg = (props) => {
            
             if(res.data.Status===1){
                  nav("/bookingconfirmation?status=Confirm&id="+res.data.ID)
+
             }
+            setLoading(false)
         }, (err) => {
            
         });
+        
     }
     return (<>
         <div className="mt-2 p-2 flex flex-col sm:flex-row">
@@ -442,9 +450,11 @@ const ParkingDetailsOnOrg = (props) => {
                     <p className="w-1/2 text-right font-semibold text-green-500">₹ {PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price}</p>
                 </div>
                 <div className="flex mt-2">
-
-                    <button className="ml-auto  px-6 py-2 text-xs md:text-[1rem] bg-green-400 rounded-md text-white hover:bg-green-600  transition-all" onClick={() => MakePayment()}>
-                        Make Payment
+                    
+                    <button disabled={Loading} className="ml-auto  px-6 py-2 text-xs md:text-[1rem] bg-green-400 rounded-md text-white hover:bg-green-600  transition-all" onClick={() => MakePayment()}>
+                    {Loading ? <div className="mx-auto animate-spin w-5 h-5 rounded-full border-b-2 border-white">
+                                 
+                                 </div> : 'Make Payment'}
                     </button>
                 </div>
             </section>)}
