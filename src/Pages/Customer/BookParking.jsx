@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Api, Get, Post } from "../../components/Api";
 import useRazorpay from "react-razorpay";
+import { useNavigate } from "react-router-dom";
 
 const BookParking = () => {
     const [SearchedOrgLists, SetSearchedOrgLists] = useState([])
@@ -160,6 +161,7 @@ const OrgListCard = (props) => {
 
 
 const ParkingDetailsOnOrg = (props) => {
+    const nav = useNavigate()
     const [TimeOptions, SetTimeOptions] = useState([])
     const [SelectedTime, SetSelectedTime] = useState('')
     const [IsNewVhicle, SetIsNewVehicle] = useState(false)
@@ -320,7 +322,10 @@ const ParkingDetailsOnOrg = (props) => {
             "data": JSON.stringify(data)
         }
         Post(det, (res, rej) => {
-            
+           
+            if(res.data.Status===1){
+                 nav("/bookingconfirmation?status=Confirm&id="+res.data.ID)
+            }
         }, (err) => {
            
         });
