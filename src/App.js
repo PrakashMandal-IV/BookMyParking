@@ -16,6 +16,7 @@ import ManageParking from './Pages/AgentDashboard/ManageParking';
 import Finance from './Pages/AgentDashboard/Finance';
 import RegisterUser from './Pages/RegisterUser';
 import BookParking from './Pages/Customer/BookParking';
+import BookingConfirmationPage from './Pages/Customer/BookingConfirmationPage';
 
 function App() {
   const nav = useNavigate()
@@ -62,7 +63,7 @@ function App() {
         <Route exact path='register' element={<RegisterUser OnLogin={(data) => OnLogin(data)} />} />
         <Route exact path='home' element={<Home />} />
         <Route exact path='bookmyparking' element={<BookParking />} />
-
+        <Route exact path='bookingconfirmation' element={<BookingConfirmationPage />} />
         {UserData?.IsAdmin && (<Route path='admin' element={<AdminDashboardLayout />}>
           <Route path='' element={<OverView />} />
           <Route path='organization' element={<Organization />} />
