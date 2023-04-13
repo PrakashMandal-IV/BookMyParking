@@ -264,9 +264,7 @@ const ParkingDetailsOnOrg = (props) => {
         
     }
     const VehcalSelectionHandeler = (id) => {
-
         var List = props.VList.filter(i => i.VehicalID === id)[0]
-
         if (List) {
             SetVTypeID(List.VehicalType)
 
@@ -290,8 +288,8 @@ const ParkingDetailsOnOrg = (props) => {
             "signature": paymentResponse.razorpay_signature,
             "orgID": props.item.OrganizationID,
             "vTypeID": VtypeID,
-            "vNumber":  SelectedCarName,
-            "vName": SelectedCarNumber,
+            "vNumber":  SelectedCarNumber,
+            "vName": SelectedCarName,
             "amount": PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price,
             "bookTime": SelectedTime
           }
@@ -331,10 +329,12 @@ const ParkingDetailsOnOrg = (props) => {
             if(res.data.Status===1){
                  nav("/bookingconfirmation?status=Confirm&id="+res.data.ID)
 
+            }else{
+                nav("/bookingconfirmation?status=Queue&id="+res.data.ID)
             }
             setLoading(false)
         }, (err) => {
-           
+            setLoading(false)
         });
         
     }
