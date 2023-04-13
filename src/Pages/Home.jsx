@@ -1,5 +1,10 @@
 import { useNavigate } from "react-router-dom"
 import HomepageMainBG from "../assets/stockimages/HomepageMainBG.jpg"
+import { ArriveAndPark, ParkingIcon, ParkingStep2 } from "../components/svgIcons"
+
+
+
+
 const Home = () => {
 
   const nav = useNavigate()
@@ -24,9 +29,41 @@ const Home = () => {
         <div className="flex flex-col gap-10">
           <p className="text-center font-normal   text-3xl">Get your Parking in 3 easy steps</p>
           <div className="flex gap-20 mx-auto">
-            <div className="w-96 bg-gray-400 h-48 rounded-md"></div>
-            <div className="w-96 bg-gray-400 h-48 rounded-md"></div>
-            <div className="w-96 bg-gray-400 h-48 rounded-md"></div>
+            <div className="w-96 bg-green-500 hover:bg-green-400 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
+              <div className="flex">
+                
+                 <ParkingIcon id="p1"/>
+               
+                <div className="ml-auto text-[4rem] px-4">
+                  1
+                </div>
+              </div>
+              <p className="text-2xl font-semibold text-white   ">Easy Search and Find</p>
+              <p className=" text-white">Search your Destination</p>
+            </div>
+            <div className="w-96 bg-green-500 hover:bg-green-400 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
+              <div className="flex">
+               
+                  <ParkingStep2 id="p2"/>
+               
+                <div className="ml-auto text-[4rem] px-4">
+                  2
+                </div>
+              </div>
+              <p className="text-2xl font-semibold text-white   ">Easy Search and Find</p>
+              <p className=" text-white">Search your Destination</p>
+            </div> <div className="w-96 bg-green-500 hover:bg-green-400 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
+              <div className="flex">
+                
+                  <ArriveAndPark id="p3"/>
+                
+                <div className="ml-auto text-[4rem] px-4">
+                  3
+                </div>
+              </div>
+              <p className="text-2xl font-semibold text-white   ">Easy Search and Find</p>
+              <p className=" text-white">Search your Destination</p>
+            </div>
           </div>
         </div>
         <div className="flex flex-col mt-24  gap-10 mb-16">
