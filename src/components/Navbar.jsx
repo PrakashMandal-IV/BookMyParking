@@ -23,8 +23,8 @@ const Nav = (props) => {
     const Logout=()=>{
       props.Logout()
     }
-    return (<div className="flex flex-col min-h-screen " id="top">
-        <div className="w-full h-14 flex bg-gray-200 px-2 sm:px-10">
+    return (<div className="flex flex-col min-h-screen  " id="top">
+        <div className="w-full h-14 flex bg-white px-2 sm:px-10 shadow-md shadow-white  z-50">
             <div className="my-auto cursor-pointer" onClick={() => NavigationClick('home')}>
                 <p className="text-lg sm:text-3xl font-medium  ">Book<span className="text-red-600 font-semibold">My</span>Parking</p>
             </div>
