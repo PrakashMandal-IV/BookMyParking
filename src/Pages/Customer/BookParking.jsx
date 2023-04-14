@@ -113,11 +113,11 @@ const OrgListCard = (props) => {
     }
     return (
         <>
-            <div className="flex gap-2 border hover:border-gray-400 p-2 rounded-md transition-all bg-gray-50 cursor-pointer" onClick={toggleCollapse}>
+            <div className="flex gap-2 border hover:border-gray-400 p-2 rounded-md transition-all bg-gradient-to-b from-slate-600 to-slate-500  cursor-pointer" onClick={toggleCollapse}>
                 <div className="max-w-[35%] sm:max-w-[40%] overflow-hidden flex">
                     <img src={Api + "orgthumb?OrgID=" + props.item.OrganizationID + "&FileName=" + props.item.Thumbnail} className="rounded-md my-auto sm:max-h-52 object-cover pointer-events-none" alt="" />
                 </div>
-                <div className="flex-grow flex flex-col sm:px-4 py-1 ">
+                <div className="flex-grow flex flex-col sm:px-4 py-1 text-white">
                     <div className="flex">
                         <div className="">
                             <p className="sm:text-2xl font-medium ">{props.item.OrganizationName}</p>
@@ -138,7 +138,7 @@ const OrgListCard = (props) => {
 
                         </div>
                         <div className="flex-grow flex ml-auto">
-                            <p className="text-[.6rem] sm:text-sm ml-auto mt-auto">Available Parking : <span className="text-green-500">{props.item.AvailableSlots}</span></p>
+                            <p className="text-[.6rem] sm:text-sm ml-auto mt-auto">Available Parking : <span className="text-yellow-300 font-semibold">{props.item.AvailableSlots}</span></p>
                             {/* <button className="ml-auto px-6 py-2 text-xs md:text-lg bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
                                 Book
                             </button> */}
@@ -148,7 +148,7 @@ const OrgListCard = (props) => {
             </div>
             {/* Collapsible Div */}
             <div
-                className={`overflow-hidden transition-max-h duration-300 ease-in-out mt-4 bg-gray-100 rounded-md ${isOpen ? 'max-h-[50rem]' : 'max-h-0 '
+                className={`overflow-hidden transition-max-h duration-300 ease-in-out mt-4  bg-gradient-to-t from-slate-600 to-slate-500  rounded-md ${isOpen ? 'max-h-[50rem]' : 'max-h-0 '
                     }`}
             >
                 {isOpen && (<ParkingDetailsOnOrg item={props.item} VList={props.VList} />)}
@@ -302,7 +302,7 @@ const ParkingDetailsOnOrg = (props) => {
             order_id: orderId, // Use the received order ID from the state
             name: 'BOOKMYPARKING',
             description: 'Payment for purchase',
-            image: 'https://yourcompany.com/logo.png', // Replace with your company logo URL
+            image: 'https://i.pinimg.com/564x/78/ff/57/78ff579622be4e58efa8ef3d5bdd3301.jpg', // Replace with your company logo URL
             handler: handlePaymentSuccess,
             prefill: {
                 name: 'John Doe', // Replace with customer's name
@@ -310,7 +310,7 @@ const ParkingDetailsOnOrg = (props) => {
                 contact: '+91 9876543210', // Replace with customer's contact number
             },
             theme: {
-                color: '#F37254', // Replace with your desired color
+                color: '#566573', // Replace with your desired color
             },
         };
 
@@ -339,7 +339,7 @@ const ParkingDetailsOnOrg = (props) => {
         
     }
     return (<>
-        <div className="mt-2 p-2 flex flex-col sm:flex-row">
+        <div className="mt-2 p-2 flex flex-col sm:flex-row ">
 
             <section className="sm:w-2/3 flex flex-col gap-5 p-2">
                 <div className="w-full flex gap-5">
@@ -356,14 +356,14 @@ const ParkingDetailsOnOrg = (props) => {
 
                     </div>
                     <div className="w-1/2 flex  flex-col gap-5">
-                        <div className="flex flex-col sm:flex-row justify-between h-full">
+                        <div className="flex flex-col sm:flex-row justify-between h-full ">
                             <label className="flex items-center space-x-3">
                                 <input
                                     type="checkbox" checked={!IsNewVhicle}
                                     onChange={(e) => ToggleVehicleSelection(e, 'EV')}
                                     className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
                                 />
-                                <span className="text-gray-700 text-xs sm:text-sm">Existing Vehicle</span>
+                                <span className="text-gray-200 text-xs sm:text-sm ">Existing Vehicle</span>
                             </label>
                             <label className="flex items-center space-x-3">
                                 <input
@@ -372,7 +372,7 @@ const ParkingDetailsOnOrg = (props) => {
                                     onChange={(e) => ToggleVehicleSelection(e, 'NV')}
                                     className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
                                 />
-                                <span className="text-gray-700 text-xs sm:text-sm">New Vehicle</span>
+                                <span className="text-gray-200 text-xs sm:text-sm">New Vehicle</span>
                             </label>
                         </div>
                     </div>
@@ -414,11 +414,11 @@ const ParkingDetailsOnOrg = (props) => {
                                         onChange={(e) => SetSaveVhicle(e.target.checked)}
                                         className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
                                     />
-                                    <span className="text-gray-700 text-xs sm:text-sm">Save Vehicle</span>
+                                    <span className=" text-xs sm:text-sm text-white">Save Vehicle</span>
                                 </label>
                             </div>
                             <div className="w-1/2 flex flex-col">
-                                <p className="text-xs text-red-500 ml-auto">Note : Your Vehical Number will be your Parking Pass</p>
+                                <p className="text-xs text-white ml-auto">Note : Your Vehical Number will be your Parking Pass</p>
 
                             </div>
                         </div>
@@ -426,7 +426,7 @@ const ParkingDetailsOnOrg = (props) => {
                 )}
             </section>
 
-            {VtypeID !== '' && (<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-gray-50 text-[.9rem]">
+            {VtypeID !== '' && (<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-slate-400 text-[.9rem]  text-gray-100">
                 <p className=" font-semibold text-center">Overview</p>
                 <div className="flex">
                     <p className="w-1/2">Type</p>
@@ -458,7 +458,7 @@ const ParkingDetailsOnOrg = (props) => {
                     </button>
                 </div>
             </section>)}
-            {VtypeID === '' && (<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-gray-50 text-[.95rem]">
+            {VtypeID === '' && (<section className="flex-grow p-2 flex-col gap-2 rounded-md bg-slate-400 text-[.95rem] text-gray-100">
                 <p className="text-center ">Select Vehicle Or Add New Vehicle !!</p>
             </section>)}
         </div>
