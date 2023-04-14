@@ -75,8 +75,8 @@ const Organization = () => {
                         </div>
                     </form>
                     <div className="ml-auto">
-                        <div className="bg-gray-200 w-10 h-10 rounded-md flex hover:bg-gray-300 transition-all cursor-pointer" onClick={() => setisOpen(!isOpen)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="m-auto w-6 h-6">
+                        <div className="bg-slate-600 w-10 h-10 rounded-md flex hover:bg-slate-500 transition-all cursor-pointer" onClick={() => setisOpen(!isOpen)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="m-auto w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                         </div>
@@ -85,7 +85,7 @@ const Organization = () => {
             </div>
             <div className="mt-10  px-32">
                 <table className="w-full">
-                    <tr className="flex py-2 bg-gray-200">
+                    <tr className="flex py-2 text-white bg-slate-700">
                         <th className="w-[10%] text-center">S.No</th>
                         <th className="w-[20%] text-center">Name</th>
                         <th className="w-[10%] text-center">Parking Slots</th>
@@ -93,20 +93,20 @@ const Organization = () => {
                         <th className="w-[10%] text-center">Total Revenue</th>
                         <th className="w-[20%] text-center">Location</th>
                         <th className="w-[10%] text-center">Status</th>
-                        <th className="w-[10%] text-center">Remove</th>
                     </tr>
                     <tbody className="w-full">
                        {FilteredOrgList.map((item,idx)=>{
-                          
-                        return ( <tr key={idx} className={"flex py-2  "+(idx % 2 !== 0?"bg-gray-100":"")}>
+                          debugger
+                        return ( <tr key={idx} className="flex py-2 transition-all hover:bg-slate-200  ">
                         <td className="w-[10%] text-center">{idx+1}</td>
                         <td className="w-[20%] text-center">{item.OrganizationName}</td>
-                        <td className="w-[10%] text-center">{item.ParkingSlots}</td>
-                        <td className="w-[10%] text-center">{item.ActiveParkingSlots}</td>
-                        <td className="w-[10%] text-center">0</td>
+                        
+                        <td className="w-[10%] text-center">{item. TotalSlot}</td>
+                        <td className="w-[10%] text-center">{item.ActiveSlot}</td>
+                        <td className="w-[10%] text-center">{item.Revenue}</td>
                         <td className="w-[20%] text-center">{item.State+","+item.City}</td>
                         <td className="w-[10%] text-center">{item.IsActive?"Active":"InActive"}</td>
-                        <td className="w-[10%] text-center">X</td>
+                       
                     </tr>)
                        })}
                     </tbody>
