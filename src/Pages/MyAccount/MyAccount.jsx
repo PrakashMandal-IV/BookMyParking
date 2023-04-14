@@ -84,20 +84,7 @@ useEffect(()=>{
 
                         </div>
                     </div>
-                    <div className="flex h-3/6 gap-10 mt-auto">
-                        <div className="flex-grow bg-slate-600 text-white shadow-lg  rounded-md flex flex-col p-4 ">
-                            <p className="text-lg  ">Total Slots</p>
-                            <p className="mt-auto ml-auto text-4xl"></p>
-                        </div>
-                        <div className="bg-slate-600 text-white   shadow-lg flex-grow rounded-md flex flex-col p-4 ">
-                            <p className="text-lg  ">Active Slots</p>
-                            <p className="mt-auto ml-auto text-4xl"></p>
-                        </div>
-                        <div className="bg-slate-600 text-white shadow-lg flex-grow rounded-md flex flex-col p-4 ">
-                            <p className="text-lg  ">Total Revenue</p>
-                            <p className="mt-auto ml-auto text-xl">Rs</p>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
             <div className="flex py-2  flex-grow px-20">

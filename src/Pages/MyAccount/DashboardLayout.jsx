@@ -25,7 +25,7 @@ const MyAccountDashboardLayout = (props) => {
                        Bookings
                     </div>
                     <div className="text-lg pl-10 text-white font-medium hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('')}>
-                        Vehicals
+                        Vehicles
                     </div>
                     <div className="mt-auto  flex gap-2 text-lg justify-around  text-red-500 font-medium bg-slate-800 hover:bg-slate-900 py-4 cursor-pointer transition-all" onClick={() =>Logout()}>
                         <p className="my-auto">Logout</p>
