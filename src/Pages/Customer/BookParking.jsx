@@ -447,7 +447,7 @@ const ParkingDetailsOnOrg = (props) => {
                 </div>
                 <div className="flex mt-2">
                     <p className="w-1/2 font-semibold ">Your Total :</p>
-                    <p className="w-1/2 text-right font-semibold text-green-500">₹ {PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price}</p>
+                    <p className="w-1/2 text-right  text-yellow-300 font-semibold">₹ {PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price}</p>
                 </div>
                 <div className="flex mt-2">
                     
