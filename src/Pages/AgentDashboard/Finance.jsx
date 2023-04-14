@@ -5,7 +5,7 @@ const Finance = () => {
     const [CurrentDate, SetCurrentDate] = useState('')
     const [isLotOpen, setisLotOpen] = useState(false)
     const [PricingList, SetPricingList] = useState([])
-
+    const [RevenueList,SetRevenueList] = useState([])
    
     useEffect(() => {
         const currentDate = new Date();
@@ -27,8 +27,8 @@ const Finance = () => {
             "link": "Agent/parkingpricing"
         }
         Get(det, (res, rej) => {
-            SetPricingList(res.data)
-
+            SetPricingList(res.data.Table)
+            SetRevenueList(res.data.Table1)
         }, (err) => {
 
         });
@@ -96,11 +96,12 @@ const Finance = () => {
                             <th className="w-1/2 text-center">Revenue</th>
                         </tr>
                         <tbody className="w-full">
-                            {PricingList.map((item, idx) => {
+                            {RevenueList.map((item, idx) => {
 
                                 return (<tr key={idx} className="flex py-2 transition-all hover:bg-slate-200 ">
-                                    <td className="w-2/12 text-center">{idx + 1}</td>
-                                    <td className="w-2/12 text-center"></td>
+                                     <td className="w-1/2 text-center">{item.VehicalType}</td>
+                                    <td className="w-1/2 text-center">{item.Revenue}</td>
+                                   
 
                                 </tr>)
                             })}
