@@ -32,13 +32,13 @@ const AgentDashboardLayout = () => {
                             <p className="text-center text-sm">{OrgData?.FullName}</p>
                         </div>
                     </div>
-                    <div className="text-lg pl-10 text-white font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('')}>
+                    <div className="text-lg pl-10 text-white font-medium hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('')}>
                         Overview
                     </div>
-                    <div className="text-lg pl-10  text-white font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('manageparking')}>
+                    <div className="text-lg pl-10  text-white font-medium hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('manageparking')}>
                         Manage Parking
                     </div>
-                    <div className="text-lg pl-10 text-white font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('finance')}>
+                    <div className="text-lg pl-10 text-white font-medium hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('finance')}>
                         Finance
                     </div>
                 </div>
