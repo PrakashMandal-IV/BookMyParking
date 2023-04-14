@@ -19,13 +19,13 @@ const MyAccountDashboardLayout = (props) => {
                         </div>
                     </div>
                     <div className="text-lg pl-10 text-white font-medium hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('')}>
-                        My Account
+                        Account
                     </div>
-                    <div className="text-lg pl-10  text-white font-medium hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('manageparking')}>
-                        Manage Parking
+                    <div className="text-lg pl-10  text-white font-medium hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('')}>
+                       Bookings
                     </div>
-                    <div className="text-lg pl-10 text-white font-medium hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('finance')}>
-                        Finance
+                    <div className="text-lg pl-10 text-white font-medium hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('')}>
+                        Vehicals
                     </div>
                     <div className="mt-auto  flex gap-2 text-lg justify-around  text-red-500 font-medium bg-slate-800 hover:bg-slate-900 py-4 cursor-pointer transition-all" onClick={() =>Logout()}>
                         <p className="my-auto">Logout</p>

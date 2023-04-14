@@ -38,7 +38,7 @@ const Home = () => {
                   1
                 </div>
               </div>
-              <p className="text-2xl font-semibold  text-yellow-300  ">Easy Search and Find</p>
+              <p className="text-2xl font-semibold  text-gray-700   ">Easy Search and Find</p>
               <p className="text-white text-sm">Search your Destination</p>
             </div>
             <div className="w-96 bg-gradient-to-t from-blue-300 to-blue-500 shadow-lg shadow-slate-800  hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
@@ -50,7 +50,7 @@ const Home = () => {
                   2
                 </div>
               </div>
-              <p className="text-2xl font-semibold text-yellow-300   ">Book your Space</p>
+              <p className="text-2xl font-semibold text-gray-700    ">Book your Space</p>
               <p className=" text-white text-sm">Book your parking space easily with our
                 Reasonable Price</p>
             </div>
@@ -62,7 +62,7 @@ const Home = () => {
                   3
                 </div>
               </div>
-              <p className="text-2xl font-semibold text-yellow-300   ">Arrive and Park</p>
+              <p className="text-2xl font-semibold text-gray-700   ">Arrive and Park</p>
               <p className=" text-white text-sm">Just Arrive and park your vehicle without
                 any Effort . Simple and easy</p>
             </div>
@@ -76,7 +76,7 @@ const Home = () => {
           <div className="flex gap-20 mx-auto">
 
             <div className="w-96 bg-gradient-to-bl from-blue-300 to-blue-500 shadow-lg shadow-slate-800 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
-              <p className="text-2xl font-semibold text-yellow-300  ">Easy Book and Park</p>
+              <p className="text-2xl font-semibold text-gray-700   ">Easy Book and Park</p>
               <div className="flex ml-auto">
                 <TosImg1 />
 
@@ -86,7 +86,7 @@ const Home = () => {
                 your vehicle !!</p>
             </div>
             <div className="w-96 bg-gradient-to-b from-blue-300 to-blue-500 shadow-lg shadow-slate-800 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
-              <p className="text-2xl font-semibold text-yellow-300   ">Queue your parking </p>
+              <p className="text-2xl font-semibold text-gray-700    ">Queue your parking </p>
               <div className="flex ml-auto">
                 <TosImg2 />
 
@@ -95,7 +95,7 @@ const Home = () => {
               <p className=" text-white text-sm">Incase the parking is full , u can queue your
                 Parking with an average waiting time !!</p>
             </div><div className="w-96 bg-gradient-to-br from-blue-300 to-blue-500 shadow-lg shadow-slate-800 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
-              <p className="text-2xl font-semibold text-yellow-300 ">Daily Parking</p>
+              <p className="text-2xl font-semibold text-gray-700  ">Daily Parking</p>
               <div className="flex ml-auto">
                 <TosImg3 />
 
