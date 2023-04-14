@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom"
+import { Api } from "./Api";
 
 
 
@@ -31,7 +32,7 @@ const Nav = (props) => {
             </div>
             <div className=" my-auto flex gap-2 cursor-pointer" onClick={() => nav('/account')}>
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden">
-                    <img src="https://i.pinimg.com/564x/d9/7b/bb/d97bbb08017ac2309307f0822e63d082.jpg" alt="" />
+                    <img src={Api + "profilepic?UserID=" + props?.UserData?.UserID + "&FileName=" + props?.UserData?.ProfilePic} alt="" />
                 </div>
                 <p className="my-auto text-xs sm:text-sm font-medium text-white  ">{props.UserData?.FullName}</p>
 

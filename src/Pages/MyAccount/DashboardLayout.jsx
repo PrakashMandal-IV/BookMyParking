@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom"
 import { Get } from "../../components/Api"
 
 const MyAccountDashboardLayout = (props) => {
-    debugger
+   
     const nav = useNavigate()
     const Logout=()=>{
         props.Logout()

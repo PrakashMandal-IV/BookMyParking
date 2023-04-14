@@ -60,6 +60,14 @@ function App() {
     nav('/')
   }
 
+  const OnUpdateName=()=>{
+    let Email = localStorage.getItem('email')
+    let pass = localStorage.getItem('pass')
+    if ((Email && pass)) {
+      AutoLogin(Email, pass)
+    }
+  }
+
   return (
     <Routes>
       <Route exact path='/' element={<Nav UserData={UserData}  />}>
@@ -68,7 +76,7 @@ function App() {
         <Route exact path='home' element={<Home />} />
         <Route exact path='bookmyparking' element={<BookParking />} />
         <Route exact path='/account' element={< MyAccountDashboardLayout UserData={UserData} Logout={Logout}/>}>
-            <Route path='' element={<MyAccount />} />
+            <Route path='' element={<MyAccount  UserData={UserData} OnUpdateName={OnUpdateName}/>} />
         </Route>
         <Route exact path='bookingconfirmation' element={<BookingConfirmationPage />} />
         {UserData?.IsAdmin && (<Route path='admin' element={<AdminDashboardLayout />}>
