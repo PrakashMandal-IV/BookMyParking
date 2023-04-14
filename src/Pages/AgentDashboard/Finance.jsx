@@ -101,8 +101,6 @@ const Finance = () => {
                                 return (<tr key={idx} className="flex py-2 transition-all hover:bg-slate-200 ">
                                      <td className="w-1/2 text-center">{item.VehicalType}</td>
                                     <td className="w-1/2 text-center">{item.Revenue}</td>
-                                   
-
                                 </tr>)
                             })}
                         </tbody>
