@@ -11,7 +11,7 @@ const Home = () => {
 
   return (
     <div className="max-h-[calc(100vh-3.5rem)] overflow-y-scroll scrollbar-thin">
-      <div className="w-full flex flex-col gap-5 ">
+      <div className="w-full flex flex-col gap-5 bg-slate-700">
         <div className="bg-gray-300 flex   h-[75vh] brightness-[150%]" style={{ backgroundImage: `url(${HomepageMainBG})` }}>
           <div className="  absolute top-0 left-0 right-0 bottom-0 bg-gray-800/60  transition-all"></div>
           <div className="mx-auto my-auto z-50">
@@ -27,21 +27,21 @@ const Home = () => {
 
         </div>
         <div className="flex flex-col gap-10">
-          <p className="text-center font-normal   text-2xl">Get your Parking in 3 easy steps</p>
+          <p className="text-center font-medium text-gray-300  text-2xl ">Get your Parking in 3 easy steps</p>
           <div className="flex gap-20 mx-auto">
-            <div className="w-96 bg-gradient-to-tl from-green-500 to-lime-400   hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
+            <div className="w-96 bg-gradient-to-tl from-blue-400 to-blue-600 shadow-lg shadow-slate-800   hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
               <div className="flex">
 
                 <ParkingIcon id="p1" />
 
-                <div className="ml-auto text-[4rem] px-4 tex">
+                <div className="ml-auto text-[4rem] px-4 ">
                   1
                 </div>
               </div>
-              <p className="text-2xl font-semibold text-white   ">Easy Search and Find</p>
-              <p className=" text-white text-sm">Search your Destination</p>
+              <p className="text-2xl font-semibold  text-white  ">Easy Search and Find</p>
+              <p className="text-white text-sm">Search your Destination</p>
             </div>
-            <div className="w-96 bg-gradient-to-t from-green-500 to-lime-400  hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
+            <div className="w-96 bg-gradient-to-t from-blue-400 to-blue-600 shadow-lg shadow-slate-800  hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
               <div className="flex">
 
                 <ParkingStep2 />
@@ -54,7 +54,7 @@ const Home = () => {
               <p className=" text-white text-sm">Book your parking space easily with our
                 Reasonable Price</p>
             </div>
-            <div className="w-96 bg-gradient-to-tr from-green-500 to-lime-400  hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
+            <div className="w-96 bg-gradient-to-tr from-blue-400 to-blue-600 shadow-lg shadow-slate-800 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
               <div className="flex">
                 <ArriveAndPark />
 
@@ -70,12 +70,12 @@ const Home = () => {
         </div>
         <div className="flex flex-col mt-24  gap-10 mb-16">
           <div className="">
-            <p className="text-center font-normal   text-xl">Type of Parking</p>
-            <p className="text-center font-normal   text-3xl">Our Parking Services</p>
+            <p className="text-center font-normal text-gray-300   text-xl">Type of Parking</p>
+            <p className="text-center font-normal text-gray-300  text-3xl">Our Parking Services</p>
           </div>
           <div className="flex gap-20 mx-auto">
 
-            <div className="w-96 bg-gradient-to-bl from-green-500 to-lime-400  hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
+            <div className="w-96 bg-gradient-to-bl from-blue-400 to-blue-600 shadow-lg shadow-slate-800 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
               <p className="text-2xl font-semibold text-white   ">Easy Book and Park</p>
               <div className="flex ml-auto">
                 <TosImg1 />
@@ -85,7 +85,7 @@ const Home = () => {
               <p className=" text-white text-sm">Book your parking in 3 easy steps and park
                 your vehicle !!</p>
             </div>
-            <div className="w-96 bg-gradient-to-b from-green-500 to-lime-400 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
+            <div className="w-96 bg-gradient-to-b from-blue-400 to-blue-600 shadow-lg shadow-slate-800 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
               <p className="text-2xl font-semibold text-white   ">Que your parking </p>
               <div className="flex ml-auto">
                 <TosImg2 />
@@ -94,7 +94,7 @@ const Home = () => {
 
               <p className=" text-white text-sm">Incase the parking is full , u can queue your
 Parking with an average waiting time !!</p>
-            </div><div className="w-96 bg-gradient-to-br from-green-500 to-lime-400 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
+            </div><div className="w-96 bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg shadow-slate-800 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
               <p className="text-2xl font-semibold text-white   ">Daily Parking</p>
               <div className="flex ml-auto">
                 <TosImg3 />

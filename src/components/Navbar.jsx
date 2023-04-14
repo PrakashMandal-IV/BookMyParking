@@ -29,7 +29,7 @@ const Nav = (props) => {
                 <p className="text-lg sm:text-3xl font-medium text-white ">Book<span className="text-red-600 font-semibold">My</span>Parking</p>
             </div>
             <div className="my-auto ml-auto mr-10">
-                {(props.UserData?.IsAdmin || props.UserData?.IsAgent) && (<p className="text-lg font-medium cursor-pointer" onClick={() => NavigationClick('dashboard')}>Dashboard</p>)}
+                {(props.UserData?.IsAdmin || props.UserData?.IsAgent) && (<p className="text-lg font-medium cursor-pointer text-white" onClick={() => NavigationClick('dashboard')}>Dashboard</p>)}
             </div>
             <div className=" my-auto flex gap-2">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden">
