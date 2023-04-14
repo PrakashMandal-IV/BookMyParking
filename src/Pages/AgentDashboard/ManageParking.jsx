@@ -43,9 +43,10 @@ const ManageParking = () => {
         Get(det, (res, rej) => {
 
             SetPLotList(JSON.parse(res.data[0].PLots))
-           
+
             SetVTypeList(JSON.parse(res.data[0].Vtypes))
             SetSlotList(JSON.parse(res.data[0].SlotList))
+            SetFilteredOrgList(JSON.parse(res.data[0].SlotList))
         }, (err) => {
 
         });
@@ -60,6 +61,24 @@ const ManageParking = () => {
     const SuccessAdd = () => {
         setisLotOpen(false)
         GetParkingLotList()
+    }
+    const ToggleParkingSlot=(id,value)=>{
+        var det = {
+            "link": "Agent/toggleparkingslot?SlotID="+id+"&Status="+value
+        }
+        Get(det, (res, rej) => {
+            var data =  FilteredOrgList
+            var updatedData = data.map(item => {
+                if (item.ParkingSlotID === id) {
+                  return { ...item, IsActive: value === 1 ? true : false };
+                } else {
+                  return item;
+                }
+              });
+           SetFilteredOrgList(updatedData)
+        }, (err) => {
+
+        });
     }
     return (<>
         <svg className='hidden'>
@@ -108,29 +127,37 @@ const ManageParking = () => {
             </div>
             <div className="mt-10  px-32">
                 <table className="w-full">
-                    <tr className="flex py-2 bg-gray-200">
+                    <tr className="flex py-2 bg-slate-700 text-white">
                         <th className="w-2/12 text-center">S.No</th>
                         <th className="w-2/12 text-center">Floor</th>
                         <th className="w-2/12 text-center">Parking Lot</th>
                         <th className="w-2/12 text-center">Parking Slot</th>
                         <th className="w-2/12 text-center">Vehical Type</th>
                         <th className="w-2/12 text-center">Status</th>
-                        <th className="w-2/12 text-center">Disable</th>
-                        <th className="w-2/12 text-center">Remove</th>
+                        <th className="w-2/12 text-center">Start/Stop</th>
                     </tr>
                     <tbody className="w-full">
-                        {SlotList.map((item, idx) => {
+                        {FilteredOrgList.map((item, idx) => {
 
-                            return (<tr key={idx} className={"flex py-2  " + (idx % 2 !== 0 ? "bg-gray-100" : "")}>
+                            return (<tr key={idx} className="flex py-2 transition-all hover:bg-slate-200"  >
                                 <td className="w-2/12 text-center">{idx + 1}</td>
                                 <td className="w-2/12 text-center">{floor_map[item.FloorNumber]}</td>
                                 <td className="w-2/12 text-center">{item.ParkingLotName}</td>
                                 <td className="w-2/12 text-center">{item.ParkingSlotName}</td>
                                 <td className="w-2/12 text-center">{item.VehicalType}</td>
                                 <td className="w-2/12 text-center">{item.Status ? "Active" : "InActive"}</td>
-                              
-                                <td className="w-2/12 text-center"></td>
-                                <td className="w-2/12 text-center">X</td>
+                                <td className="w-2/12 text-center flex">
+                                    <div className="my-auto mx-auto">
+                                        {item.IsActive && (<svg xmlns="http://www.w3.org/2000/svg" onClick={()=>ToggleParkingSlot(item.ParkingSlotID,0)} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:stroke-red-600 hover:fill-red-600 hover:scale-105 transition-all">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 7.5A2.25 2.25 0 017.5 5.25h9a2.25 2.25 0 012.25 2.25v9a2.25 2.25 0 01-2.25 2.25h-9a2.25 2.25 0 01-2.25-2.25v-9z" />
+                                        </svg>)}
+                                        {!item.IsActive && (<svg xmlns="http://www.w3.org/2000/svg" onClick={()=>ToggleParkingSlot(item.ParkingSlotID,1)} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="-6 h-6 hover:stroke-green-400  hover:fill-green-400 hover:scale-105 transition-all">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+                                        </svg>
+                                        )}
+                                    </div>
+                                </td>
+
                             </tr>)
                         })}
                     </tbody>
@@ -241,7 +268,7 @@ const AddParkingSlot = (props) => {
 
     const [Scale, SetScale] = useState('scale-0')
     const [Error, SetError] = useState('')
-  
+
     const [Loading, SetLoading] = useState(false)
     useEffect(() => {
         SetScale('scale-100')
@@ -252,18 +279,18 @@ const AddParkingSlot = (props) => {
             props.Close()
         }, 150);
     }
- 
+
     const OnFormSubmit = (e) => {
 
         e.preventDefault()
-       
+
         SetError('')
         SetLoading(true)
         debugger
         var data = {
             "pLotID": e.target[0].value,
             "slotCount": parseInt(e.target[1].value),
-            "vehicalTypeID":e.target[2].value
+            "vehicalTypeID": e.target[2].value
         }
         AddParkinglot(data)
     }
@@ -275,7 +302,7 @@ const AddParkingSlot = (props) => {
             "data": JSON.stringify(data)
         }
         Post(det, (res, rej) => {
-           
+
             SetLoading(false)
             props.Success()
         }, (err) => {

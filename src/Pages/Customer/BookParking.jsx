@@ -301,7 +301,7 @@ const ParkingDetailsOnOrg = (props) => {
             amount: 1000, // Replace with the amount you want to charge
             order_id: orderId, // Use the received order ID from the state
             name: 'BOOKMYPARKING',
-            description: 'Payment for purchase',
+            description: 'Parking reservation',
             image: 'https://i.pinimg.com/564x/78/ff/57/78ff579622be4e58efa8ef3d5bdd3301.jpg', // Replace with your company logo URL
             handler: handlePaymentSuccess,
             prefill: {
