@@ -5,7 +5,7 @@ import Nav from './components/Navbar';
 
 import Home from './Pages/Home';
 import Login from './Pages/LoginPage';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AdminDashboardLayout from './Pages/AdminDashboard/DashboardLayout';
 import OverView from './Pages/AdminDashboard/Overview';
 import { NoAuthPost } from './components/Api';
@@ -17,6 +17,9 @@ import Finance from './Pages/AgentDashboard/Finance';
 import RegisterUser from './Pages/RegisterUser';
 import BookParking from './Pages/Customer/BookParking';
 import BookingConfirmationPage from './Pages/Customer/BookingConfirmationPage';
+import MyAccount from './Pages/MyAccount/MyAccount';
+import MyAccountDashboardLayout from './Pages/MyAccount/DashboardLayout';
+
 
 function App() {
   const nav = useNavigate()
@@ -56,13 +59,17 @@ function App() {
     localStorage.clear()
     nav('/')
   }
+
   return (
     <Routes>
-      <Route exact path='/' element={<Nav UserData={UserData} Logout={Logout} />}>
+      <Route exact path='/' element={<Nav UserData={UserData}  />}>
         <Route exact path='/' element={<Login OnLogin={(data) => OnLogin(data)} />} />
         <Route exact path='register' element={<RegisterUser OnLogin={(data) => OnLogin(data)} />} />
         <Route exact path='home' element={<Home />} />
         <Route exact path='bookmyparking' element={<BookParking />} />
+        <Route exact path='/account' element={< MyAccountDashboardLayout UserData={UserData} Logout={Logout}/>}>
+            <Route path='' element={<MyAccount />} />
+        </Route>
         <Route exact path='bookingconfirmation' element={<BookingConfirmationPage />} />
         {UserData?.IsAdmin && (<Route path='admin' element={<AdminDashboardLayout />}>
           <Route path='' element={<OverView />} />
