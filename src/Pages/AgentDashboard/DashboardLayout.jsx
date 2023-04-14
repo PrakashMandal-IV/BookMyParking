@@ -24,21 +24,21 @@ const AgentDashboardLayout = () => {
     }
     return (<>
         <div className="w-full h-full flex">
-            <div className="w-64  bg-gray-200">
-                <div className="flex flex-col">
+            <div className="w-64  bg-slate-700">
+                <div className="flex flex-col ">
                     <div className=" bg-gray-400 flex">
                         <div className="mx-10 my-10 w-full">
                             <p className="text-center text-lg ">{OrgData?.OrganizationName}</p>
                             <p className="text-center text-sm">{OrgData?.FullName}</p>
                         </div>
                     </div>
-                    <div className="text-lg pl-10 font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('')}>
+                    <div className="text-lg pl-10 text-white font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('')}>
                         Overview
                     </div>
-                    <div className="text-lg pl-10  font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('manageparking')}>
+                    <div className="text-lg pl-10  text-white font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('manageparking')}>
                         Manage Parking
                     </div>
-                    <div className="text-lg pl-10  font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('finance')}>
+                    <div className="text-lg pl-10 text-white font-medium hover:bg-gray-300 py-4 cursor-pointer" onClick={() => nav('finance')}>
                         Finance
                     </div>
                 </div>

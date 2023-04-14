@@ -1,18 +1,31 @@
-import { useState } from "react";
-import { Get } from "../../components/Api";
+import { useEffect, useState } from "react";
+import { Api, Get, Post } from "../../components/Api";
+import useRazorpay from "react-razorpay";
+import { useNavigate } from "react-router-dom";
 
 const BookParking = () => {
     const [SearchedOrgLists, SetSearchedOrgLists] = useState([])
+    const [UserVehicles, SetUserVehicles] = useState([])
+    useEffect(() => {
+        GetUserVhiclesList()
+    }, [])
+    const GetUserVhiclesList = () => {
+        var det = {
+            "link": "Customer/vehiclelist"
+        }
+        Get(det, (res, rej) => {
+            SetUserVehicles(res.data)
+        }, (err) => {
 
-
+        });
+    }
     const SearchParkings = (e) => {
         e.preventDefault()
-        debugger
         var det = {
             "link": "Customer/searchorg?SearchText=" + e.target[0].value
         }
         Get(det, (res, rej) => {
-            debugger
+
             SetSearchedOrgLists(res.data)
         }, (err) => {
 
@@ -27,12 +40,12 @@ const BookParking = () => {
             </defs>
         </svg>
         <div className="max-h-[calc(100vh-3.5rem)] overflow-hidden flex flex-col  ">
-            <p className="text-2xl font-semibold text-center my-10">Book You Parking !!</p>
-            <div className="flex w-full ">
-                <div className="mx-auto">
+            <p className="text-2xl font-semibold text-center mt-5">Book You Parking !!</p>
+            <div className="flex w-full  mt-5">
+                <div className="mx-auto sm:w-1/4">
                     <form onSubmit={SearchParkings}>
-                        <div className="flex  px-2  rounded-md border" >
-                            <input type="text" name="Org_Search" id="SearchParkings" className="w-96  py-2 outline-none" placeholder="Where you want to park ?" />
+                        <div className="flex   rounded-md border" >
+                            <input type="text" id="SearchParkings" className=" w-full px-4 focus:bg-none py-2 outline-none" placeholder="Where you want to park ?" />
                             <span className="my-auto ml-auto" id="basic-addon1">
                                 <svg width='16' height='16'>
                                     <use xlinkHref='#svg_search'></use>
@@ -40,16 +53,20 @@ const BookParking = () => {
                             </span>
                         </div>
                     </form>
-                    <p className="text-center mt-1 text-sm ">Start by Selected where you want to go..</p>
+                    <p className="text-center mt-1 text-sm ">Start by Selected where you want to go...</p>
                 </div>
             </div>
-            <div className="flex flex-col w-full mt-10">
-                <div className="w-3/5 mx-auto">
-                     
-                    <div className="flex h-[40rem] flex-col gap-5 pr-2 overflow-y-auto scrollbar-thin" >
-                        <OrgListCard />
-                        <OrgListCard />
-                        <OrgListCard />
+            <div className="flex-grow flex flex-col w-full mt-10 overflow-y-auto scrollbar-thin scroll-smooth ">
+                <div className="w-full px-2 md:w-4/5 lg:w-3/5 mx-auto">
+
+                    <div className="flex flex-col gap-5 pr-2  " >
+                        {SearchedOrgLists.map((item, idx) => (
+                            <div className="" key={idx}>
+                                <OrgListCard item={item} VList={UserVehicles} />
+                            </div>
+
+                        ))}
+
                     </div>
                 </div>
             </div>
@@ -61,26 +78,390 @@ const BookParking = () => {
 export default BookParking
 
 
-const OrgListCard = () => {
-    return (<>
-        <div className="flex border hover:border-gray-400 p-2 rounded-md transition-all">
-            <div className="max-w-[40%]  bg-gray-200  rounded-md overflow-hidden">
-                <img src="https://i.pinimg.com/564x/8d/35/b2/8d35b2cf43859bfec6d5ade4d466c9ad.jpg" className=" object-cover pointer-events-none max-h-52" alt="" />
-            </div>
-            <div className="flex-grow flex flex-col px-4 py-1 ">
-                  <div className="">
-                             <p className="text-2xl font-medium  ">City Center</p>
-                             <p className="text-sm">Raipur, Chhatisgarh</p>
-                             <p className="text-sm">road 34, phase 2 , Pandri</p>
-                  </div>
-                  <div className="mt-auto flex">
-                    <div className="ml-auto">
-                        <button className="px-6 py-2 bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
-                            Book
-                        </button>
+const OrgListCard = (props) => {
+    const [isOpen, setIsOpen] = useState(false); // State to track whether the collapsible div is open or not
+
+    const [InTime, SetInTime] = useState('')
+    const [OutTime, SetOutTime] = useState('')
+    useEffect(() => {
+        SetTime(props.item.InTime, 'in')
+        SetTime(props.item.OutTime, 'out')
+        // setIsOpen(false)
+    }, [props])
+    const toggleCollapse = () => {
+
+        var time = new Date()
+        if (props.item.OutTime <= time.getHours() && props.item.InTime >= time.getHours()) {
+            setIsOpen(false);
+        } else {
+            setIsOpen(!isOpen);
+        }
+
+
+    };
+
+    function SetTime(hours, type) {
+        var meridiem = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours === 0 ? 12 : hours;
+        var timeString = hours + ':00 ' + meridiem;
+        if (type === "in") {
+            SetInTime(timeString)
+        } else {
+            SetOutTime(timeString)
+        }
+    }
+    return (
+        <>
+            <div className="flex gap-2 border hover:border-gray-400 p-2 rounded-md transition-all bg-gray-50 cursor-pointer" onClick={toggleCollapse}>
+                <div className="max-w-[35%] sm:max-w-[40%] overflow-hidden flex">
+                    <img src={Api + "orgthumb?OrgID=" + props.item.OrganizationID + "&FileName=" + props.item.Thumbnail} className="rounded-md my-auto sm:max-h-52 object-cover pointer-events-none" alt="" />
+                </div>
+                <div className="flex-grow flex flex-col sm:px-4 py-1 ">
+                    <div className="flex">
+                        <div className="">
+                            <p className="sm:text-2xl font-medium ">{props.item.OrganizationName}</p>
+                            <p className="text-[.6rem] sm:text-sm">{props.item.City}, {props.item.State}</p>
+                            <p className="text-[.6rem] sm:text-sm">{props.item.Address1}</p>
+                        </div>
                     </div>
-                  </div>
+                    <div className="flex gap-1 mt-auto">
+                        <div className="sm:flex flex-col flex-grow mt-auto">
+                            <div className="flex">
+                                <p className="w-20 text-[.6rem] md:text-sm font-medium">Opens At:</p>
+                                <p className="w-1/2 text-[.6rem]  md:text-sm font-normal ">{InTime} </p>
+                            </div>
+                            <div className="flex">
+                                <p className="w-20 text-[.6rem] md:text-sm font-medium">Close At:</p>
+                                <p className="w-1/2 text-[.6rem]  md:text-sm font-normal ">{OutTime} </p>
+                            </div>
+
+                        </div>
+                        <div className="flex-grow flex ml-auto">
+                            <p className="text-[.6rem] sm:text-sm ml-auto mt-auto">Available Parking : <span className="text-green-500">{props.item.AvailableSlots}</span></p>
+                            {/* <button className="ml-auto px-6 py-2 text-xs md:text-lg bg-green-400 rounded-md text-white hover:bg-green-600  transition-all">
+                                Book
+                            </button> */}
+                        </div>
+                    </div>
+                </div>
             </div>
+            {/* Collapsible Div */}
+            <div
+                className={`overflow-hidden transition-max-h duration-300 ease-in-out mt-4 bg-gray-100 rounded-md ${isOpen ? 'max-h-[50rem]' : 'max-h-0 '
+                    }`}
+            >
+                {isOpen && (<ParkingDetailsOnOrg item={props.item} VList={props.VList} />)}
+            </div>
+            {/* Collapsible Div Toggle Button */}
+        </>
+    );
+};
+
+
+
+const ParkingDetailsOnOrg = (props) => {
+    const nav = useNavigate()
+    const [TimeOptions, SetTimeOptions] = useState([])
+    const [SelectedTime, SetSelectedTime] = useState('')
+    const [IsNewVhicle, SetIsNewVehicle] = useState(false)
+    const [PricingList, SetPricingList] = useState([])
+    const [VtypeID, SetVTypeID] = useState('')
+
+    const [SelectedCarNumber, SetSelectedCarNumber] = useState('')
+    const [SelectedCarName, SetSelectedCarName] = useState('')
+    const [SaveVhicle, SetSaveVhicle] = useState(true)
+    const [Loading,setLoading] = useState(false)
+    const Razorpay = useRazorpay();
+    useEffect(() => {
+        GetPricingDetails()
+
+        let timeArray = [];
+        let currentTime = new Date();
+        let currentHour = currentTime.getHours();
+        let currentMinute = currentTime.getMinutes();
+        let inTime = props.item.InTime; // props.item.InTime represents the minimum allowed hour
+        let outTime = props.item.OutTime - 1; // props.item.OutTime - 1 represents the maximum allowed hour
+
+        // Ensure currentHour is not less than props.item.InTime
+        currentHour = Math.max(currentHour, inTime);
+
+        // Ensure endTime is not greater than props.item.OutTime - 1
+        let endTime = currentHour + 2; // 2 hours after current hour in 24-hour format
+        endTime = Math.min(endTime, outTime);
+
+        // If current time is 12 PM, start from 1 PM
+        if (currentHour === 12 && currentMinute >= 0) {
+            currentHour = 13;
+        }
+
+        // Calculate the difference between currentHour and endTime
+        let diff = calculateHourDifference(currentHour, endTime);
+
+        // Loop to generate time options
+        for (let i = 0; i <= diff; i++) {
+            if (currentHour <= 23) {
+                let hour = currentHour % 12;
+                let amPm = currentHour < 12 ? 'am' : 'pm';
+                timeArray.push({ values: (hour === 0 ? 12 : hour) + (amPm === 'am' ? 0 : 12), time: `${hour === 0 ? 12 : hour} ${amPm}` });
+            }
+            currentHour++;
+        }
+
+        SetTimeOptions(timeArray);
+        SetSelectedTime(timeArray[0]?.values);
+
+
+    }, [])
+    function calculateHourDifference(currentHour, endTime) {
+        if (currentHour === endTime) {
+            // If currentHour is the same as endTime, the difference is 0
+            return 0;
+        } else if (currentHour < endTime) {
+            // If currentHour is less than endTime, simply subtract the values
+            return endTime - currentHour;
+        } else {
+            // If currentHour is greater than endTime, we have crossed midnight
+            // Subtract currentHour from 24 and add endTime
+            return (24 - currentHour) + endTime;
+        }
+    }
+    async function GetPricingDetails() {
+        var det = {
+            "link": "Customer/getparkingstatusoforg?OrgID=" + props.item.OrganizationID
+        }
+        Get(det, (res, rej) => {
+
+            SetPricingList(res.data.Table)
+        }, (err) => {
+
+        });
+    }
+
+    const ToggleVehicleSelection = (e, item) => {
+        if (item === 'NV') {
+            SetIsNewVehicle(e.target.checked)
+            SetVTypeID('')
+            SetSelectedCarName('')
+            SetSelectedCarNumber('')
+        } else {
+            SetIsNewVehicle(!e.target.checked)
+        }
+    }
+
+    const MakePayment =async() => {
+        setLoading(true)
+        var det = {
+            "link": "Customer/getOrderID?Amount=" + PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price
+        }
+        Get(det, (res, rej) => {
+
+            openRazorpayGateway(res.data.OrderID, res.data.RazorPayID)
+            setLoading(false)
+        }, (err) => {
+
+        });
+        
+    }
+    const VehcalSelectionHandeler = (id) => {
+        var List = props.VList.filter(i => i.VehicalID === id)[0]
+        if (List) {
+            SetVTypeID(List.VehicalType)
+
+            SetSelectedCarNumber(List.VehicalNumber)
+            SetSelectedCarName(List.VehicalName)
+        } else {
+            SetVTypeID('')
+            SetSelectedCarName('')
+            SetSelectedCarNumber('')
+        }
+    }
+
+
+
+    const handlePaymentSuccess = (paymentResponse) => {
+     
+        console.log('Payment success:', paymentResponse);
+        var Data = {
+            "orderID": paymentResponse.razorpay_order_id,
+            "paymentID": paymentResponse.razorpay_payment_id,
+            "signature": paymentResponse.razorpay_signature,
+            "orgID": props.item.OrganizationID,
+            "vTypeID": VtypeID,
+            "vNumber":  SelectedCarNumber,
+            "vName": SelectedCarName,
+            "amount": PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price,
+            "bookTime": SelectedTime
+          }
+          CreateBooking(Data)
+    };
+    const openRazorpayGateway = (orderId, Key) => {
+        const razorpayOptions = {
+            key: Key,
+            amount: 1000, // Replace with the amount you want to charge
+            order_id: orderId, // Use the received order ID from the state
+            name: 'BOOKMYPARKING',
+            description: 'Payment for purchase',
+            image: 'https://yourcompany.com/logo.png', // Replace with your company logo URL
+            handler: handlePaymentSuccess,
+            prefill: {
+                name: 'John Doe', // Replace with customer's name
+                email: 'john.doe@example.com', // Replace with customer's email
+                contact: '+91 9876543210', // Replace with customer's contact number
+            },
+            theme: {
+                color: '#F37254', // Replace with your desired color
+            },
+        };
+
+        const razorpayInstance = new Razorpay(razorpayOptions);
+        razorpayInstance.open();
+    };
+
+    async function CreateBooking(data){
+        setLoading(true)
+        var det = {
+            "link": "Customer/BookParking",
+            "data": JSON.stringify(data)
+        }
+        Post(det, (res, rej) => {
+           
+            if(res.data.Status===1){
+                 nav("/bookingconfirmation?status=Confirm&id="+res.data.ID)
+
+            }else{
+                nav("/bookingconfirmation?status=Queue&id="+res.data.ID)
+            }
+            setLoading(false)
+        }, (err) => {
+            setLoading(false)
+        });
+        
+    }
+    return (<>
+        <div className="mt-2 p-2 flex flex-col sm:flex-row">
+
+            <section className="sm:w-2/3 flex flex-col gap-5 p-2">
+                <div className="w-full flex gap-5">
+                    <div className="w-1/2 flex flex-col gap-5">
+                        <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none text-xs sm:text-sm " placeholder="Where you want to park ?" onChange={e => SetSelectedTime(parseInt(e.target.value))}>
+                            {TimeOptions.map((item, idx) =>
+                                <option value={item.values} key={idx}>{item.time}</option>
+                            )}
+                        </select>
+
+
+
+
+
+                    </div>
+                    <div className="w-1/2 flex  flex-col gap-5">
+                        <div className="flex flex-col sm:flex-row justify-between h-full">
+                            <label className="flex items-center space-x-3">
+                                <input
+                                    type="checkbox" checked={!IsNewVhicle}
+                                    onChange={(e) => ToggleVehicleSelection(e, 'EV')}
+                                    className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                />
+                                <span className="text-gray-700 text-xs sm:text-sm">Existing Vehicle</span>
+                            </label>
+                            <label className="flex items-center space-x-3">
+                                <input
+                                    type="checkbox"
+                                    checked={IsNewVhicle}
+                                    onChange={(e) => ToggleVehicleSelection(e, 'NV')}
+                                    className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                />
+                                <span className="text-gray-700 text-xs sm:text-sm">New Vehicle</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                {!IsNewVhicle && (<div className="w-full flex gap-5">
+                    <div className="w-1/2 flex flex-col gap-5">
+                        <select type="text" id="SearchParkings" className="rounded-md text-xs sm:text-sm p-2 outline-none" placeholder="Vehicle Selector" onChange={(e) => VehcalSelectionHandeler(e.target.value)}>
+                            <option value="" >Select Your Vehicle</option>
+                            {props.VList.map((item, idx) => (
+                                <option value={item.VehicalID} key={idx}>{item.VehicalName}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>)}
+                {IsNewVhicle && (
+                    <section className="flex flex-col gap-4">
+                        <div className="w-full flex  gap-5">
+                            <div className="w-1/2 flex flex-col gap-5">
+                                <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none text-xs sm:text-sm " placeholder="Vehicle Selector" onChange={(e) => SetVTypeID(e.target.value)}>
+                                    <option value="" >Select Your Vehicle Type</option>
+                                    {PricingList.map((item, idx) => (
+                                        <option value={item.VTypeID} key={idx}>{item.VName}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="w-1/2 flex flex-col gap-5">
+                                <input type="text" id="SearchParkings" className=" rounded w-full focus:bg-none p-2 outline-none text-xs sm:text-sm " onChange={(e) => SetSelectedCarNumber(e.target.value)} placeholder="Vehicle Number" />
+                            </div>
+                        </div>
+                        <div className="w-full flex gap-5">
+                            <div className="w-1/2 flex flex-col gap-2">
+                                <input type="text" id="SearchParkings" className=" rounded w-full focus:bg-none p-2 outline-none text-xs sm:text-sm " onChange={(e) => SetSelectedCarName(e.target.value)} placeholder="Vehicle Name" />
+                                <label className="flex items-center space-x-3">
+                                    <input
+                                        type="checkbox"
+                                        checked={SaveVhicle}
+                                        onChange={(e) => SetSaveVhicle(e.target.checked)}
+                                        className="form-checkbox text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                    />
+                                    <span className="text-gray-700 text-xs sm:text-sm">Save Vehicle</span>
+                                </label>
+                            </div>
+                            <div className="w-1/2 flex flex-col">
+                                <p className="text-xs text-red-500 ml-auto">Note : Your Vehical Number will be your Parking Pass</p>
+
+                            </div>
+                        </div>
+                    </section>
+                )}
+            </section>
+
+            {VtypeID !== '' && (<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-gray-50 text-[.9rem]">
+                <p className=" font-semibold text-center">Overview</p>
+                <div className="flex">
+                    <p className="w-1/2">Type</p>
+                    <p className="w-1/2 text-right">{PricingList.filter(i => i.VTypeID === VtypeID)[0]?.VName}</p>
+                </div>
+                <div className="flex">
+                    <p className="w-1/2">No.</p>
+                    <p className="w-1/2 text-right">{SelectedCarNumber.replaceAll(' ', '').toUpperCase()}</p>
+                </div>
+                <div className="flex">
+                    <p className="w-1/2">Name</p>
+                    <p className="w-1/2 text-right">{SelectedCarName}</p>
+                </div>
+                <div className="flex">
+                    <p className="w-1/2">Time</p>
+
+                    <p className="w-1/2 text-right">{TimeOptions.filter(i => i.values === SelectedTime)[0]?.time}</p>
+                </div>
+                <div className="flex mt-2">
+                    <p className="w-1/2 font-semibold ">Your Total :</p>
+                    <p className="w-1/2 text-right font-semibold text-green-500">₹ {PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price}</p>
+                </div>
+                <div className="flex mt-2">
+                    
+                    <button disabled={Loading} className="ml-auto  px-6 py-2 text-xs md:text-[1rem] bg-green-400 rounded-md text-white hover:bg-green-600  transition-all" onClick={() => MakePayment()}>
+                    {Loading ? <div className="mx-auto animate-spin w-5 h-5 rounded-full border-b-2 border-white">
+                                 
+                                 </div> : 'Make Payment'}
+                    </button>
+                </div>
+            </section>)}
+            {VtypeID === '' && (<section className="flex-grow p-2 flex-col gap-2 border rounded-md bg-gray-50 text-[.95rem]">
+                <p className="text-center ">Select Vehicle Or Add New Vehicle !!</p>
+            </section>)}
         </div>
     </>)
 }
+

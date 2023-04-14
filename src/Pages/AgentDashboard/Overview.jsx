@@ -9,6 +9,8 @@ const AgentOverView = () => {
     const [OrgImage, SetOrgImage] = useState('')
     const [AddedImage, SetAddedImage] = useState(null)
     const [ImageChange, SetImageChange] = useState(false)
+    const [InTime, SetInTime] = useState('')
+    const [OutTime, SetOutTime] = useState('')
     useEffect(() => {
         const currentDate = new Date();
         SetCurrentDate(formatDate(currentDate))
@@ -30,10 +32,26 @@ const AgentOverView = () => {
         Get(det, (res, rej) => {
             SetOrgData(res.data.Table[0])
             SetOrgEditableData(res.data.Table[0])
-            SetOrgImage(Api+"orgthumb?OrgID="+res.data.Table[0].OrganizationID+"&FileName="+res.data.Table[0].Thumbnail)
+            SetOrgImage(Api + "orgthumb?OrgID=" + res.data.Table[0].OrganizationID + "&FileName=" + res.data.Table[0].Thumbnail)
+            SetTime(res.data.Table[0].InTime, 'in')
+            SetTime(res.data.Table[0].OutTime, 'out')
+
         }, (err) => {
 
         });
+    }
+
+    function SetTime(hours, type) {
+
+        var meridiem = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours === 0 ? 12 : hours;
+        var timeString = hours + ':00 ' + meridiem;
+        if (type === "in") {
+            SetInTime(timeString)
+        } else {
+            SetOutTime(timeString)
+        }
     }
     const OrgEditClick = () => {
         SetOrgEditModal(true)
@@ -50,16 +68,16 @@ const AgentOverView = () => {
 
         if (file) {
             SetAddedImage(file)
-            reader.readAsDataURL(file); 
+            reader.readAsDataURL(file);
         }
     };
     const OnImageChangeCancle = () => {
-        SetOrgImage(Api+"orgthumb?OrgID="+OrgData.OrganizationID+"&FileName="+OrgData.Thumbnail)
+        SetOrgImage(Api + "orgthumb?OrgID=" + OrgData.OrganizationID + "&FileName=" + OrgData.Thumbnail)
         SetImageChange(false)
     }
     const OnImageSave = async () => {
-      
-        if (OrgData&&AddedImage) {
+
+        if (OrgData && AddedImage) {
             var det = {
                 "link": "uploadorgthumb?TypeID=" + OrgData.OrganizationID,
                 "file": AddedImage
@@ -84,13 +102,18 @@ const AgentOverView = () => {
                 <div className="max-w-[40%]  bg-gray-200  rounded-md overflow-hidden">
                     <img src={OrgImage} className=" object-cover pointer-events-none max-h-96" alt="" />
                 </div>
-                <div className="flex flex-col py-2 px-10 flex-grow">
-                    <div className="flex">
-                        <div className="">
+                <div className="flex flex-col px-10 flex-grow">
+                    <div className="flex flex-grow">
+                        <div className="flex flex-col">
                             <p className="text-3xl font-semibold">{OrgData?.OrganizationName}</p>
-                            <p className="">{OrgData?.City}, {OrgData?.State}</p>
-                            <p className="text-sm">{OrgData?.PinCode}</p>
+                            <p className="">{OrgData?.City}, {OrgData?.State} <span className=" font-light ">{OrgData?.PinCode}</span> </p>
+                            <p className="text-sm">{OrgData?.AddressLine1}</p>
+                            <div className="mt-auto mb-2">
+                                <p className="text-sm font-medium mt-auto">Opens At : <span className="font-normal"> {InTime}</span></p>
+                                <p className="text-sm font-medium mb-1">Close At : <span className="font-normal">{OutTime}</span></p>
+                            </div>
                         </div>
+
                         <div className="ml-auto">
                             <div className="ml-auto flex gap-2 py-1 bg-gray-200 hover:bg-slate-300 transition-all my-2 px-2 rounded-md cursor-pointer" onClick={() => OrgEditClick()}>
                                 <p className="">Edit</p>
@@ -99,6 +122,7 @@ const AgentOverView = () => {
                                 </svg>
 
                             </div>
+
                         </div>
                     </div>
                     <div className="flex h-3/6 gap-10 mt-auto">
@@ -134,7 +158,7 @@ const AgentOverView = () => {
                 {ImageChange && (<>
                     <div className="flex gap-5">
                         <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-400 transition duration-200" onClick={OnImageChangeCancle}>Cancle</button>
-                        <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-400 transition duration-200" onClick={()=>OnImageSave()}>Save</button>
+                        <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-400 transition duration-200" onClick={() => OnImageSave()}>Save</button>
                     </div>
                 </>)}
             </div>
