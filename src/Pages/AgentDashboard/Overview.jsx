@@ -11,6 +11,11 @@ const AgentOverView = () => {
     const [ImageChange, SetImageChange] = useState(false)
     const [InTime, SetInTime] = useState('')
     const [OutTime, SetOutTime] = useState('')
+
+
+    const [TotalSlot,SetTotalSlot] = useState(0)
+    const [ActiveSlot,SetActiveSlot] = useState(0)
+    const [TotalRevenue,SetTotalRevenue] = useState(0)
     useEffect(() => {
         const currentDate = new Date();
         SetCurrentDate(formatDate(currentDate))
@@ -30,12 +35,16 @@ const AgentOverView = () => {
             "link": "Agent/OverViewData"
         }
         Get(det, (res, rej) => {
+            debugger
             SetOrgData(res.data.Table[0])
             SetOrgEditableData(res.data.Table[0])
             SetOrgImage(Api + "orgthumb?OrgID=" + res.data.Table[0].OrganizationID + "&FileName=" + res.data.Table[0].Thumbnail)
             SetTime(res.data.Table[0].InTime, 'in')
             SetTime(res.data.Table[0].OutTime, 'out')
-
+            SetTotalSlot(res.data.Table1[0].TotalSlot)
+            SetActiveSlot(res.data.Table1[0].ActiveSlot)
+          
+            SetTotalRevenue(res.data.Table2[0].Revenue)
         }, (err) => {
 
         });
@@ -99,7 +108,7 @@ const AgentOverView = () => {
                 <div className="ml-auto text-lg font-medium">{CurrentDate}</div>
             </div>
             <div className="flex px-20 w-full mt-10">
-                <div className="max-w-[40%]  bg-gray-200  rounded-md overflow-hidden">
+                <div className="max-w-[40%]  rounded-md overflow-hidden">
                     <img src={OrgImage} className=" object-cover pointer-events-none max-h-96" alt="" />
                 </div>
                 <div className="flex flex-col px-10 flex-grow">
@@ -126,17 +135,17 @@ const AgentOverView = () => {
                         </div>
                     </div>
                     <div className="flex h-3/6 gap-10 mt-auto">
-                        <div className="flex-grow bg-gray-200  rounded-md flex flex-col p-4 ">
+                        <div className="flex-grow bg-slate-600 text-white shadow-lg  rounded-md flex flex-col p-4 ">
                             <p className="text-lg  ">Total Slots</p>
-                            <p className="mt-auto ml-auto text-4xl">1</p>
+                            <p className="mt-auto ml-auto text-4xl">{TotalSlot}</p>
                         </div>
-                        <div className="bg-gray-200 flex-grow rounded-md flex flex-col p-4 ">
+                        <div className="bg-slate-600 text-white   shadow-lg flex-grow rounded-md flex flex-col p-4 ">
                             <p className="text-lg  ">Active Slots</p>
-                            <p className="mt-auto ml-auto text-4xl">5</p>
+                            <p className="mt-auto ml-auto text-4xl">{ActiveSlot}</p>
                         </div>
-                        <div className="bg-gray-200 flex-grow rounded-md flex flex-col p-4 ">
+                        <div className="bg-slate-600 text-white shadow-lg flex-grow rounded-md flex flex-col p-4 ">
                             <p className="text-lg  ">Total Revenue</p>
-                            <p className="mt-auto ml-auto text-xl">Rs 5000</p>
+                            <p className="mt-auto ml-auto text-xl">Rs {TotalRevenue}</p>
                         </div>
                     </div>
                 </div>
@@ -144,7 +153,7 @@ const AgentOverView = () => {
             <div className="flex py-2  flex-grow px-20">
                 {!ImageChange && (<> <label
                     htmlFor="imageInput"
-                    className="bg-gray-200 = px-4 py-2 rounded cursor-pointer hover:bg-gray-400 transition duration-200"
+                    className="bg-slate-500 text-white hover:bg-slate-600  px-4 py-2 rounded cursor-pointer  transition duration-200"
                 >
                     Set New Image
                 </label>
@@ -157,8 +166,8 @@ const AgentOverView = () => {
                     /></>)}
                 {ImageChange && (<>
                     <div className="flex gap-5">
-                        <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-400 transition duration-200" onClick={OnImageChangeCancle}>Cancle</button>
-                        <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-400 transition duration-200" onClick={() => OnImageSave()}>Save</button>
+                        <button className="px-3 py-1 bg-red-500 text-white hover:bg-red-600 transition duration-200 rounded" onClick={OnImageChangeCancle}>Cancle</button>
+                        <button className="px-3 py-1 bg-blue-500 text-white hover:bg-blue-600 transition duration-200 rounded" onClick={() => OnImageSave()}>Save</button>
                     </div>
                 </>)}
             </div>

@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 
 const OverView = () => {
     const [CurrentDate, SetCurrentDate] = useState('')
+    const [TotalSlot,SetTotalSlot] = useState(0)
+    const [ActiveSlot,SetActiveSlot] = useState(0)
+    const [TotalRevenue,SetTotalRevenue] = useState(0)
     useEffect(() => {
         const currentDate = new Date();
         SetCurrentDate(formatDate(currentDate))

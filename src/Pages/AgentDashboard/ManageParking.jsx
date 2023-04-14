@@ -99,24 +99,14 @@ const ManageParking = () => {
             </div>
             <div className=" px-32 mt-10">
                 <div className="flex ">
-                    {/* <form onSubmit={SearchFunc}>
-                        <div className="flex border px-2  rounded-md">
-                            <input type="text" name="Org_Search" id="SearchInput" className="  py-2 outline-none" placeholder="Search.." />
-                            <span className="my-auto" id="basic-addon1">
-                                <svg width='16' height='16'>
-                                    <use xlinkHref='#svg_search'></use>
-                                </svg>
-                            </span>
-                        </div>
-                    </form> */}
                     <div className="ml-auto flex gap-2">
-                        <div className="bg-gray-200  h-10 rounded-md flex gap-2 px-2 hover:bg-gray-300 transition-all cursor-pointer" onClick={() => setisLotOpen(!isLotOpen)}>
+                        <div className="bg-slate-600 text-white hover:bg-slate-700 h-10 rounded-md flex gap-2 px-2  transition-all cursor-pointer" onClick={() => setisLotOpen(!isLotOpen)}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="m-auto w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                             <p className="my-auto">Add Parking lot</p>
                         </div>
-                        <div className="bg-gray-200  h-10 rounded-md flex gap-2 px-2 hover:bg-gray-300 transition-all cursor-pointer" onClick={() => setisSLotOpen(!isSLotOpen)}>
+                        <div className="bg-slate-600 text-white hover:bg-slate-700  h-10 rounded-md flex gap-2 px-2 transition-all cursor-pointer" onClick={() => setisSLotOpen(!isSLotOpen)}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="m-auto w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>

@@ -73,14 +73,14 @@ const Finance = () => {
                         </div>
                     </div>
                     <table className="w-full">
-                        <tr className="flex py-2 bg-gray-200">
+                        <tr className="flex py-2 bg-slate-700 text-white">
                             <th className="w-1/2 text-center">Vehical Type</th>
                             <th className="w-1/2 text-center">Price per hour</th>
                         </tr>
                         <tbody className="w-full">
                             {PricingList.map((item, idx) => {
 
-                                return (<tr key={idx} className={"flex py-2  " + (idx % 2 !== 0 ? "bg-gray-100" : "")}>
+                                return (<tr key={idx} className="flex py-2 transition-all hover:bg-slate-200 ">
                                     <td className="w-1/2 text-center">{item.VehicalType}</td>
                                     <td className="w-1/2 text-center">{item.Price}</td>
                                 </tr>)
@@ -91,14 +91,14 @@ const Finance = () => {
                 <div className=" w-1/2  px-32">
                     <p className="mb-2 text-lg font-medium">Total Revenue </p>
                     <table className="w-full">
-                        <tr className="flex py-2 bg-gray-200">
+                        <tr className="flex py-2 bg-slate-700 text-white">
                             <th className="w-1/2 text-center">Vehical Type</th>
                             <th className="w-1/2 text-center">Revenue</th>
                         </tr>
                         <tbody className="w-full">
                             {PricingList.map((item, idx) => {
 
-                                return (<tr key={idx} className={"flex py-2  " + (idx % 2 !== 0 ? "bg-gray-100" : "")}>
+                                return (<tr key={idx} className="flex py-2 transition-all hover:bg-slate-200 ">
                                     <td className="w-2/12 text-center">{idx + 1}</td>
                                     <td className="w-2/12 text-center"></td>
 
