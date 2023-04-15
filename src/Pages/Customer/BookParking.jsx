@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Api, Get, Post } from "../../components/Api";
 import useRazorpay from "react-razorpay";
 import { useNavigate } from "react-router-dom";
+import StarRatings from "react-star-ratings";
 
 const BookParking = () => {
     const [SearchedOrgLists, SetSearchedOrgLists] = useState([])
@@ -123,6 +124,17 @@ const OrgListCard = (props) => {
                             <p className="sm:text-2xl font-medium ">{props.item.OrganizationName}</p>
                             <p className="text-[.6rem] sm:text-sm">{props.item.City}, {props.item.State}</p>
                             <p className="text-[.6rem] sm:text-sm">{props.item.Address1}</p>
+                        </div>
+                        <div className="ml-auto">
+                            <p className="">Total Ratings ( {props.item.TotalRating} )</p>
+                        <StarRatings
+                            rating={props.item.AverageRating}
+                            starDimension="25px"
+                            starRatedColor="#0f172a"
+                            starHoverColor="#1e293b"
+                            numberOfStars={5}
+                            name='User Rating'
+                        />
                         </div>
                     </div>
                     <div className="flex gap-1 mt-auto">

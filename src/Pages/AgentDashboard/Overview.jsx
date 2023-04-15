@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Api, FileUpload, Get, Post } from "../../components/Api";
+import StarRatings from "react-star-ratings";
 
 const AgentOverView = () => {
     const [CurrentDate, SetCurrentDate] = useState('')
@@ -13,9 +14,9 @@ const AgentOverView = () => {
     const [OutTime, SetOutTime] = useState('')
 
 
-    const [TotalSlot,SetTotalSlot] = useState(0)
-    const [ActiveSlot,SetActiveSlot] = useState(0)
-    const [TotalRevenue,SetTotalRevenue] = useState(0)
+    const [TotalSlot, SetTotalSlot] = useState(0)
+    const [ActiveSlot, SetActiveSlot] = useState(0)
+    const [TotalRevenue, SetTotalRevenue] = useState(0)
     useEffect(() => {
         const currentDate = new Date();
         SetCurrentDate(formatDate(currentDate))
@@ -35,7 +36,7 @@ const AgentOverView = () => {
             "link": "Agent/OverViewData"
         }
         Get(det, (res, rej) => {
-           
+
             SetOrgData(res.data.Table[0])
             SetOrgEditableData(res.data.Table[0])
             SetOrgImage(Api + "orgthumb?OrgID=" + res.data.Table[0].OrganizationID + "&FileName=" + res.data.Table[0].Thumbnail)
@@ -43,7 +44,7 @@ const AgentOverView = () => {
             SetTime(res.data.Table[0].OutTime, 'out')
             SetTotalSlot(res.data.Table1[0].TotalSlot)
             SetActiveSlot(res.data.Table1[0].ActiveSlot)
-          
+
             SetTotalRevenue(res.data.Table2[0].Revenue)
         }, (err) => {
 
@@ -117,6 +118,18 @@ const AgentOverView = () => {
                             <p className="text-3xl font-semibold">{OrgData?.OrganizationName}</p>
                             <p className="">{OrgData?.City}, {OrgData?.State} <span className=" font-light ">{OrgData?.PinCode}</span> </p>
                             <p className="text-sm">{OrgData?.AddressLine1}</p>
+                            <div className="mt-2">
+                                <p className="">Total Ratings ({OrgData?.TotalRating})</p>
+                                <StarRatings
+                                    rating={OrgData?.AverageRating}
+                                    starDimension="25px"
+                                    starRatedColor="#475569"
+                                    starHoverColor="#334155"
+                                   
+                                    numberOfStars={5}
+                                    name='User Rating'
+                                />
+                            </div>
                             <div className="mt-auto mb-2">
                                 <p className="text-sm font-medium mt-auto">Opens At : <span className="font-normal"> {InTime}</span></p>
                                 <p className="text-sm font-medium mb-1">Close At : <span className="font-normal">{OutTime}</span></p>
