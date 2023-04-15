@@ -19,6 +19,7 @@ import BookParking from './Pages/Customer/BookParking';
 import BookingConfirmationPage from './Pages/Customer/BookingConfirmationPage';
 import MyAccount from './Pages/MyAccount/MyAccount';
 import MyAccountDashboardLayout from './Pages/MyAccount/DashboardLayout';
+import MyBookings from './Pages/MyAccount/MyBookings';
 
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
         <Route exact path='bookmyparking' element={<BookParking />} />
         <Route exact path='/account' element={< MyAccountDashboardLayout UserData={UserData} Logout={Logout}/>}>
             <Route path='' element={<MyAccount  UserData={UserData} OnUpdateName={OnUpdateName}/>} />
+            <Route path='bookings' element={<MyBookings/>}/>
         </Route>
         <Route exact path='bookingconfirmation' element={<BookingConfirmationPage />} />
         {UserData?.IsAdmin && (<Route path='admin' element={<AdminDashboardLayout />}>
