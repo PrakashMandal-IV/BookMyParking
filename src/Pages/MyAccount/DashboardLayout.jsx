@@ -9,7 +9,7 @@ const MyAccountDashboardLayout = (props) => {
         props.Logout()
     }
     return (<>
-        <div className="w-full h-full flex">
+        <div className=" w-full h-full flex">
             <div className="w-64  bg-slate-700">
                 <div className="flex flex-col h-full">
                     <div className=" bg-slate-500 flex">
@@ -39,9 +39,10 @@ const MyAccountDashboardLayout = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="flex-grow">
+            <div className="flex-grow max-h-[calc(100vh-3.5rem)] overflow-y-scroll scrollbar-thin">
                 <Outlet />
             </div>
+
         </div>
 
     </>)

@@ -22,7 +22,7 @@ const Nav = (props) => {
         }
     }
    
-    return (<div className="flex flex-col min-h-screen  " id="top">
+    return (<div className="flex flex-col overflow-hidden   " id="top">
         <div className="w-full h-14 flex bg-slate-700 px-2 sm:px-10  z-50">
             <div className="my-auto cursor-pointer" onClick={() => NavigationClick('home')}>
                 <p className="text-lg sm:text-3xl font-medium text-white ">Book<span className="text-red-600 font-semibold">My</span>Parking</p>
@@ -38,7 +38,7 @@ const Nav = (props) => {
 
             </div>
         </div>
-        <div className="w-full h-[calc(100vh-3.5rem)]">
+        <div className="w-full h-[calc(100vh-3.5rem)] max-h-[calc(100vh-3.5rem)]">
             <Outlet />
         </div>
 
