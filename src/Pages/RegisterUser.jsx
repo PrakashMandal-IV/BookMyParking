@@ -36,7 +36,7 @@ const RegisterUser = (props) => {
         });
     }
     return (<>
-        <div className="w-full flex h-full justify-center align-middle">
+        <div className="w-full flex  justify-center align-middle">
 
             <div className="md:w-1/5 rounded border mt-36 p-5">
                 <form onSubmit={OnLoginClick} className="flex flex-col gap-12 ">
