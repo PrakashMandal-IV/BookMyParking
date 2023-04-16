@@ -40,6 +40,7 @@ export default MyBookings
 
 
 const BookingCard = (props) => {
+    debugger
     const [Rating, SetRating] = useState(props.item.Ratings)
 
 
@@ -55,6 +56,24 @@ const BookingCard = (props) => {
             });
         }
     }
+    function getTimeInFormat(timeString) {
+        // Create a new Date object from the input time string
+        const date = new Date(timeString);
+      
+        // Retrieve the hour, minute, and time format (AM/PM) from the Date object
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        const timeFormat = hour >= 12 ? 'PM' : 'AM';
+      
+        // Convert the hour to 12-hour format
+        const hour12 = (hour % 12) || 12;
+      
+        // Format the time string in the desired format
+        const formattedTime = `${hour12}:${minute.toString().padStart(2, '0')} ${timeFormat}`;
+      
+        return formattedTime;
+      }
+      
     return (<>
         <div className="bg-gradient-to-l    border hover:border-slate-700 transition-all w-full flex gap-2 p-2 rounded-md">
 
@@ -64,7 +83,7 @@ const BookingCard = (props) => {
             <div className="flex-grow flex flex-col">
                 <div className="flex w-full">
                     <div className="">
-                        <p className="text-2xl text-slate-700">{props.item.OrganizationName} <span className="text-lg font-light">(10:00 AM - 12:00 PM)</span></p>
+                        <p className="text-2xl text-slate-700">{props.item.OrganizationName} <span className="text-lg font-light">({getTimeInFormat(props.item.BookedFrom)} - {getTimeInFormat(props.item.BookedTo)})</span></p>
                         <p className="text-slate-700">{props.item.City} , {props.item.STATE} </p>
                         <p className=" text-green-600 mt-2 text-sm">Total Cost : Rs {props.item.Amount} only</p>
                     </div>
