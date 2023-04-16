@@ -40,7 +40,7 @@ export default MyBookings
 
 
 const BookingCard = (props) => {
-    debugger
+   
     const [Rating, SetRating] = useState(props.item.Ratings)
 
 

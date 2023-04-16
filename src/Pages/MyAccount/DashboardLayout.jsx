@@ -26,7 +26,7 @@ const MyAccountDashboardLayout = (props) => {
                     <div className="text-lg pl-10  text-white  hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('bookings')}>
                         Bookings
                     </div>
-                    <div className="text-lg pl-10 text-white  hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('')}>
+                    <div className="text-lg pl-10 text-white  hover:bg-slate-800 py-4 cursor-pointer transition-all" onClick={() => nav('vehicles')}>
                         Vehicles
                     </div>
                     <div className="mt-auto  flex gap-2 text-lg justify-around  text-red-500  bg-red-500 hover:bg-red-600 py-4 cursor-pointer transition-all" onClick={() => Logout()}>
