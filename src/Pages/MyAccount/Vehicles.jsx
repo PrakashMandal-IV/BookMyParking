@@ -8,7 +8,7 @@ const Vehicle = () => {
     }, [])
     const GetParkingList = async () => {
         var det = {
-            "link": "Customer/GetVehicleList"
+            "link": "Customer/vehiclelist"
         }
         Get(det, (res, rej) => {
             SetVList(res.data)
