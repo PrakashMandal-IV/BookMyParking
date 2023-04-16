@@ -67,7 +67,6 @@ const BookParking = () => {
                             </div>
 
                         ))}
-
                     </div>
                 </div>
             </div>
@@ -80,6 +79,7 @@ export default BookParking
 
 
 const OrgListCard = (props) => {
+ 
     const [isOpen, setIsOpen] = useState(false); // State to track whether the collapsible div is open or not
 
     const [InTime, SetInTime] = useState('')
@@ -112,6 +112,7 @@ const OrgListCard = (props) => {
             SetOutTime(timeString)
         }
     }
+    
     return (
         <>
             <div className="flex gap-2 border hover:border-gray-400 p-2 rounded-md transition-all bg-gradient-to-b from-slate-600 to-slate-500  cursor-pointer" onClick={toggleCollapse}>
@@ -128,7 +129,7 @@ const OrgListCard = (props) => {
                         <div className="ml-auto">
                           
                         <StarRatings
-                            rating={props.item.AverageRating}
+                            rating={props?.item?.AverageRating}
                             starDimension="25px"
                             starRatedColor="#0f172a"
                             starHoverColor="#1e293b"
@@ -303,7 +304,8 @@ const ParkingDetailsOnOrg = (props) => {
             "vNumber":  SelectedCarNumber,
             "vName": SelectedCarName,
             "amount": PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price,
-            "bookTime": SelectedTime
+            "bookTime": SelectedTime,
+            "addVehicale":(IsNewVhicle?SaveVhicle:false)
           }
           CreateBooking(Data)
     };

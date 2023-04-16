@@ -57,9 +57,9 @@ const BookingConfirmationPage = () => {
     return (<>
         <div className="flex">
             <div className="mt-16  mx-auto">
-                <p className="text-2xl text-center">Booking Confirmation</p>
+                <p className="text-2xl text-center">Booking {SuccesStatus?"Confirmed":" In Queue"}</p>
                 <div className="mt-5 border rounded-md p-5">
-                    <p className="text-center text-lg font-medium  ">{SuccesStatus?"Your booking has been confirmed !!":"Your your has been assigned !!"}</p>
+                    <p className="text-center text-lg font-medium  ">{SuccesStatus?"Your booking has been confirmed !!":"Your booking has been assigned !!"}</p>
                     {SuccesStatus&&(<div className="w-[30rem] mt-5 flex flex-col gap-2">
                         <div className="flex">
                             <p className="">Transection ID</p>
@@ -98,7 +98,7 @@ const BookingConfirmationPage = () => {
                         </div>
                         <div className="flex">
                             <p className="">Booking Status</p>
-                            <p className="ml-auto">Confirmed</p>
+                            <p className="ml-auto">In Queue</p>
                         </div>
                        
                         <div className="flex">

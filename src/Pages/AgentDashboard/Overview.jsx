@@ -36,7 +36,7 @@ const AgentOverView = () => {
             "link": "Agent/OverViewData"
         }
         Get(det, (res, rej) => {
-
+            debugger
             SetOrgData(res.data.Table[0])
             SetOrgEditableData(res.data.Table[0])
             SetOrgImage(Api + "orgthumb?OrgID=" + res.data.Table[0].OrganizationID + "&FileName=" + res.data.Table[0].Thumbnail)
