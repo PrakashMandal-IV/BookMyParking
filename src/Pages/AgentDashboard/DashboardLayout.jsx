@@ -27,7 +27,7 @@ const AgentDashboardLayout = () => {
             <div className="w-64  bg-slate-700">
                 <div className="flex flex-col ">
                     <div className=" bg-slate-500 flex">
-                        <div className="mx-10 my-10 w-full">
+                        <div className="mx-10 my-10 w-full text-white">
                             <p className="text-center text-lg ">{OrgData?.OrganizationName}</p>
                             <p className="text-center text-sm">{OrgData?.FullName}</p>
                         </div>

@@ -15,7 +15,7 @@ const Home = () => {
         <div className="bg-gray-300 flex   h-[75vh] brightness-[150%]" style={{ backgroundImage: `url(${HomepageMainBG})` }}>
           <div className="  absolute top-0 left-0 right-0 bottom-0 bg-gray-800/60  transition-all"></div>
           <div className="mx-auto my-auto z-50">
-            <button className="py-4   rounded text-white bg-gradient-to-b from-blue-500 to-blue-600 shadow-lg transition-all px-10  flex gap-4 hover:gap-8" onClick={() => nav('/bookmyparking')}>
+            <button className="py-4   rounded text-white bg-gradient-to-b from-blue-600 to-blue-700 shadow-lg transition-all px-10  flex gap-4 hover:gap-8" onClick={() => nav('/bookmyparking')}>
               <p className="">Get a Parking </p>
               <div className="ml-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -143,27 +143,34 @@ const Home = () => {
         </div>
 
         <div className="flex flex-col gap-10">
-          <p className="text-center font-normal   text-3xl">Rent your parking slot with a few easy steps !!</p>
-          <div className="   flex gap-32 justify-center w-3/5 mx-auto ">
+          <p className="text-center font-normal  text-gray-200 text-3xl">Rent your parkings with a few easy steps !!</p>
+          <div className=" text-white  flex gap-32 justify-center w-3/5 mx-auto ">
             <div className="w-96 rounded-md flex flex-col gap-5">
-              <div className="w-40 h-40 rounded-full bg-gray-400 mx-auto"></div>
+              <div className="w-40 h-40 rounded-full bg-gray-400 mx-auto overflow-hidden">
+                <img src="https://i.pinimg.com/564x/68/e4/76/68e476fe6fa32347063204bfc57a4766.jpg" alt="" className="" />
+              </div>
               <div className="text-center">
                 <p className=" text-xl font-medium">List yourself with us </p>
-                <p className="">Get a quote with <br /> <span className="text-blue-400">Get A Quote</span></p>
+                <p className="">Get a quote with <br /> </p>
               </div>
             </div>
             <div className="   w-96  rounded-md flex flex-col gap-5 ">
-              <div className="w-40 h-40 rounded-full bg-gray-400 mx-auto"></div>
+              <div className="w-40 h-40 rounded-full bg-gray-400 mx-auto overflow-hidden">
+                <img src="https://i.pinimg.com/564x/76/ed/99/76ed99cee9382671d9ef540ebf3318b3.jpg" alt="" className="" />
+              </div>
               <div className="text-center">
-                <p className="text-xl font-medium">List yourself with us </p>
-                <p className="">Get a quote with <br /> <span className="text-blue-400">Get A Quote</span></p>
+                <p className="text-xl font-medium">List your parkings  </p>
+                <p className="">List your parking in our website <br /> </p>
               </div>
             </div>
             <div className="  w-96  rounded-md flex flex-col gap-5 ">
-              <div className="w-40 h-40 rounded-full bg-gray-400 mx-auto"></div>
+              <div className="w-40 h-40 rounded-full bg-gray-400 mx-auto overflow-hidden">
+                <img src="https://i.pinimg.com/564x/6c/de/79/6cde7950339869d53692f1d256b7aea3.jpg" alt="" className="" />
+              </div>
               <div className="text-center">
-                <p className="text-xl font-medium">List yourself with us </p>
-                <p className="">Get a quote with <br /> <span className="text-blue-400">Get A Quote</span></p>
+                <p className="text-xl font-medium">Start Earning right away </p>
+                <p className="">Start earning right away without
+                  limitations </p>
               </div>
             </div>
           </div>
@@ -172,7 +179,7 @@ const Home = () => {
         <div className="flex flex-col gap-10 mt-16">
           <div className="w-3/4  mx-auto flex">
             <div className="flex-grow">
-              <ContactUs />
+              {/* <ContactUs /> */}
             </div>
             <div className="w-1/3 bg-gray-300"></div>
           </div>
