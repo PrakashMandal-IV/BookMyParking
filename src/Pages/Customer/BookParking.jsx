@@ -79,7 +79,7 @@ export default BookParking
 
 
 const OrgListCard = (props) => {
- 
+
     const [isOpen, setIsOpen] = useState(false); // State to track whether the collapsible div is open or not
 
     const [InTime, SetInTime] = useState('')
@@ -112,7 +112,7 @@ const OrgListCard = (props) => {
             SetOutTime(timeString)
         }
     }
-    
+
     return (
         <>
             <div className="flex gap-2 border hover:border-gray-400 p-2 rounded-md transition-all bg-gradient-to-b from-slate-600 to-slate-500  cursor-pointer" onClick={toggleCollapse}>
@@ -127,15 +127,15 @@ const OrgListCard = (props) => {
                             <p className="text-[.6rem] sm:text-sm">{props.item.Address1}</p>
                         </div>
                         <div className="ml-auto">
-                          
-                        <StarRatings
-                            rating={props?.item?.AverageRating}
-                            starDimension="25px"
-                            starRatedColor="#0f172a"
-                            starHoverColor="#1e293b"
-                            numberOfStars={5}
-                            name='User Rating'
-                        />
+
+                            <StarRatings
+                                rating={props?.item?.AverageRating}
+                                starDimension="25px"
+                                starRatedColor="#0f172a"
+                                starHoverColor="#1e293b"
+                                numberOfStars={5}
+                                name='User Rating'
+                            />
                         </div>
                     </div>
                     <div className="flex gap-1 mt-auto">
@@ -184,61 +184,80 @@ const ParkingDetailsOnOrg = (props) => {
     const [SelectedCarNumber, SetSelectedCarNumber] = useState('')
     const [SelectedCarName, SetSelectedCarName] = useState('')
     const [SaveVhicle, SetSaveVhicle] = useState(true)
-    const [Loading,setLoading] = useState(false)
+    const [Loading, setLoading] = useState(false)
     const Razorpay = useRazorpay();
     useEffect(() => {
         GetPricingDetails()
 
-        let timeArray = [];
-        let currentTime = new Date();
-        let currentHour = currentTime.getHours();
-        let currentMinute = currentTime.getMinutes();
-        let inTime = props.item.InTime; // props.item.InTime represents the minimum allowed hour
-        let outTime = props.item.OutTime - 1; // props.item.OutTime - 1 represents the maximum allowed hour
+        // Get the start time and end time from props
+        const startTime = props.item.InTime;
+        const endTime = props.item.OutTime;
 
-        // Ensure currentHour is not less than props.item.InTime
-        currentHour = Math.max(currentHour, inTime);
+        // Create a new Date object with the current date
+        const currentDate = new Date();
 
-        // Ensure endTime is not greater than props.item.OutTime - 1
-        let endTime = currentHour + 2; // 2 hours after current hour in 24-hour format
-        endTime = Math.min(endTime, outTime);
+        // Get the current hour
+        const currentHour = currentDate.getHours();
 
-        // If current time is 12 PM, start from 1 PM
-        if (currentHour === 12 && currentMinute >= 0) {
-            currentHour = 13;
-        }
+        // Create an empty array to store the objects with time values and corresponding times
+        const timeArray = [];
 
-        // Calculate the difference between currentHour and endTime
-        let diff = calculateHourDifference(currentHour, endTime);
+        // Loop through each hour from 0 to 23
+        for (let i = 0; i < 24; i++) {
+            // Calculate the time value by adding the loop index to the start time
+            const timeValue = startTime + i;
 
-        // Loop to generate time options
-        for (let i = 0; i <= diff; i++) {
-            if (currentHour <= 23) {
-                let hour = currentHour % 12;
-                let amPm = currentHour < 12 ? 'am' : 'pm';
-                timeArray.push({ values: (hour === 0 ? 12 : hour) + (amPm === 'am' ? 0 : 12), time: `${hour === 0 ? 12 : hour} ${amPm}` });
+            // Skip the hours that have already passed
+            if (timeValue > currentHour) {
+                // Calculate the corresponding time in 12-hour format
+                const timeIn12HourFormat = (timeValue % 12) === 0 ? 12 : (timeValue % 12);
+
+                // Determine whether it's AM or PM
+                const amOrPm = timeValue < 12 ? 'AM' : 'PM';
+
+                // Create an object with time value and corresponding time in 12-hour format
+                const timeObject = {
+                    value: timeValue % 24, // Use modulo operator to wrap around to 0 after 23
+                    time: `${timeIn12HourFormat} ${amOrPm}`
+                };
+
+                // Add the time object to the array
+                timeArray.push(timeObject);
+
+                // Check if the time value exceeds the end time, and break out of the loop if it does
+                if (timeValue >= endTime) {
+                    break;
+                }
             }
-            currentHour++;
         }
+        timeArray.pop()
 
+      
         SetTimeOptions(timeArray);
-        SetSelectedTime(timeArray[0]?.values);
+        SetSelectedTime(timeArray[0]?.value);
+
 
 
     }, [])
     function calculateHourDifference(currentHour, endTime) {
-        if (currentHour === endTime) {
-            // If currentHour is the same as endTime, the difference is 0
-            return 0;
-        } else if (currentHour < endTime) {
-            // If currentHour is less than endTime, simply subtract the values
-            return endTime - currentHour;
-        } else {
-            // If currentHour is greater than endTime, we have crossed midnight
-            // Subtract currentHour from 24 and add endTime
-            return (24 - currentHour) + endTime;
+        // Convert currentHour and endTime to minutes
+        let currentMinutes = currentHour * 60;
+        let endMinutes = endTime * 60;
+
+        // If endTime is earlier than currentHour, add 24 hours (1440 minutes)
+        if (endMinutes < currentMinutes) {
+            endMinutes += 1440;
         }
+
+        // Calculate the hour difference in minutes
+        let minuteDifference = endMinutes - currentMinutes;
+
+        // Convert minute difference to hours
+        let hourDifference = Math.floor(minuteDifference / 60);
+
+        return hourDifference;
     }
+
     async function GetPricingDetails() {
         var det = {
             "link": "Customer/getparkingstatusoforg?OrgID=" + props.item.OrganizationID
@@ -262,7 +281,7 @@ const ParkingDetailsOnOrg = (props) => {
         }
     }
 
-    const MakePayment =async() => {
+    const MakePayment = async () => {
         setLoading(true)
         var det = {
             "link": "Customer/getOrderID?Amount=" + PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price
@@ -274,7 +293,7 @@ const ParkingDetailsOnOrg = (props) => {
         }, (err) => {
 
         });
-        
+
     }
     const VehcalSelectionHandeler = (id) => {
         var List = props.VList.filter(i => i.VehicalID === id)[0]
@@ -293,7 +312,7 @@ const ParkingDetailsOnOrg = (props) => {
 
 
     const handlePaymentSuccess = (paymentResponse) => {
-     
+
         console.log('Payment success:', paymentResponse);
         var Data = {
             "orderID": paymentResponse.razorpay_order_id,
@@ -301,13 +320,13 @@ const ParkingDetailsOnOrg = (props) => {
             "signature": paymentResponse.razorpay_signature,
             "orgID": props.item.OrganizationID,
             "vTypeID": VtypeID,
-            "vNumber":  SelectedCarNumber,
+            "vNumber": SelectedCarNumber,
             "vName": SelectedCarName,
             "amount": PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price,
             "bookTime": SelectedTime,
-            "addVehicale":(IsNewVhicle?SaveVhicle:false)
-          }
-          CreateBooking(Data)
+            "addVehicale": (IsNewVhicle ? SaveVhicle : false)
+        }
+        CreateBooking(Data)
     };
     const openRazorpayGateway = (orderId, Key) => {
         const razorpayOptions = {
@@ -332,25 +351,25 @@ const ParkingDetailsOnOrg = (props) => {
         razorpayInstance.open();
     };
 
-    async function CreateBooking(data){
+    async function CreateBooking(data) {
         setLoading(true)
         var det = {
             "link": "Customer/BookParking",
             "data": JSON.stringify(data)
         }
         Post(det, (res, rej) => {
-           
-            if(res.data.Status===1){
-                 nav("/bookingconfirmation?status=Confirm&id="+res.data.ID)
 
-            }else{
-                nav("/bookingconfirmation?status=Queue&id="+res.data.ID)
+            if (res.data.Status === 1) {
+                nav("/bookingconfirmation?status=Confirm&id=" + res.data.ID)
+
+            } else {
+                nav("/bookingconfirmation?status=Queue&id=" + res.data.ID)
             }
             setLoading(false)
         }, (err) => {
             setLoading(false)
         });
-        
+
     }
     return (<>
         <div className="mt-2 p-2 flex flex-col sm:flex-row ">
@@ -359,8 +378,8 @@ const ParkingDetailsOnOrg = (props) => {
                 <div className="w-full flex gap-5">
                     <div className="w-1/2 flex flex-col gap-5">
                         <select type="text" id="SearchParkings" className="rounded-md p-2 outline-none text-xs sm:text-sm " placeholder="Where you want to park ?" onChange={e => SetSelectedTime(parseInt(e.target.value))}>
-                            {TimeOptions.map((item, idx) =>
-                                <option value={item.values} key={idx}>{item.time}</option>
+                            {TimeOptions.slice(0, 4).map((item, idx) =>
+                                <option value={item.value} key={idx}>{item.time}</option>
                             )}
                         </select>
 
@@ -464,11 +483,11 @@ const ParkingDetailsOnOrg = (props) => {
                     <p className="w-1/2 text-right  text-yellow-300 font-semibold">₹ {PricingList.filter(i => i.VTypeID === VtypeID)[0]?.Price}</p>
                 </div>
                 <div className="flex mt-2">
-                    
+
                     <button disabled={Loading} className="ml-auto  px-6 py-2 text-xs md:text-[1rem] bg-green-400 rounded-md text-white hover:bg-green-600  transition-all" onClick={() => MakePayment()}>
-                    {Loading ? <div className="mx-auto animate-spin w-5 h-5 rounded-full border-b-2 border-white">
-                                 
-                                 </div> : 'Make Payment'}
+                        {Loading ? <div className="mx-auto animate-spin w-5 h-5 rounded-full border-b-2 border-white">
+
+                        </div> : 'Make Payment'}
                     </button>
                 </div>
             </section>)}
