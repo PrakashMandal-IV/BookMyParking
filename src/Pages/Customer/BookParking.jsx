@@ -41,7 +41,7 @@ const BookParking = () => {
             </defs>
         </svg>
         <div className="max-h-[calc(100vh-3.5rem)] overflow-hidden flex flex-col  ">
-            <p className="text-2xl font-semibold text-center mt-5">Book You Parking !!</p>
+            <p className="text-2xl font-semibold text-center mt-5">Book Your Parking !!</p>
             <div className="flex w-full  mt-5">
                 <div className="mx-auto sm:w-1/4">
                     <form onSubmit={SearchParkings}>
@@ -126,7 +126,7 @@ const OrgListCard = (props) => {
                             <p className="text-[.6rem] sm:text-sm">{props.item.Address1}</p>
                         </div>
                         <div className="ml-auto">
-                            <p className="">Total Ratings ( {props.item.TotalRating} )</p>
+                          
                         <StarRatings
                             rating={props.item.AverageRating}
                             starDimension="25px"

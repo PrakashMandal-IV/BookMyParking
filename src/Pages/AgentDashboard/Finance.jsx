@@ -75,7 +75,7 @@ const Finance = () => {
                     <table className="w-full">
                         <tr className="flex py-2 bg-slate-700 text-white">
                             <th className="w-1/2 text-center">Vehical Type</th>
-                            <th className="w-1/2 text-center">Price per hour</th>
+                            <th className="w-1/2 text-center">Price</th>
                         </tr>
                         <tbody className="w-full">
                             {PricingList.map((item, idx) => {

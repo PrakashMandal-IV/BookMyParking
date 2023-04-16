@@ -65,7 +65,7 @@ const BookingCard = (props) => {
                 <div className="flex w-full">
                     <div className="">
                         <p className="text-2xl text-slate-700">{props.item.OrganizationName} <span className="text-lg font-light">(10:00 AM - 12:00 PM)</span></p>
-                        <p className="text-slate-700">{props.item.City} , {props.item.State} </p>
+                        <p className="text-slate-700">{props.item.City} , {props.item.STATE} </p>
                         <p className=" text-green-600 mt-2 text-sm">Total Cost : Rs {props.item.Amount} only</p>
                     </div>
                     <div className=" ml-auto">
