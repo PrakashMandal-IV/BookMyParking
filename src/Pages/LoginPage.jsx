@@ -25,7 +25,7 @@ const Login = (props) => {
         SetIsLoading(true)
         SetError('')
         var det = {
-            "link": "User/Login?Email=" + email + "&Password=" + pass
+            "link": "User/Login?Email=" + email.replaceAll("'",'"') + "&Password=" + pass.replaceAll("'",'"')
         }
         NoAuthPost(det, (res, rej) => {
             if (res.data.length !== 0) {
