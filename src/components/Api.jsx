@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// export const Api='https://frenzi.bsite.net/MyPasswordVault/'
+
 export const Api = 'https://localhost:7230/'
 
 
