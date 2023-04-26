@@ -6,11 +6,10 @@ import { Api } from "./Api";
 
 const Nav = (props) => {
     const nav = useNavigate()
-
+    
 
 
     function NavigationClick(type) {
-
         if (type === 'dashboard') {
             if (props.UserData?.IsAdmin) {
                 nav('admin')
@@ -18,7 +17,9 @@ const Nav = (props) => {
                 nav('agent')
             }
         } else if (type === 'home') {
-            nav('home')
+            if(props.UserData){
+                nav('home')
+            }
         }
     }
    

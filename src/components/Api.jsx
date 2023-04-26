@@ -1,18 +1,12 @@
 import axios from "axios";
-
-
 export const Api = 'https://localhost:7230/'
-
-
 export async function NoAuthPost(config, callback, errorcallback) {
-
   const options = {
     method: 'POST',
     url: Api + config.link,
     headers: { 'Content-Type': 'application/json' },
     data: config.data
   };
-
   await axios.request(options)
     .then(res => {
       if (callback != null) {
@@ -27,15 +21,12 @@ export async function NoAuthPost(config, callback, errorcallback) {
       }
     })
 }
-
 export async function NoAuthGet(config, callback, errorcallback) {
 
   const options = {
     method: 'GET',
     url: Api + config.link,
-
   };
-
   await axios.request(options)
     .then(res => {
       //do something
@@ -44,7 +35,6 @@ export async function NoAuthGet(config, callback, errorcallback) {
       }
     })
     .catch(err => {
-
       // catch error
       if (errorcallback != null) {
         errorcallback(err);
@@ -54,7 +44,6 @@ export async function NoAuthGet(config, callback, errorcallback) {
 
 
 export async function Get(config, callback, errorcallback) {
-
   const options = {
     method: 'GET',
     url: Api + config.link,
@@ -65,10 +54,7 @@ export async function Get(config, callback, errorcallback) {
   };
   await axios.request(options)
     .then(res => {
-
-
       if (callback != null) {
-
         callback(res);
       }
     })
@@ -90,7 +76,6 @@ export async function Post(config, callback, errorcallback) {
     },
     data: config.data
   };
-
   await axios.request(options)
     .then(res => {
       if (callback != null) {
@@ -103,10 +88,7 @@ export async function Post(config, callback, errorcallback) {
       }
     })
 }
-
-
 export const FileUpload = async (config, callback, errorcallback) => {
-  
   const formData = new FormData();
   formData.append('file', config.file)
   const response = await fetch(Api + config.link,
@@ -117,10 +99,8 @@ export const FileUpload = async (config, callback, errorcallback) => {
       },
       body: formData
     })
-
   if (response.ok) {
     callback(response.text());
-
   }else{
     errorcallback();
   }

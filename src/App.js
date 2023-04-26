@@ -1,5 +1,5 @@
 
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 import './App.css';
 import Nav from './components/Navbar';
 
@@ -69,7 +69,7 @@ function App() {
       AutoLogin(Email, pass)
     }
   }
-
+  
   return (
     <Routes>
       <Route exact path='/' element={<Nav UserData={UserData}  />}>
