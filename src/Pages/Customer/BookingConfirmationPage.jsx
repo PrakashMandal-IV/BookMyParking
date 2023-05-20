@@ -55,66 +55,66 @@ const BookingConfirmationPage = () => {
         });
     }
     return (<>
-        <div className="flex">
+        <div className="flex mx-1">
             <div className="mt-16  mx-auto">
                 <p className="text-2xl text-center">Booking {SuccesStatus?"Confirmed":" In Queue"}</p>
-                <div className="mt-5 border rounded-md p-5">
+                <div className="mt-5 border rounded-md p-2 md:p-5">
                     <p className="text-center text-lg font-medium  ">{SuccesStatus?"Your booking has been confirmed !!":"Your booking has been assigned !!"}</p>
                     {SuccesStatus&&(<div className="w-[30rem] mt-5 flex flex-col gap-2">
                         <div className="flex">
-                            <p className="">Transection ID</p>
-                            <p className="ml-auto">{SuccesStatus.TransectionID}</p>
+                            <p className=" font-medium">Transection ID</p>
+                            <p className="ml-auto ">{SuccesStatus.TransectionID}</p>
                         </div>
                         <div className="flex">
-                            <p className="">Booking Status</p>
+                            <p className="font-medium">Booking Status</p>
                             <p className="ml-auto">Confirmed</p>
                         </div>
                         <div className="flex">
-                            <p className="">Floor</p>
+                            <p className="font-medium">Floor</p>
                             <p className="ml-auto">{floor_map[SuccesStatus.FloorNumber]}</p>
                         </div>
                         <div className="flex">
-                            <p className="">Parking Slot</p>
+                            <p className="font-medium">Parking Slot</p>
                             <p className="ml-auto">{SuccesStatus.ParkingLotName} {SuccesStatus.ParkingSlotName}</p>
                         </div>
                         <div className="flex">
-                            <p className="">Vehicle Number</p>
+                            <p className="font-medium">Vehicle Number</p>
                             <p className="ml-auto">{SuccesStatus.VehicalNumber}</p>
                         </div>
                         <div className="flex">
-                            <p className="">Vehicle Type</p>
+                            <p className="font-medium">Vehicle Type</p>
                             <p className="ml-auto">{SuccesStatus.VehicalType}</p>
                         </div>
                         <div className="flex">
-                            <p className="">Arriving Time</p>
+                            <p className="font-medium">Arriving Time</p>
                             <p className="ml-auto">{getTime(SuccesStatus.BookedFrom)}</p>
                         </div>
                         
                     </div>)}
-                    {QueueStatus&&(<div className="w-[30rem] mt-5 flex flex-col gap-2">
+                    {QueueStatus&&(<div className=" md:w-[30rem] mt-5 flex flex-col gap-2">
                         <div className="flex">
-                            <p className="">Transection ID</p>
+                            <p className="font-medium">Transection ID</p>
                             <p className="ml-auto">{QueueStatus.TransectionID}</p>
                         </div>
                         <div className="flex">
-                            <p className="">Booking Status</p>
+                            <p className="font-medium">Booking Status</p>
                             <p className="ml-auto">In Queue</p>
                         </div>
                        
                         <div className="flex">
-                            <p className="">Queue Number</p>
+                            <p className="font-medium">Queue Number</p>
                             <p className="ml-auto">{QueueStatus.QueueNumber+1}</p>
                         </div>
                         <div className="flex">
-                            <p className="">Vehicle Number</p>
+                            <p className="font-medium">Vehicle Number</p>
                             <p className="ml-auto">{QueueStatus.VehicleNumber}</p>
                         </div>
                         <div className="flex">
-                            <p className="">Vehicle Type</p>
+                            <p className="font-medium">Vehicle Type</p>
                             <p className="ml-auto">{QueueStatus.VehicalType}</p>
                         </div>
                         <div className="flex">
-                            <p className="">Arriving Time</p>
+                            <p className="font-medium">Arriving Time</p>
                             <p className="ml-auto">{getTime(QueueStatus.BookedFrom)}</p>
                         </div>
                         
