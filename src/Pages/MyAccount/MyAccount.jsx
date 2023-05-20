@@ -59,10 +59,10 @@ useEffect(()=>{
         SetOrgEditModal(false)
     }
     return (<>
-        <div className="pl-10 pr-20 pt-5 ">
+        <div className="md:pl-10 md:pr-20 pt-5 ">
 
-            <div className="flex px-20 w-full mt-10">
-                <div className="max-w-[40%]  rounded-md overflow-hidden">
+            <div className="flex flex-col gap-5 md:gap-1 md:flex-row md:px-20 w-full mt-10">
+                <div className="max-w-[40%] mx-auto  rounded-md overflow-hidden">
                     <img src={UserImage} className=" object-cover pointer-events-none max-h-96" onError={()=>SetUserImage('https://i.pinimg.com/564x/d9/7b/bb/d97bbb08017ac2309307f0822e63d082.jpg')} alt="" />
                 </div>
                 <div className="flex flex-col px-10 flex-grow">
@@ -87,7 +87,7 @@ useEffect(()=>{
                    
                 </div>
             </div>
-            <div className="flex py-2  flex-grow px-20">
+            <div className="flex py-2  flex-grow px-10  md:px-20">
                 {!ImageChange && (<> <label
                     htmlFor="imageInput"
                     className="bg-slate-500 text-white hover:bg-slate-600  px-4 py-2 rounded cursor-pointer  transition duration-200"
