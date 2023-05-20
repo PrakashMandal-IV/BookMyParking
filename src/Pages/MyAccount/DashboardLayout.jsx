@@ -9,7 +9,7 @@ const MyAccountDashboardLayout = (props) => {
         props.Logout()
     }
     return (<>
-        <div className=" w-full h-[calc(100%-3.5rem)] md:h-full flex">
+        <div className=" w-full  h-full flex">
             <div className="w-64  bg-slate-700">
                 <div className="flex flex-col h-full">
                     <div className=" bg-slate-500 flex">

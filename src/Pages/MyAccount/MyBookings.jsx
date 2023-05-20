@@ -19,7 +19,7 @@ const MyBookings = () => {
         });
     }
     return (
-        <div className="mx-80 mt-16">
+        <div className="md:mx-80 mt-16">
         <div className="w-full h-full flex flex-col">
           <p className="font-semi bold text-2xl text-center">Bookings</p>
           <div className="mt-5 flex-grow ">
@@ -75,19 +75,19 @@ const BookingCard = (props) => {
       }
       
     return (<>
-        <div className="bg-gradient-to-l    border hover:border-slate-700 transition-all w-full flex gap-2 p-2 rounded-md">
+        <div className="text-sm  border hover:border-slate-700 transition-all w-full flex flex-col md:flex-row gap-2 p-2 rounded-md">
 
-            <div className="max-w-[35%] sm:max-w-[40%] overflow-hidden flex">
-                <img src={Api + "orgthumb?OrgID=" + props.item.OrganizationID + "&FileName=" + props.item.Thumbnail} className="rounded-md my-auto sm:max-h-52 object-cover pointer-events-none" alt="" />
+            <div className="md:max-w-[35%] h-[10rem] md:h-auto sm:max-w-[40%] overflow-hidden flex">
+                <img src={Api + "orgthumb?OrgID=" + props.item.OrganizationID + "&FileName=" + props.item.Thumbnail} className="rounded-md my-auto h-[10rem]  object-cover pointer-events-none" alt="" />
             </div>
             <div className="flex-grow flex flex-col">
-                <div className="flex w-full">
+                <div className="flex flex-col md:flex-row  w-full">
                     <div className="">
                         <p className="text-2xl text-slate-700">{props.item.OrganizationName} <span className="text-lg font-light">({getTimeInFormat(props.item.BookedFrom)} - {getTimeInFormat(props.item.BookedTo)})</span></p>
                         <p className="text-slate-700">{props.item.City} , {props.item.STATE} </p>
                         <p className=" text-green-600 mt-2 text-sm">Total Cost : Rs {props.item.Amount} only</p>
                     </div>
-                    <div className=" ml-auto">
+                    <div className=" md:ml-auto">
                         <p className="text-slate-700 ">{props.item.VehicalType} | {props.item.VehicalNumber}|  {props.item.VhicalName}</p>
                     </div>
                 </div>
