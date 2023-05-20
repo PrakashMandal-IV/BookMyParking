@@ -47,12 +47,12 @@ const Login = (props) => {
     return (<>
         <div className="w-full flex justify-center align-middle">
 
-            <div className="md:w-1/5 rounded border mt-36 p-5">
+            <div className="w-4/5 md:w-1/5 rounded border mt-36 p-2 md:p-5">
                 <form onSubmit={OnLoginClick} className="flex flex-col gap-12 ">
                     <p className="text-center text-2xl">Login</p>
                     <div className="flex flex-col w-full gap-5">
-                        <input type="email" name="LoginEmail" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Email" required />
-                        <input type="password" name="LoginPassword" className="border mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Password" required />
+                        <input type="email" name="LoginEmail" className="border text-sm md:text-md mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Email" required />
+                        <input type="password" name="LoginPassword" className="border text-sm md:text-md mx-auto w-4/5 px-2 py-3 outline-none rounded-md" placeholder="Password" required />
                     </div>
                    
                     <div className="flex flex-col w-full gap-4 pb-5">
