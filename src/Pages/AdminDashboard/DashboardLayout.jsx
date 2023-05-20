@@ -13,6 +13,7 @@ const AdminDashboardLayout = () => {
                     </div>
                     <div className="text-lg pl-10 text-white font-medium hover:bg-slate-800 py-4 cursor-pointer" onClick={()=> nav('organization')}>
                         Organization
+                    
                     </div>
                 </div>
             </div>
