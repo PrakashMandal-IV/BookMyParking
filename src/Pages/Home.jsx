@@ -28,7 +28,7 @@ const Home = () => {
         </div>
         <div className="flex flex-col gap-10">
           <p className="text-center font-medium text-gray-300  text-2xl ">Get your Parking in 3 easy steps</p>
-          <div className="flex gap-20 mx-auto">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-20 mx-auto">
             <div className="w-96 bg-gradient-to-tl from-blue-300 to-blue-500 shadow-lg shadow-slate-800   hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
               <div className="flex">
 
@@ -73,7 +73,7 @@ const Home = () => {
             <p className="text-center font-normal text-gray-300   text-xl">Type of Parking</p>
             <p className="text-center font-normal text-gray-300  text-3xl">Our Parking Services</p>
           </div>
-          <div className="flex gap-20 mx-auto">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-20 mx-auto">
 
             <div className="w-96 bg-gradient-to-bl from-blue-300 to-blue-500 shadow-lg shadow-slate-800 hover:scale-110 h-48 rounded-md flex flex-col p-2 transition-all duration-200">
               <p className="text-2xl font-semibold text-gray-700   ">Easy Book and Park</p>
@@ -107,7 +107,7 @@ const Home = () => {
           </div>
         </div>
         <div className=" shadow-lg flex bg-slate-600 ">
-          <div className="w-1/2 ml-32 my-20">
+          <div className="w-1/2 p-10 md:ml-32 my-20">
             <div className="">
               <p className="text-lg text-white">Why Choose ParkIn ?</p>
               <p className="text-2xl font-semibold text-white">Parking made easy with our  </p>
@@ -136,7 +136,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="w-1/2 bg-gray-400 flex brightness-150" style={{ backgroundImage: `url(${HomepageSIMAGE})` }}>
+          <div className="hidden  w-1/2 bg-gray-400 md:flex brightness-150" style={{ backgroundImage: `url(${HomepageSIMAGE})` }}>
 
           </div>
 
@@ -144,7 +144,7 @@ const Home = () => {
 
         <div className="flex flex-col gap-10">
           <p className="text-center font-normal  text-gray-200 text-3xl">Rent your parkings with a few easy steps !!</p>
-          <div className=" text-white  flex gap-32 justify-center w-3/5 mx-auto ">
+          <div className=" text-white  flex flex-col md:flex-row gap-5 md:gap-32 justify-center md:w-3/5 mx-auto ">
             <div className="w-96 rounded-md flex flex-col gap-5">
               <div className="w-40 h-40 rounded-full bg-gray-400 mx-auto overflow-hidden">
                 <img src="https://i.pinimg.com/564x/68/e4/76/68e476fe6fa32347063204bfc57a4766.jpg" alt="" className="" />
