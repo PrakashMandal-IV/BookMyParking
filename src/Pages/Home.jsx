@@ -107,7 +107,7 @@ const Home = () => {
           </div>
         </div>
         <div className=" shadow-lg flex bg-slate-600 ">
-          <div className="w-1/2 p-10 md:ml-32 my-20">
+          <div className="md:w-1/2 p-10 md:ml-32 my-20">
             <div className="">
               <p className="text-lg text-white">Why Choose ParkIn ?</p>
               <p className="text-2xl font-semibold text-white">Parking made easy with our  </p>
