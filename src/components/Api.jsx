@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const Api = 'http://192.168.69.227:9000/'
+export const Api = 'http://172.16.57.65:9000/'
 
 export async function NoAuthPost(config, callback, errorcallback) {
   const options = {
