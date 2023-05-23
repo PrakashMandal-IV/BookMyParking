@@ -17,7 +17,7 @@ const Vehicle = () => {
         });
     }
     return (<>
-        <div className="mx-80 mt-16">
+        <div className="md:mx-80 mt-16">
             <div className="w-full h-full flex flex-col">
                 <p className="font-semi bold text-2xl text-center">Your Saved Vehicles</p>
                 <div className="mt-5 flex-grow ">
@@ -36,9 +36,9 @@ export default Vehicle
 
 
 const VListCard = (props) => {
-    debugger
+   
     return (<>
-        <div className="border flex gap-10 p-4 rounded-md">
+        <div className="border flex flex-col gap-10 mx-5 p-4 rounded-md">
             <div className="">
                 {props.item.VehicalType1==='4 Wheeler'&&(<svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -389,7 +389,7 @@ const ParkingDetailsOnOrg = (props) => {
 
                     </div>
                     <div className="w-1/2 flex  flex-col gap-5">
-                        <div className="flex flex-col sm:flex-row justify-between h-full ">
+                        <div className="flex flex-col gap-2 sm:flex-row justify-between h-full ">
                             <label className="flex items-center space-x-3">
                                 <input
                                     type="checkbox" checked={!IsNewVhicle}
